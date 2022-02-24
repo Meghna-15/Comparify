@@ -1,7 +1,3 @@
-before_script:
-  - apt-get update
-  - apt-get maven nodejs ruby
-
 stages:
   - test
   - build
