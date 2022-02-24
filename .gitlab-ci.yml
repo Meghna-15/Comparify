@@ -1,8 +1,6 @@
-image: alpine:3
-
 before_script:
-  - apk update
-  - apk add maven nodejs ruby
+  - apt-get update
+  - apt-get maven nodejs ruby
 
 stages:
   - test
