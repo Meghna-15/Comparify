@@ -1,3 +1,9 @@
+image: alpine:3
+
+before_script:
+  - apk update
+  - apk add maven nodejs ruby
+
 stages:
   - test
   - build
@@ -7,9 +13,8 @@ stages:
 # -------------------------- Test -------------------------- #
 Test:
   stage: test
-  image: maven:latest
   tags:
-    - dalfcs_docker_autoscale
+    - ugrad
   script:
     - cd server
     - mvn clean verify
@@ -23,9 +28,8 @@ Test:
 # -------------------------- Build Server for Dev -------------------------- #
 Build Server for Dev:
   stage: build
-  image: maven:latest
   tags:
-    - dalfcs_docker_autoscale
+    - ugrad
   script:
     - cd server
     - mvn clean package -DskipTests=true
@@ -39,9 +43,8 @@ Build Server for Dev:
 # -------------------------- Build Server for Staging -------------------------- #
 Build Server for Staging:
   stage: build
-  image: maven:latest
   tags:
-    - dalfcs_docker_autoscale
+    - ugrad
   script:
     - cd server
     - mvn clean package -DskipTests=true -Pstaging
@@ -54,9 +57,8 @@ Build Server for Staging:
 # -------------------------- Build Server for Production -------------------------- #
 Build Server for Prod:
   stage: build
-  image: maven:latest
   tags:
-    - dalfcs_docker_autoscale
+    - ugrad
   script:
     - cd server
     - mvn clean package -DskipTests=true -Pprod
@@ -69,9 +71,8 @@ Build Server for Prod:
 # -------------------------- Build Client -------------------------- #
 Build Client:
   stage: build
-  image: node:15
   tags:
-    - dalfcs_docker_autoscale
+    - ugrad
   script:
     - cd client
     - npm install
@@ -80,33 +81,27 @@ Build Client:
 # -------------------------- Deploy on Staging -------------------------- #
 Deploy Staging Client:
   stage: deploy-staging
-  image: ruby:latest
   tags:
-    - dalfcs_docker_autoscale  
+    - ugrad  
   before_script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
     - gem install dpl
   script:
     - cd client
     - dpl --provider=heroku --app=$STAGING_CLIENT_HEROKU_APP_NAME --api-key=$HARSH_HEROKU_API_KEY --cleanup
   only:
-    - main
+    - /^feature-*/
 
 Deploy Staging Server:
   stage: deploy-staging
-  image: ruby:latest
   tags:
-    - dalfcs_docker_autoscale  
+    - ugrad  
   before_script:
-    - apt-get update -qy
-    - apt-get install -y ruby-dev
     - gem install dpl
   script:
     - cd server
     - dpl --provider=heroku --app=$STAGING_SERVER_HEROKU_APP_NAME --api-key=$HARSH_HEROKU_API_KEY --cleanup
   only:
-    - main
+    - /^feature-*/
 
 # -------------------------- Deploy on Prod -------------------------- #
 Deploy Production Client:
