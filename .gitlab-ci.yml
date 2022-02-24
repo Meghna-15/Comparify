@@ -63,7 +63,7 @@ Build Server for Prod:
   artifacts:
     paths:
        - target/*.jar
-    only:
+  only:
     - tag
 
 # -------------------------- Build Client -------------------------- #
