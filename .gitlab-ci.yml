@@ -21,7 +21,7 @@ Test:
         - server/target/failsafe-reports/TEST-*.xml
     
 # -------------------------- Build Server for Dev -------------------------- #
-Build Server:
+Build Server for Dev:
   stage: build
   image: maven:latest
   tags:
@@ -37,7 +37,7 @@ Build Server:
     - tag
 
 # -------------------------- Build Server for Staging -------------------------- #
-Build Server:
+Build Server for Staging:
   stage: build
   image: maven:latest
   tags:
@@ -52,7 +52,7 @@ Build Server:
     - main
 
 # -------------------------- Build Server for Production -------------------------- #
-Build Server:
+Build Server for Prod:
   stage: build
   image: maven:latest
   tags:
