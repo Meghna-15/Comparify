@@ -105,7 +105,7 @@ Deploy Staging Server:
   script:
     - > 
       curl --request PATCH "https://api.heroku.com/apps/$STAGING_CLIENT_HEROKU_APP_NAME/config-vars"  
-      --data "{'SPRING_PROFILES_ACTIVE':'staging'}" 
+      --data "{\"SPRING_PROFILES_ACTIVE\": \"staging\"}" 
       --header "Content-Type: application/json" 
       --header "Accept: application/vnd.heroku+json; version=3" 
       --header "Authorization: Bearer $HARSH_HEROKU_API_KEY"
