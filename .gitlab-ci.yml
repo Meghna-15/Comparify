@@ -69,7 +69,7 @@ Build Server for Prod:
 # -------------------------- Build Client -------------------------- #
 Build Client:
   stage: build
-  image: node:15
+  image: node:16
   tags:
     - dalfcs_docker_autoscale
   script:
