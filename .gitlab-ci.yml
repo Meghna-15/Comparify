@@ -112,7 +112,7 @@ Deploy Staging Server:
     - cd server
     - dpl --provider=heroku --app=$STAGING_SERVER_HEROKU_APP_NAME --api-key=$HARSH_HEROKU_API_KEY --cleanup
   only:
-    - main
+    - feature-application-profiling
 
 # -------------------------- Deploy on Prod -------------------------- #
 Deploy Production Client:
