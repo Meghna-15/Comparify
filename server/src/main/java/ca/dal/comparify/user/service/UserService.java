@@ -1,5 +1,6 @@
 package ca.dal.comparify.user.service;
 
+import ca.dal.comparify.user.model.SignupRequest;
 import ca.dal.comparify.user.repository.UserRepository;
 import ca.dal.comparify.user.model.authentication.UserAuthenticationRequestModel;
 import ca.dal.comparify.user.model.authentication.UserAuthenticationResponseModel;
@@ -13,6 +14,9 @@ public class UserService {
 
     @Autowired
     private UserAuthenticationService userAuthenticationService;
+
+    @Autowired
+    private UserRegistrationService userRegistrationService;
 
     @Autowired
     private UserRepository userRepository;
@@ -41,5 +45,10 @@ public class UserService {
      */
     public boolean createUserAuthentication(String userIdentifier, String secret){
         return userAuthenticationService.createUserAuthentication(userIdentifier, secret);
+    }
+
+    public boolean register(SignupRequest signupRequest) {
+        return userRegistrationService.register(signupRequest);
+
     }
 }

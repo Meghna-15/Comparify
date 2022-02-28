@@ -118,7 +118,7 @@ public class MongoRepository {
         try {
             result = collection.insertOne(object);
         } catch (MongoException ex){
-            ex.printStackTrace();
+            return false;
         }
 
         if(result == null){
