@@ -1,7 +1,7 @@
 stages:
   - test
   - build
-  - code_quality
+  - code-quality
   - deploy-staging
   - deploy-production
 
@@ -81,7 +81,7 @@ Build Client:
 # -------------------------- Code Quality on Development -------------------------- #
 
 Code Quality for Development:
-  stage: code_quality
+  stage: code-quality
   tags:
     - ugrad
   variables:
@@ -99,7 +99,7 @@ Code Quality for Development:
 # -------------------------- Code Quality on Staging -------------------------- #
 
 Code Quality for Staging:
-  stage: code_quality
+  stage: code-quality
   tags:
     - ugrad
   variables:
@@ -116,7 +116,7 @@ Code Quality for Staging:
 # -------------------------- Code Quality on Production -------------------------- #
 
 Code Quality for Production:
-  stage: code_quality
+  stage: code-quality
   tags:
     - ugrad
   variables:
