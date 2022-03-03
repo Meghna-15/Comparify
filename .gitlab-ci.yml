@@ -77,20 +77,7 @@ build_client:
     - cd client
     - npm install
     - npm run build
-
-
-# -------------------------- GitLab in-build Code Quality -------------------------- #
-
-include:
-  - template: Code-Quality.gitlab-ci.yml
-
-code_quality:
-  stage: test
-  script:
-    - cd server
-  artifacts:
-    paths: [gl-code-quality-report.json]
-
+    
 # -------------------------- Code Quality on Development -------------------------- #
 
 code_quality_for_dev_by_designite:
