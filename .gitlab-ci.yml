@@ -86,6 +86,8 @@ include:
 
 code_quality:
   stage: code-quality
+  script:
+    - cd server
   artifacts:
     paths: [gl-code-quality-report.json]
 
