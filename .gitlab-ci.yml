@@ -80,10 +80,10 @@ Build Client:
 
 # -------------------------- Code Quality on Development -------------------------- #
 
-code_quality:
+Code Quality:
   stage: code_quality
   tags:
-    - dalfcs_docker_autoscale
+    - ugrad
   variables:
     UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization: Token $QSCORED_API_KEY_HARSH" -H "repository-link: $CI_PROJECT_URL"+ -H 
         "username:$QSCORED_USERNAME_HARSH" -H "Content-Type: multipart/form-data" --url https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_STAGING -F "file=$DESIGNITE_XML_OUTPUT"
