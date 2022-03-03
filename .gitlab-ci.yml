@@ -90,8 +90,8 @@ Code Quality:
     DOWNLOAD_DESINITE_URL: "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"'
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
-    - echo $CI_PROJECT_PATH
-    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "https://git.cs.dal.ca/"
+    - echo $CI_PROJECT_NAMESPACE
+    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_ID/$CI_PROJECT_NAME -pat $PAT -host "https://git.cs.dal.ca/"
     - eval "$UPLOAD_QUALITY_REPORT"
 
 # -------------------------- Deploy on Staging -------------------------- #
