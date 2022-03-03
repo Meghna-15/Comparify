@@ -85,7 +85,7 @@ include:
   - template: Code-Quality.gitlab-ci.yml
 
 code_quality:
-  stage: code-quality
+  stage: test
   script:
     - cd server
   artifacts:
