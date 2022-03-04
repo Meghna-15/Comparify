@@ -3,6 +3,9 @@ package ca.dal.comparify.framework.exception;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Harsh Shah
+ */
 public class MissingRequiredFieldException extends ApplicationRuntimeException {
 
     private List<String> fields;

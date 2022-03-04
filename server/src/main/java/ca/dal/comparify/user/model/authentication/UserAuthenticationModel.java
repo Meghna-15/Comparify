@@ -12,6 +12,9 @@ import org.springframework.security.core.GrantedAuthority;
 import java.time.LocalDate;
 import java.util.Collection;
 
+/**
+ * @author Harsh Shah
+ */
 public class UserAuthenticationModel {
 
     public static final String USER_IDENTIFIER = "user_identifier";

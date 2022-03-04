@@ -14,10 +14,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author Harsh Shah
+ */
 @Configuration
 @Service
 public class MongoConfig {
 
+    /**
+     * @param connectionString
+     * @return
+     *
+     * @author Harsh Shah
+     */
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     public MongoClient mongoClient(@Value("${spring.data.mongodb.uri}") String connectionString) {

@@ -4,6 +4,9 @@ import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @author Harsh Shah
+ */
 public interface AuthenticationProviders {
 
     public final String AUTHENTICATE_TOKEN_PREFIX = "Bearer";

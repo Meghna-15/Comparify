@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Harsh Shah
+ */
 public class UserAuthenticationRequestModel implements Serializable {
 
     private static final String USER_IDENTIFIER = "user_identifier";

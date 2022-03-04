@@ -1,5 +1,8 @@
 package ca.dal.comparify.user.enumeration;
 
+/**
+ * @author Harsh Shah
+ */
 public enum UserErrorCode {
 
     E2000(2000), E2001(2001), E2002(2002), E2003(2003), E2004(2004);

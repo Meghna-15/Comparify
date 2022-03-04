@@ -7,6 +7,9 @@ import ca.dal.comparify.user.model.authentication.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Harsh Shah
+ */
 @Service
 public class UserService {
 
@@ -20,6 +23,8 @@ public class UserService {
     /**
      * @param authenticationRequestModel
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserAuthenticationResponseModel authenticate(UserAuthenticationRequestModel authenticationRequestModel) {
         return userAuthenticationService.authenticate(authenticationRequestModel);
@@ -28,6 +33,8 @@ public class UserService {
     /**
      * @param userIdentifier
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserPrincipal fetchUser(String userIdentifier) {
         return userAuthenticationService.fetchUser(userIdentifier);
@@ -38,6 +45,8 @@ public class UserService {
      * @param userIdentifier
      * @param secret
      * @return
+     *
+     * @author Harsh Shah
      */
     public boolean createUserAuthentication(String userIdentifier, String secret){
         return userAuthenticationService.createUserAuthentication(userIdentifier, secret);

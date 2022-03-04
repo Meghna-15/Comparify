@@ -18,6 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * @author Harsh Shah
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,6 +29,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private TokenService tokenService;
 
 
+    /**
+     * @param http
+     * @throws Exception
+     *
+     * @author Harsh Shah
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -49,6 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    /**
+     * @return
+     * @throws Exception
+     *
+     * @author Harsh Shah
+     */
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

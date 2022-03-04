@@ -21,6 +21,9 @@ import java.util.List;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+/**
+ * @author Harsh Shah
+ */
 @Service
 public class MongoRepository {
 
@@ -31,6 +34,12 @@ public class MongoRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * @param mongoClient
+     * @param databaseName
+     *
+     * @author Harsh Shah
+     */
     @Autowired
     protected MongoRepository(MongoClient mongoClient, @Value("${spring.data.mongodb.database}") String databaseName){
        this.database = mongoClient.getDatabase(databaseName);
@@ -44,6 +53,8 @@ public class MongoRepository {
     /**
      * @param collectionName
      * @return
+     *
+     * @author Harsh Shah
      */
     private MongoCollection<Document> getCollection(String collectionName){
         return this.database.getCollection(collectionName);
@@ -54,6 +65,8 @@ public class MongoRepository {
      * @param classOf
      * @param <T>
      * @return
+     *
+     * @author Harsh Shah
      */
     private <T> MongoCollection<T> getCollection(String collectionName, Class<T> classOf){
         return this.database.getCollection(collectionName, classOf).withCodecRegistry(this.pojoCodecRegistry);
@@ -66,6 +79,8 @@ public class MongoRepository {
      * @param classOf
      * @param <T>
      * @return
+     *
+     * @author Harsh Shah
      */
     public <T> List<T> find(String collectionName, Bson query, Class<T> classOf){
         MongoCollection<T> collection = getCollection(collectionName, classOf);
@@ -91,6 +106,8 @@ public class MongoRepository {
      * @param classOf
      * @param <T>
      * @return
+     *
+     * @author Harsh Shah
      */
     public <T> T findOne(String collectionName, Bson query, Class<T> classOf){
         MongoCollection<T> collection = getCollection(collectionName, classOf);
@@ -110,6 +127,8 @@ public class MongoRepository {
      * @param classOf
      * @param <T>
      * @return
+     *
+     * @author Harsh Shah
      */
     public <T> boolean insert(String collectionName, T object, Class<T> classOf) {
         MongoCollection<T> collection = getCollection(collectionName, classOf);
@@ -131,6 +150,8 @@ public class MongoRepository {
     /**
      * @param collectionName
      * @return
+     *
+     * @author Harsh Shah
      */
     public long count(String collectionName, Bson query) {
         MongoCollection<Document>  collection = getCollection(collectionName);

@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+/**
+ * @author Harsh Shah
+ */
 @Service
 public class UserAuthenticationService {
 
@@ -38,6 +41,8 @@ public class UserAuthenticationService {
     /**
      * @param userIdentifier
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserPrincipal fetchUser(String userIdentifier) {
 
@@ -54,6 +59,8 @@ public class UserAuthenticationService {
     /**
      * @param requestModel
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserAuthenticationResponseModel authenticate(UserAuthenticationRequestModel requestModel) {
 
@@ -82,6 +89,8 @@ public class UserAuthenticationService {
      * @param userIdentifier
      * @param secret
      * @return
+     *
+     * @author Harsh Shah
      */
     public boolean createUserAuthentication(String userIdentifier, String secret) {
 
@@ -101,6 +110,12 @@ public class UserAuthenticationService {
 
     }
 
+    /**
+     * @param userIdentifier
+     * @return
+     *
+     * @author Harsh Shah
+     */
     private boolean isUserExists(String userIdentifier){
         return userAuthenticationRepository.isUserExists(userIdentifier);
     }

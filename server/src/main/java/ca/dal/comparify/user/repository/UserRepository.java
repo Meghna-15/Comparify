@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import static com.mongodb.client.model.Filters.eq;
 
+/**
+ * @author Harsh Shah
+ */
 @Service
 public class UserRepository {
 

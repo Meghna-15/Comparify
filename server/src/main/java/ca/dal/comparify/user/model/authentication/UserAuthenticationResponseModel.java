@@ -2,6 +2,9 @@ package ca.dal.comparify.user.model.authentication;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * @author Harsh Shah
+ */
 public class UserAuthenticationResponseModel {
 
     private String token;

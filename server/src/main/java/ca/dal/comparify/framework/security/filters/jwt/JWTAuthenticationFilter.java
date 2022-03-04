@@ -10,11 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class
-JWTAuthenticationFilter extends OncePerRequestFilter {
+/**
+ * @author Harsh Shah
+ */
+public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private AuthenticationProviders authenticationProviders;
 
+    /**
+     * @param request a
+     * @param response
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     *
+     * @author Harsh Shah
+     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -26,6 +37,11 @@ JWTAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * @param authenticationProviders
+     *
+     * @author Harsh Shah
+     */
     public void setAuthenticationProviders(AuthenticationProviders authenticationProviders) {
         this.authenticationProviders = authenticationProviders;
     }
