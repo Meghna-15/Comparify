@@ -96,8 +96,6 @@ public class MongoRepository {
     public <T> T findOne(String collectionName, Bson query, Class<T> classOf) {
         MongoCollection<T> collection = getCollection(collectionName, classOf);
 
-        T output = null;
-
         if (collection == null) {
             return null;
         }
@@ -124,7 +122,7 @@ public class MongoRepository {
         try {
             result = collection.insertOne(object);
         } catch (MongoException ex) {
-            return false;
+            result = null;
         }
 
         if (result == null) {
