@@ -1,7 +1,7 @@
 package ca.dal.comparify.security;
 
 import ca.dal.comparify.framework.security.filters.jwt.AuthenticationProviders;
-import ca.dal.comparify.user.model.iam.authentication.UserPrincipal;
+import ca.dal.comparify.user.model.authentication.UserPrincipal;
 import ca.dal.comparify.utils.DateUtils;
 import ca.dal.comparify.utils.StringUtils;
 import com.auth0.jwt.JWT;
