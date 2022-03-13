@@ -35,7 +35,7 @@ build_server_for_dev:
        - server/target/*.jar
   except:
     - main
-    - tag
+    - tags
 
 # -------------------------- Build Server for Staging -------------------------- #
 build_server_for_staging:
@@ -65,7 +65,7 @@ build_server_for_prod:
     paths:
        - server/target/*.jar
   only:
-    - tag
+    - tags
 
 # -------------------------- Build Client -------------------------- #
 build_client:
@@ -78,34 +78,42 @@ build_client:
     - npm install
     - npm run build
     
-# -------------------------- Code Quality on Development -------------------------- #
+# -------------------------- Code Quality for Development by Designite -------------------------- #
 
 code_quality_for_dev_by_designite:
   stage: code-quality
   tags:
     - ugrad
   variables:
-    UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization: Token $QSCORED_API_KEY_HARSH" -H "repository-link:$CI_PROJECT_URL" -H 
-        "username:$QSCORED_USERNAME_HARSH" -H "Content-Type:multipart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_DEVELOPMENT" -F "file=$DESIGNITE_XML_OUTPUT"
-    DOWNLOAD_DESINITE_URL: "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"'
+    UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization:Token $QSCORED_API_KEY_HARSH" 
+        -H "repository-link:$CI_PROJECT_URL" 
+        -H "username:$QSCORED_USERNAME_HARSH" 
+        -H "Content-Type:multipart/form-data" 
+        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_DEVELOPMENT" 
+        -F "file=$DESIGNITE_XML_OUTPUT"'
+    DOWNLOAD_DESINITE_URL: "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
     - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_ID/$CI_PROJECT_NAME -pat $PAT -host "https://git.cs.dal.ca/"
     - eval "$UPLOAD_QUALITY_REPORT"
   except:
     - main
-    - tag
+    - tags
 
-# -------------------------- Code Quality on Staging -------------------------- #
+# -------------------------- Code Quality for Staging by Designite -------------------------- #
 
 code_quality_for_staging_by_designite:
   stage: code-quality
   tags:
     - ugrad
   variables:
-    UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization: Token $QSCORED_API_KEY_HARSH" -H "repository-link:$CI_PROJECT_URL" -H 
-        "username:$QSCORED_USERNAME_HARSH" -H "Content-Type:multipart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_STAGING" -F "file=$DESIGNITE_XML_OUTPUT"
-    DOWNLOAD_DESINITE_URL: "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"'
+    UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization:Token $QSCORED_API_KEY_HARSH" 
+        -H "repository-link:$CI_PROJECT_URL" 
+        -H "username:$QSCORED_USERNAME_HARSH" 
+        -H "Content-Type:multipart/form-data" 
+        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_STAGING" 
+        -F "file=$DESIGNITE_XML_OUTPUT"'
+    DOWNLOAD_DESINITE_URL: "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
     - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_ID/$CI_PROJECT_NAME -pat $PAT -host "https://git.cs.dal.ca/"
@@ -114,22 +122,26 @@ code_quality_for_staging_by_designite:
     - main
 
 
-# -------------------------- Code Quality on Production -------------------------- #
+# -------------------------- Code Quality for Production by Designite -------------------------- #
 
 code_quality_for_prod_by_designite:
   stage: code-quality
   tags:
     - ugrad
   variables:
-    UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization: Token $QSCORED_API_KEY_HARSH" -H "repository-link:$CI_PROJECT_URL" -H 
-        "username:$QSCORED_USERNAME_HARSH" -H "Content-Type:multipart/form-data" --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_PROD" -F "file=$DESIGNITE_XML_OUTPUT"
-    DOWNLOAD_DESINITE_URL: "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"'
+    UPLOAD_QUALITY_REPORT: 'curl -X PUT -H "Authorization:Token $QSCORED_API_KEY_HARSH" 
+        -H "repository-link:$CI_PROJECT_URL" 
+        -H "username:$QSCORED_USERNAME_HARSH" 
+        -H "Content-Type:multipart/form-data" 
+        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_PROD" 
+        -F "file=$DESIGNITE_XML_OUTPUT"'
+    DOWNLOAD_DESINITE_URL: "https://www.designite-tools.com/static/download/DJE/DesigniteJava.jar"
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
     - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_ID/$CI_PROJECT_NAME -pat $PAT -host "https://git.cs.dal.ca/"
     - eval "$UPLOAD_QUALITY_REPORT"
   only:
-    - tag
+    - tags
 
 
 # -------------------------- Code Quality by Sonar -------------------------- #
@@ -148,8 +160,6 @@ code_quality_by_sonar:
       junit:
         - server/target/surefire-reports/TEST-*.xml
         - server/target/failsafe-reports/TEST-*.xml
-  only:
-    - feature-code-quality
 
 # -------------------------- Deploy on Staging -------------------------- #
 deploy_staging_client:
@@ -202,7 +212,7 @@ deploy_prod_client:
     - cd client
     - dpl --provider=heroku --app=$PRODUCTION_CLIENT_HEROKU_APP_NAME --api-key=$HARSH_HEROKU_API_KEY --cleanup
   only:
-    - tag
+    - tags
 
 deploy_prod_server:
   stage: deploy-production
@@ -223,4 +233,4 @@ deploy_prod_server:
     - cd server
     - dpl --provider=heroku --app=$PRODUCTION_SERVER_HEROKU_APP_NAME --api-key=$HARSH_HEROKU_API_KEY --cleanup
   only:
-    - tag
+    - tags
