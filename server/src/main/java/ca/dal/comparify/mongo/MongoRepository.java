@@ -99,7 +99,7 @@ public class MongoRepository {
         T output = null;
 
         if (collection == null) {
-            return output;
+            return null;
         }
 
         return collection.find(query).first();
@@ -124,7 +124,7 @@ public class MongoRepository {
         try {
             result = collection.insertOne(object);
         } catch (MongoException ex) {
-            ex.printStackTrace();
+            return false;
         }
 
         if (result == null) {
