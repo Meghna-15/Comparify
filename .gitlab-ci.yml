@@ -148,8 +148,6 @@ code_quality_by_sonar:
       junit:
         - server/target/surefire-reports/TEST-*.xml
         - server/target/failsafe-reports/TEST-*.xml
-  only:
-    - feature-code-quality
 
 # -------------------------- Deploy on Staging -------------------------- #
 deploy_staging_client:
