@@ -55,7 +55,7 @@ public class MongoRepository {
     private <T> MongoCollection<T> getCollection(String collectionName, Class<T> classOf) {
         try {
             return this.database.getCollection(collectionName, classOf).withCodecRegistry(this.pojoCodecRegistry);
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -96,10 +96,8 @@ public class MongoRepository {
     public <T> T findOne(String collectionName, Bson query, Class<T> classOf) {
         MongoCollection<T> collection = getCollection(collectionName, classOf);
 
-        T output = null;
-
         if (collection == null) {
-            return output;
+            return null;
         }
 
         return collection.find(query).first();
@@ -138,15 +136,15 @@ public class MongoRepository {
         MongoCollection<T> collection = getCollection(collectionName, classOf);
 
         InsertOneResult result = null;
-
-        if(collection == null){
+        
+        if (collection == null) {
             return false;
         }
 
         try {
             result = collection.insertOne(object);
         } catch (MongoException ex) {
-            ex.printStackTrace();
+            result = null;
         }
 
         if (result == null) {
