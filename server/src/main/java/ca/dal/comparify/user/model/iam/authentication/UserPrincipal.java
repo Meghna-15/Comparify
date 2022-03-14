@@ -1,5 +1,6 @@
-package ca.dal.comparify.user.model.authentication;
+package ca.dal.comparify.user.model.iam.authentication;
 
+import ca.dal.comparify.user.model.iam.UserIAMModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,7 +15,7 @@ public class UserPrincipal implements UserDetails {
 
   private String secret;
 
-  private Collection<? extends GrantedAuthority> authorities;
+  private Collection<GrantedAuthority> authorities;
 
   private boolean isLocked;
 
@@ -26,7 +27,7 @@ public class UserPrincipal implements UserDetails {
 
 
   public UserPrincipal(String id, String userIdentifier, String secret,
-                       Collection<? extends GrantedAuthority> authorities,
+                       Collection<GrantedAuthority> authorities,
                        boolean isLocked, boolean isActive, boolean isAccountExpired,
                        boolean isSecretExpired) {
     this.id = id;
@@ -39,16 +40,18 @@ public class UserPrincipal implements UserDetails {
     this.isSecretExpired = isSecretExpired;
   }
 
-  public static UserPrincipal create(UserAuthenticationModel model) {
+  public static UserPrincipal create(UserIAMModel model) {
+
+    UserAuthenticationModel authentication = model.getAuthentication();
 
     return new UserPrincipal(model.getId(),
             model.getUserIdentifier(),
-            model.getSecret(),
-            model.getAuthorities(),
-            model.isLocked(),
-            model.isActive(),
-            model.isAccountExpired(),
-            model.isSecretExpired());
+            authentication.getSecret(),
+            authentication.getAuthorities(),
+            authentication.isLocked(),
+            authentication.isActive(),
+            authentication.isAccountExpired(),
+            authentication.isSecretExpired());
   }
 
   public String getId() {

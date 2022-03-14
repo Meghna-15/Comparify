@@ -1,9 +1,9 @@
 package ca.dal.comparify.user.service;
 
-import ca.dal.comparify.user.repository.UserRepository;
-import ca.dal.comparify.user.model.authentication.UserAuthenticationRequestModel;
-import ca.dal.comparify.user.model.authentication.UserAuthenticationResponseModel;
-import ca.dal.comparify.user.model.authentication.UserPrincipal;
+import ca.dal.comparify.user.model.iam.UserIAMRequestModel;
+import ca.dal.comparify.user.model.iam.UserIAMResponseModel;
+import ca.dal.comparify.user.model.iam.authentication.UserPrincipal;
+import ca.dal.comparify.user.service.iam.UserIAMService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +12,14 @@ public class UserService {
 
 
     @Autowired
-    private UserAuthenticationService userAuthenticationService;
-
-    @Autowired
-    private UserRepository userRepository;
+    private UserIAMService userIAMService;
 
     /**
      * @param authenticationRequestModel
      * @return
      */
-    public UserAuthenticationResponseModel authenticate(UserAuthenticationRequestModel authenticationRequestModel) {
-        return userAuthenticationService.authenticate(authenticationRequestModel);
+    public UserIAMResponseModel authenticate(UserIAMRequestModel authenticationRequestModel) {
+        return userIAMService.authenticate(authenticationRequestModel);
     }
 
     /**
@@ -30,7 +27,7 @@ public class UserService {
      * @return
      */
     public UserPrincipal fetchUser(String userIdentifier) {
-        return userAuthenticationService.fetchUser(userIdentifier);
+        return userIAMService.fetchUser(userIdentifier);
     }
 
 
@@ -39,7 +36,7 @@ public class UserService {
      * @param secret
      * @return
      */
-    public boolean createUserAuthentication(String userIdentifier, String secret){
-        return userAuthenticationService.createUserAuthentication(userIdentifier, secret);
+    public boolean createUserIAMInfo(String userIdentifier, String secret){
+        return userIAMService.createUserIAMInfo(userIdentifier, secret);
     }
 }
