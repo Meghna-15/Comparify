@@ -23,7 +23,7 @@ class MailServiceTest {
     private MailService mailService;
 
     @Test
-    public void testMail() {
+    void testMail() {
 
         HashModel model = new HashModel();
         model.put("name", "Harsh Shah");
