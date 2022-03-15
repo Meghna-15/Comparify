@@ -12,4 +12,11 @@ httpClient.interceptors.request.use(async function (config) {
     return config;
 });
 
+httpClient.interceptors.response.use(async function (config) {
+    return config;
+    },
+    (error) => {
+        return Promise.reject(error.response.data)
+});
+
 export default httpClient;
