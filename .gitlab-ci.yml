@@ -90,7 +90,7 @@ code_quality_for_dev_by_designite:
         -H "repository-link:$CI_PROJECT_URL" 
         -H "username:$QSCORED_USERNAME_HARSH" 
         -H "Content-Type:multipart/form-data" 
-        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_DEVELOPMENT" 
+        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_PIPELINE_IID&project_name=$PROJECT_NAME_DEVELOPMENT" 
         -F "file=$DESIGNITE_XML_OUTPUT"'
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
@@ -112,7 +112,7 @@ code_quality_for_staging_by_designite:
         -H "repository-link:$CI_PROJECT_URL" 
         -H "username:$QSCORED_USERNAME_HARSH" 
         -H "Content-Type:multipart/form-data" 
-        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_STAGING" 
+        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_PIPELINE_IID&project_name=$PROJECT_NAME_STAGING" 
         -F "file=$DESIGNITE_XML_OUTPUT"'
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
@@ -134,7 +134,7 @@ code_quality_for_prod_by_designite:
         -H "repository-link:$CI_PROJECT_URL" 
         -H "username:$QSCORED_USERNAME_HARSH" 
         -H "Content-Type:multipart/form-data" 
-        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_CONCURRENT_ID&project_name=$PROJECT_NAME_PROD" 
+        --url "https://qscored.com/api/upload/file.xml?is_open_access=off&version=$CI_PIPELINE_IID&project_name=$PROJECT_NAME_PROD" 
         -F "file=$DESIGNITE_XML_OUTPUT"'
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
