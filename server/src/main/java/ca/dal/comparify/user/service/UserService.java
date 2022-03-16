@@ -17,6 +17,8 @@ public class UserService {
     /**
      * @param authenticationRequestModel
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserIAMResponseModel authenticate(UserIAMRequestModel authenticationRequestModel) {
         return userIAMService.authenticate(authenticationRequestModel);
@@ -25,6 +27,8 @@ public class UserService {
     /**
      * @param userIdentifier
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserPrincipal fetchUser(String userIdentifier) {
         return userIAMService.fetchUser(userIdentifier);
@@ -35,6 +39,8 @@ public class UserService {
      * @param userIdentifier
      * @param secret
      * @return
+     *
+     * @author Harsh Shah
      */
     public boolean createUserIAMInfo(String userIdentifier, String secret){
         return userIAMService.createUserIAMInfo(userIdentifier, secret);

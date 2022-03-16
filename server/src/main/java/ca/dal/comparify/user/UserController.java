@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * @author Harsh Shah
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -22,6 +25,8 @@ public class UserController {
     /**
      * @param userIAMRequestModel
      * @return
+     *
+     * @author Harsh Shah
      */
     @PostMapping("/authentication")
     public UserIAMResponseModel authentication(@RequestBody UserIAMRequestModel userIAMRequestModel){
@@ -36,6 +41,8 @@ public class UserController {
     /**
      * @param userIAMRequestModel
      * @return
+     *
+     * @author Harsh Shah
      */
     @PostMapping("/register")
     public ResponseEntity<Map<String, Boolean>> register(@RequestBody UserIAMRequestModel userIAMRequestModel){

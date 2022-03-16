@@ -44,6 +44,8 @@ public class UserIAMService {
     /**
      * @param userIdentifier
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserPrincipal fetchUser(String userIdentifier) {
 
@@ -60,6 +62,8 @@ public class UserIAMService {
     /**
      * @param requestModel
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserIAMResponseModel authenticate(UserIAMRequestModel requestModel) {
 
@@ -73,6 +77,9 @@ public class UserIAMService {
         } catch (DisabledException e) {
             throw new UserAuthenticationException(e.getMessage(), 401, UserErrorCode.E2000.getCode());
         } catch (BadCredentialsException e) {
+
+            invalidAuthenticationAttempt(requestModel.getUserIdentifier());
+
             throw new UserAuthenticationException(e.getMessage(), 401, UserErrorCode.E2001.getCode());
         } catch (LockedException e) {
             throw new UserAuthenticationException(e.getMessage(), 401, UserErrorCode.E2002.getCode());
@@ -80,14 +87,35 @@ public class UserIAMService {
             throw new UserAuthenticationException(e.getMessage(), 401, UserErrorCode.E2003.getCode());
         }
 
+        validAuthenticationAttempt(requestModel.getUserIdentifier());
 
         return new UserIAMResponseModel(tokenService.generateToken(auth));
     }
 
     /**
      * @param userIdentifier
+     *
+     * @author Harsh Shah
+     */
+    private void validAuthenticationAttempt(String userIdentifier) {
+        userIAMRepository.validAuthenticationAttempt(userIdentifier);
+    }
+
+    /**
+     * @param userIdentifier
+     *
+     * @author Harsh Shah
+     */
+    private void invalidAuthenticationAttempt(String userIdentifier) {
+        userIAMRepository.invalidAuthenticationAttempt(userIdentifier);
+    }
+
+    /**
+     * @param userIdentifier
      * @param secret
      * @return
+     *
+     * @author Harsh Shah
      */
     public boolean createUserIAMInfo(String userIdentifier, String secret) {
 
@@ -110,6 +138,12 @@ public class UserIAMService {
 
     }
 
+    /**
+     * @param userIdentifier
+     * @return
+     *
+     * @author Harsh Shah
+     */
     private boolean isUserExists(String userIdentifier) {
         return userIAMRepository.isUserExists(userIdentifier);
     }

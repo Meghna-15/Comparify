@@ -33,6 +33,8 @@ public class TokenService implements AuthenticationProviders {
     /**
      * @param authentication
      * @return
+     *
+     * @author Harsh Shah
      */
     public String generateToken(Authentication authentication) {
 
@@ -50,6 +52,8 @@ public class TokenService implements AuthenticationProviders {
     /**
      * @param request
      * @return
+     *
+     * @author Harsh Shah
      */
     @Override
     public Authentication getAuthentication(HttpServletRequest request) {
@@ -66,6 +70,8 @@ public class TokenService implements AuthenticationProviders {
     /**
      * @param token
      * @return
+     *
+     * @author Harsh Shah
      */
     public String getAuthenticationUser(String token) {
         try {
@@ -85,6 +91,8 @@ public class TokenService implements AuthenticationProviders {
     /**
      * @param secret
      * @return
+     *
+     * @author Harsh Shah
      */
     private Algorithm getAlgorithm(String secret){
         return Algorithm.HMAC256(secret);

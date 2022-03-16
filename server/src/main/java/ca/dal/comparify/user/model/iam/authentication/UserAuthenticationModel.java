@@ -97,7 +97,7 @@ public class UserAuthenticationModel {
 
     @BsonIgnore()
     public boolean isLocked() {
-        return numberOfIncorrectAttempts > 3;
+        return numberOfIncorrectAttempts > 2;
     }
 
     @BsonIgnore()
