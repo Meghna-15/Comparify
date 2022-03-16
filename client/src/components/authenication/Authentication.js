@@ -1,6 +1,6 @@
 import { Button, TextField, Box, Grid } from "@material-ui/core";
 import { useFormik } from "formik";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authenication } from "../../store/thunk/userThunkCreators";
 
@@ -44,17 +44,15 @@ const Authentication = (props) => {
         }
     });
 
-    const resetForm = useCallback(() => {
-        formik.resetForm(props.values)
-    }, [props.values])
+    const { resetForm } = formik;
 
     useEffect(() => {
 
         if(!authenication.token){
-            resetForm()
+            resetForm(props.values)
         }
 
-    }, [authentication, resetForm])
+    }, [authentication, resetForm, props.values])
 
     return (
         <Grid container className={classes.root}>
