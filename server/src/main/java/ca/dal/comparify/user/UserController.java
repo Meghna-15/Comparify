@@ -1,5 +1,6 @@
 package ca.dal.comparify.user;
 
+import ca.dal.comparify.framework.exception.InvalidFormatException;
 import ca.dal.comparify.framework.exception.MissingRequiredFieldException;
 import ca.dal.comparify.user.model.SignupRequest;
 import ca.dal.comparify.user.model.authentication.UserAuthenticationRequestModel;
@@ -42,12 +43,19 @@ public class UserController {
      */
     @PostMapping("/register")
     public ResponseEntity<Map<String, Boolean>> register(@RequestBody SignupRequest signupRequest){
-
-
         // validate - optional
-
+        System.out.println("Working");
         if(!signupRequest.validate()){
             throw new MissingRequiredFieldException(400, 1000, new ArrayList<>());
+        }
+
+        if(!signupRequest.validateEmail())
+        {
+            throw new InvalidFormatException("Invalid Format",1000,2005);
+        }
+
+        if(!signupRequest.HasValidPasswordPattern(signupRequest.getPassword())){
+            throw new InvalidFormatException("Invalid Format",1000,2005);
         }
 
         boolean status = userService.register(signupRequest);
