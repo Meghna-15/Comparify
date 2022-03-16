@@ -94,7 +94,7 @@ code_quality_for_dev_by_designite:
         -F "file=$DESIGNITE_XML_OUTPUT"'
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
-    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_ID/$CI_PROJECT_NAME -pat $PAT -host "https://git.cs.dal.ca/"
+    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca"
     - eval "$UPLOAD_QUALITY_REPORT"
   except:
     - main
@@ -116,7 +116,7 @@ code_quality_for_staging_by_designite:
         -F "file=$DESIGNITE_XML_OUTPUT"'
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
-    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_ID/$CI_PROJECT_NAME -pat $PAT -host "https://git.cs.dal.ca/"
+    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca"
     - eval "$UPLOAD_QUALITY_REPORT"
   only:
     - main
@@ -138,7 +138,7 @@ code_quality_for_prod_by_designite:
         -F "file=$DESIGNITE_XML_OUTPUT"'
   script:
     - wget -O DesigniteJava.jar $DOWNLOAD_DESIGNITE_URL
-    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_ID/$CI_PROJECT_NAME -pat $PAT -host "https://git.cs.dal.ca/"
+    - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca"
     - eval "$UPLOAD_QUALITY_REPORT"
   only:
     - tags
