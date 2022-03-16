@@ -30,7 +30,7 @@ const Authentication = (props) => {
 
     const formik = useFormik({
         initialValues: props.values,
-        onSubmit: (values, actions) => {
+        onSubmit: (values) => {
 
             const { userIdentifier, secret } = values;
 
