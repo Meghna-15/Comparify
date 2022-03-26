@@ -24,17 +24,21 @@ public class UserService {
     /**
      * @param authenticationRequestModel
      * @return
+     *
+     * @author Harsh Shah
      */
-    public UserAuthenticationResponseModel authenticate(UserAuthenticationRequestModel authenticationRequestModel) {
-        return userAuthenticationService.authenticate(authenticationRequestModel);
+    public UserIAMResponseModel authenticate(UserIAMRequestModel authenticationRequestModel) {
+        return userIAMService.authenticate(authenticationRequestModel);
     }
 
     /**
      * @param userIdentifier
      * @return
+     *
+     * @author Harsh Shah
      */
     public UserPrincipal fetchUser(String userIdentifier) {
-        return userAuthenticationService.fetchUser(userIdentifier);
+        return userIAMService.fetchUser(userIdentifier);
     }
 
 
@@ -42,9 +46,11 @@ public class UserService {
      * @param userIdentifier
      * @param secret
      * @return
+     *
+     * @author Harsh Shah
      */
-    public boolean createUserAuthentication(String userIdentifier, String secret){
-        return userAuthenticationService.createUserAuthentication(userIdentifier, secret);
+    public int createUserIAMInfo(String userIdentifier, String secret){
+        return userIAMService.createUserIAMInfo(userIdentifier, secret);
     }
 
     public boolean register(SignupRequest signupRequest) {

@@ -1,26 +1,32 @@
 package ca.dal.comparify.mongo;
 
+import ca.dal.comparify.model.HashModel;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Updates.combine;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+
+/**
+ * @author Harsh Shah
+ */
 @Service
 public class MongoRepository {
 
@@ -30,10 +36,10 @@ public class MongoRepository {
 
     @Autowired
     protected MongoRepository(MongoClient mongoClient,
-                              @Value("${spring.data.mongodb.database}") String databaseName){
-       this.database = mongoClient.getDatabase(databaseName);
+                              @Value("${spring.data.mongodb.database}") String databaseName) {
+        this.database = mongoClient.getDatabase(databaseName);
 
-       this.pojoCodecRegistry =
+        this.pojoCodecRegistry =
                 fromRegistries(
                         MongoClientSettings.getDefaultCodecRegistry(),
                         fromProviders(PojoCodecProvider.builder().automatic(true).build()));
@@ -42,9 +48,14 @@ public class MongoRepository {
     /**
      * @param collectionName
      * @return
+     * @author Harsh Shah
      */
-    private MongoCollection<Document> getCollection(String collectionName){
+    private MongoCollection<Document> getCollection(String collectionName) {
+        try {
         return this.database.getCollection(collectionName);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -52,9 +63,14 @@ public class MongoRepository {
      * @param classOf
      * @param <T>
      * @return
+     * @author Harsh Shah
      */
-    private <T> MongoCollection<T> getCollection(String collectionName, Class<T> classOf){
-        return this.database.getCollection(collectionName, classOf).withCodecRegistry(this.pojoCodecRegistry);
+    private <T> MongoCollection<T> getCollection(String collectionName, Class<T> classOf) {
+        try {
+            return this.database.getCollection(collectionName, classOf).withCodecRegistry(this.pojoCodecRegistry);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 
@@ -64,20 +80,21 @@ public class MongoRepository {
      * @param classOf
      * @param <T>
      * @return
+     * @author Harsh Shah
      */
-    public <T> List<T> find(String collectionName, Bson query, Class<T> classOf){
+    public <T> List<T> find(String collectionName, Bson query, Class<T> classOf) {
         MongoCollection<T> collection = getCollection(collectionName, classOf);
 
-        List<T> output = new ArrayList<T>();
+        List<T> output = new ArrayList<>();
 
-        if(collection == null){
+        if (collection == null) {
             return output;
         }
 
         collection.find(query)
                 .allowDiskUse(true)
                 .iterator()
-                .forEachRemaining(result -> output.add(result));
+                .forEachRemaining(output::add);
 
 
         return output;
@@ -89,17 +106,39 @@ public class MongoRepository {
      * @param classOf
      * @param <T>
      * @return
+     * @author Harsh Shah
      */
-    public <T> T findOne(String collectionName, Bson query, Class<T> classOf){
+    public <T> T findOne(String collectionName, Bson query, Class<T> classOf) {
         MongoCollection<T> collection = getCollection(collectionName, classOf);
 
-        T output = null;
-
-        if(collection == null){
-            return output;
+        if (collection == null) {
+            return null;
         }
 
         return collection.find(query).first();
+    }
+
+    /**
+     * @param collectionName
+     * @param query
+     * @param projection
+     * @param classOf
+     * @param <T>
+     * @return
+     * @author Harsh Shah
+     */
+    public <T> T findOne(String collectionName, Bson query, Bson projection, Class<T> classOf) {
+        MongoCollection<T> collection = getCollection(collectionName, classOf);
+
+        if (collection == null) {
+            return null;
+        }
+
+        if (projection == null) {
+            projection = new Document();
+        }
+
+        return collection.find(query).projection(projection).first();
     }
 
     /**
@@ -108,30 +147,70 @@ public class MongoRepository {
      * @param classOf
      * @param <T>
      * @return
+     * @author Harsh Shah
      */
-    public <T> boolean insert(String collectionName, T object, Class<T> classOf) {
+    public <T> int insertOne(String collectionName, T object, Class<T> classOf) {
         MongoCollection<T> collection = getCollection(collectionName, classOf);
 
         InsertOneResult result = null;
+
+        if (null == collection) {
+            return -1;
+        }
+
         try {
             result = collection.insertOne(object);
         } catch (MongoException ex){
             return false;
         }
 
-        if(result == null){
+        return collection.countDocuments(query);
+    }
+
+
+    /**
+     * @param <T>
+     * @param collectionName
+     * @param query
+     * @return
+     * @author Harsh Shah
+     */
+    public boolean updateOne(String collectionName, Bson query, HashModel update) {
+        MongoCollection<Document> collection = getCollection(collectionName);
+
+        if (collection == null) {
             return false;
         }
+
+        Document params = new Document("$set", new Document(update));
+
+        UpdateResult result = collection.updateOne(query, params);
 
         return result.wasAcknowledged();
     }
 
+
     /**
      * @param collectionName
+     * @param query
+     * @param values
      * @return
+     * @author Harsh Shah
      */
-    public long count(String collectionName, Bson query) {
-        MongoCollection<Document>  collection = getCollection(collectionName);
-        return collection.countDocuments(query);
+    public boolean updateOne(String collectionName, Bson query, Bson... values) {
+        MongoCollection<Document> collection = getCollection(collectionName);
+
+        if (collection == null) {
+            return false;
+        }
+
+        if (values.length == 0) {
+            return false;
+        }
+
+        UpdateResult result = collection.updateOne(query, combine(values));
+
+        return result.wasAcknowledged();
     }
+
 }

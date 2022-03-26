@@ -8,7 +8,6 @@ import ca.dal.comparify.user.model.authentication.UserAuthenticationResponseMode
 import ca.dal.comparify.user.service.UserService;
 import ca.dal.comparify.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * @author Harsh Shah
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -23,23 +25,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     /**
-     * @param authenticationRequestModel
+     * @param userIAMRequestModel
      * @return
+     * @author Harsh Shah
      */
     @PostMapping("/authentication")
-    public UserAuthenticationResponseModel authentication(@RequestBody UserAuthenticationRequestModel authenticationRequestModel){
+    public UserIAMResponseModel authentication(@RequestBody UserIAMRequestModel userIAMRequestModel) {
 
-        if(authenticationRequestModel.isEmpty()){
-            throw new MissingRequiredFieldException(400, 1000, authenticationRequestModel.getRequiredFields());
+        if (userIAMRequestModel.isEmpty()) {
+            throw new MissingRequiredFieldException(400, 1000, userIAMRequestModel.getRequiredFields());
         }
 
-        return userService.authenticate(authenticationRequestModel);
+        return userService.authenticate(userIAMRequestModel);
     }
 
     /**
      * @param signupRequest
      * @return
+     * @author Harsh Shah
      */
     @PostMapping("/register")
     public ResponseEntity<Map<String, Boolean>> register(@RequestBody SignupRequest signupRequest){
@@ -76,10 +83,23 @@ public class UserController {
         }
 
 
-        HttpStatus httpStatus = status ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+        return ResponseEntityUtils.returnStatus(status);
+    }
 
-        return ResponseEntity.status(httpStatus).body(Collections.singletonMap("status", status));
 
+    /**
+     * @param username
+     * @return
+     * @author Aman Singh Bhandari
+     */
+    @GetMapping("/details")
+    public UserDetailsModel getUserDetails(@RequestParam(name = "username") String username) {
+
+        if (username.isEmpty()) {
+            throw new MissingRequiredFieldException(400, 1000, UserDetailsModel.getRequiredFields());
+        }
+
+        return userDetailsService.fetchUser(username);
     }
 
 
