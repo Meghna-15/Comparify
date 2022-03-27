@@ -11,3 +11,14 @@ export const authenication = (credentials) => async (dispatch) => {
       localStorage.removeItem("auth-token")
     }
 };
+
+export const getDetails = (username) => async (dispatch) => {
+  try {
+    alert(username);
+
+    const { data } = await httpClient.get("/user/details?username=" + username);
+    alert('success');
+  } catch (error) {
+    alert('failed');
+  }
+};

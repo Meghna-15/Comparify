@@ -6,6 +6,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 
+import { getDetails } from "../../store/thunk/userThunkCreators";
+import { useDispatch } from "react-redux";
+
+
 
 const style = {
     root: {
@@ -65,9 +69,11 @@ const UserProfile = (props) => {
     const classes = useStyles(style);
     // const [task, setTask] = useState("");
     const [isEditMode, setEditMode] = React.useState(false);
+    const dispatch = useDispatch();
 
     function userEmail()
     {
+        dispatch(getDetails('12334'));
         return "amansbhandari@gmail.com";
     }
 
