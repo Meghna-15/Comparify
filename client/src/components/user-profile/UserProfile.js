@@ -74,17 +74,17 @@ const UserProfile = (props) => {
     function userEmail()
     {
         dispatch(getDetails('12334'));
-        return "amansbhandari@gmail.com";
+        return localStorage.getItem("email");
     }
 
     function userFirstName()
     {
-        return "Aman Singh";
+        return localStorage.getItem("firstName");
     }
 
     function userLastName()
     {
-        return "Bhandari";
+        return localStorage.getItem("lastName");
     }
 
     return(<>

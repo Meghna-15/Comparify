@@ -14,11 +14,11 @@ export const authenication = (credentials) => async (dispatch) => {
 
 export const getDetails = (username) => async (dispatch) => {
   try {
-    alert(username);
-
     const { data } = await httpClient.get("/user/details?username=" + username);
-    alert('success');
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("firstName", data.firstName);
+    localStorage.setItem("lastName", data.lastName);
   } catch (error) {
-    alert('failed');
+    alert(error);
   }
 };
