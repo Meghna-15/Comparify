@@ -9,6 +9,7 @@ import ca.dal.comparify.user.model.iam.UserIAMResponseModel;
 import ca.dal.comparify.user.service.UserDetailsService;
 import ca.dal.comparify.user.service.UserService;
 import ca.dal.comparify.utils.ResponseEntityUtils;
+import ca.dal.comparify.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
