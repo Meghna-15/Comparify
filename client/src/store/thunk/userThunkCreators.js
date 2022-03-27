@@ -11,3 +11,16 @@ export const authenication = (credentials) => async (dispatch) => {
       localStorage.removeItem("auth-token")
     }
 };
+
+
+export const signup = (credentials) => async (dispatch) => {
+  try {
+    const { data } = await httpClient.post("/user/register", credentials);
+  } catch (error) {
+  
+  
+  }
+};
+
+
+

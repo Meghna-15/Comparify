@@ -9,3 +9,4 @@ server/mvnw
 server/mvnw.cmd
 server/target/
 .vscode/
+client/.vscode/

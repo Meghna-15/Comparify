@@ -10,6 +10,7 @@ import ca.dal.comparify.user.service.UserDetailsService;
 import ca.dal.comparify.user.service.UserService;
 import ca.dal.comparify.utils.ResponseEntityUtils;
 import ca.dal.comparify.utils.StringUtils;
+import ca.dal.comparify.utils.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -67,19 +68,27 @@ public class UserController {
             throw new InvalidFormatException("Invalid Format",1000,2005);
         }
 
+        signupRequest.setId(UUIDUtils.generate());
+
+
+        UserIAMRequestModel userIAMRequestModel = new UserIAMRequestModel(signupRequest.getId(),
+            signupRequest.getUsername(),
+            signupRequest.getPassword());
+
+        signupRequest.setPassword(null);
         int status = userService.register(signupRequest);
 
+
+
         if(status == 0) {
-
-            UserIAMRequestModel userIAMRequestModel = new UserIAMRequestModel(signupRequest.getUsername(),
-                    signupRequest.getPassword());
-
 
             if (userIAMRequestModel.isEmpty()) {
                 throw new MissingRequiredFieldException(400, 1000, userIAMRequestModel.getRequiredFields());
             }
 
-            status = userService.createUserIAMInfo(userIAMRequestModel.getUserIdentifier(),
+            status = userService.createUserIAMInfo(
+                userIAMRequestModel.getId(),
+                userIAMRequestModel.getUserIdentifier(),
                 userIAMRequestModel.getUserSecret());
         }
 

@@ -1,18 +1,11 @@
 import { Box } from "@material-ui/core";
 import React, { useEffect } from "react";
-import { useNavigate  } from "react-router-dom";
-import Authentication from "../authenication/Authentication";
+import { Outlet, useNavigate  } from "react-router-dom";
 import useStyles from "../../hooks/use-styles";
 
-
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import Paper from '@mui/material/Paper';
-
-
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import logo from '../../assets/logo/logo-256.png';
 import { useSelector } from "react-redux";
@@ -67,9 +60,9 @@ const LandingPage = (props) => {
     const classes = useStyles(style);
     const authentication = useSelector((state) => state.authentication)
     const navigate = useNavigate();
-    const initialValues = {
-        userIdentifier: '', secret: ''
-    }
+    // const initialValues = {
+    //     userIdentifier: '', secret: ''
+    // }
 
     useEffect(() => {
         if (authentication.token) {
@@ -102,32 +95,9 @@ const LandingPage = (props) => {
                     </Grid>
                 </Grid>
             </Grid>  
-                
-            <Grid item xs={12} sm={7} md={6} component={Paper} elevation={6} square>
-                <Box className={classes.root}>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-                    </Typography>
 
-                    <Authentication values={initialValues}>
-                            
-                    </Authentication>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">
-                            Forgot password?
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link href="#" variant="body2">
-                            {"Don't have an account? Sign Up"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Box>
+            <Grid item xs={12} sm={7} md={6} component={Paper} elevation={6} square>
+                <Outlet />
             </Grid>
         </Grid>
         }

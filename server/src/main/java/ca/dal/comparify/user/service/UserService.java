@@ -46,8 +46,10 @@ public class UserService {
      *
      * @author Harsh Shah
      */
-    public int createUserIAMInfo(String userIdentifier, String secret){
-        return userIAMService.createUserIAMInfo(userIdentifier, secret);
+    public int createUserIAMInfo(
+        String userId,
+        String userIdentifier, String secret){
+        return userIAMService.createUserIAMInfo(userId, userIdentifier, secret);
     }
 
     public int register(SignupRequest signupRequest) {

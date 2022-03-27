@@ -2,12 +2,17 @@ package ca.dal.comparify.user.model;
 
 
 import ca.dal.comparify.utils.StringUtils;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignupRequest {
+
+  @BsonId
+  private String id;
 
   private String firstName;
 
@@ -175,6 +180,13 @@ public class SignupRequest {
         return true;
       }
 
+  public String getId() {
+    return id;
   }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+}
 
 
