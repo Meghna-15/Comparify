@@ -9,8 +9,6 @@ import Avatar from '@mui/material/Avatar';
 import { getDetails } from "../../store/thunk/userThunkCreators";
 import { useDispatch } from "react-redux";
 
-
-
 const style = {
     root: {
         display: 'flex',
@@ -100,7 +98,7 @@ const UserProfile = (props) => {
                     </div>
                     
                     <div style={style.field}>
-                        <label style= {style.label}>First name</label>
+                        <label style= {style.label}>First Name</label>
                         {showFirstName()}
                     </div>
                      
