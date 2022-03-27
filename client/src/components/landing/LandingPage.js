@@ -4,7 +4,7 @@ import { Outlet, useNavigate  } from "react-router-dom";
 import useStyles from "../../hooks/use-styles";
 
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';  
 import Paper from '@mui/material/Paper';
 
 import logo from '../../assets/logo/logo-256.png';

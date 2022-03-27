@@ -15,7 +15,7 @@ export const authenication = (credentials) => async (dispatch) => {
 
 export const signup = (credentials) => async (dispatch) => {
   try {
-    const { data } = await httpClient.post("/user/register", credentials);
+    await httpClient.post("/user/register", credentials);
   } catch (error) {
   
   
