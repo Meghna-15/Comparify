@@ -12,13 +12,26 @@ export const authenication = (credentials) => async (dispatch) => {
     }
 };
 
-export const getDetails = (username) => async (dispatch) => {
+export const getDetails = (username) =>  async (dispatch) => {
   try {
     const { data } = await httpClient.get("/user/details?username=" + username);
+    
     localStorage.setItem("email", data.email);
     localStorage.setItem("firstName", data.firstName);
     localStorage.setItem("lastName", data.lastName);
   } catch (error) {
-    alert(error);
+    alert('Failed to read user data with error :'+ error);
+  }
+};
+
+export const saveDetails = (details) => (dispatch) => {
+  try {
+      httpClient.post("/user/details", details);
+      localStorage.setItem("email", details.email);
+      localStorage.setItem("firstName", details.firstName);
+      localStorage.setItem("lastName", details.lastName);
+
+  } catch (error) {
+   alert(error);
   }
 };

@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 
-import { getDetails } from "../../store/thunk/userThunkCreators";
+import { getDetails, saveDetails } from "../../store/thunk/userThunkCreators";
 import { useDispatch } from "react-redux";
 
 const style = {
@@ -135,8 +135,12 @@ function editClicked()
     }
     else                            //Save the user details
     {
+        dispatch(saveDetails({
+            "username": '12334', email, firstName,lastName
+        }));
+
         setEditMode(false);
-        
+
     }
     
 }
