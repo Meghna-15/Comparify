@@ -1,5 +1,5 @@
 import { Box,Button,TextField} from "@material-ui/core";
-import React from "react";
+import React,{ useEffect } from "react";
 import useStyles from "../../hooks/use-styles";
 
 import Grid from '@mui/material/Grid';
@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 
 import { getDetails, saveDetails } from "../../store/thunk/userThunkCreators";
-import { useDispatch } from "react-redux";
+
 
 const style = {
     root: {
@@ -65,16 +65,26 @@ const style = {
 const UserProfile = (props) => {
 
     const classes = useStyles(style);
-    // const [task, setTask] = useState("");
     const [isEditMode, setEditMode] = React.useState(false);
-    const dispatch = useDispatch();
+    const [isDataLoaded, setDataLoaded] = React.useState(false);
+    
     var email = ""
     var firstName = ""
     var lastName = ""
 
+    useEffect(() => {
+        getDetails(localStorage.getItem('user_identifier')).then((data) => {
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("firstName", data.firstName);
+            localStorage.setItem("lastName", data.lastName);
+            if(isDataLoaded === false)
+                setDataLoaded(true);
+         })
+         .catch(err => console.log("Axios err: ", err))
+    }, [isDataLoaded])
+
     function userEmail()
     {
-        dispatch(getDetails('12334'));
         return localStorage.getItem("email");
     }
 
@@ -132,13 +142,22 @@ function editClicked()
     if(isEditMode === false)        //Click to edit
     {
         setEditMode(true)
+        if(isDataLoaded === true)
+            setDataLoaded(false);
     }
     else                            //Save the user details
     {
-        dispatch(saveDetails({
-            "username": '12334', email, firstName,lastName
-        }));
+        saveDetails({
+            "username": localStorage.getItem('user_identifier'), email, firstName,lastName
+        }).then((data) => {
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("firstName", data.firstName);
+            localStorage.setItem("lastName", data.lastName);
+            
+            if(isDataLoaded === true)
+                setDataLoaded(false);
 
+         })
         setEditMode(false);
 
     }
