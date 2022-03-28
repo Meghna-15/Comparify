@@ -68,6 +68,9 @@ const UserProfile = (props) => {
     // const [task, setTask] = useState("");
     const [isEditMode, setEditMode] = React.useState(false);
     const dispatch = useDispatch();
+    var email = ""
+    var firstName = ""
+    var lastName = ""
 
     function userEmail()
     {
@@ -126,14 +129,39 @@ function getButtonLabel()
 }
 function editClicked()
 {
-    setEditMode(true)
+    if(isEditMode === false)        //Click to edit
+    {
+        setEditMode(true)
+    }
+    else                            //Save the user details
+    {
+        setEditMode(false);
+        
+    }
+    
+}
+
+function emailChanged(e)
+{
+    email = e.target.value
+}
+
+function firstNameChanged(e)
+{
+    firstName = e.target.value
+}
+
+function lastNameChanged(e)
+{
+    lastName = e.target.value
 }
 
 function showEmailId()
 {
     if(isEditMode)
     {
-        return <TextField id="outlined-basic" label="Email Id" variant="outlined" style= {style.editableField} disabled={!isEditMode}/>
+        return <TextField id="email-text" label="Email Id" variant="outlined" style= {style.editableField} disabled={!isEditMode} onChange={(e) => {
+            emailChanged(e)}}/>
     }
     else{
         return <label style= {style.editableField} disabled={isEditMode}>{userEmail()}</label>
@@ -144,7 +172,8 @@ function showFirstName()
 {
     if(isEditMode)
     {
-        return <TextField id="outlined-basic" label="First name" variant="outlined" style= {style.editableField} disabled={!isEditMode}/>
+        return <TextField id="firstName-text" label="First name" variant="outlined" style= {style.editableField} disabled={!isEditMode} onChange={(e) => {
+            firstNameChanged(e)}}/>
     }
     else{
         return <label style= {style.editableField} disabled={isEditMode}>{userFirstName()}</label>
@@ -155,7 +184,8 @@ function showLastName()
 {
     if(isEditMode)
     {
-        return <TextField id="outlined-basic" label="Last name" variant="outlined" style= {style.editableField} disabled={!isEditMode} />
+        return <TextField id="lastName-text" label="Last name" variant="outlined" style= {style.editableField} disabled={!isEditMode} onChange={(e) => {
+            lastNameChanged(e)}}/>
     }
     else{
         return <label style= {style.editableField} disabled={isEditMode}>{userLastName()}</label>
