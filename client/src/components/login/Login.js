@@ -69,6 +69,10 @@ const LandingPage = (props) => {
     //     userIdentifier: '', secret: ''
     // }
 
+    const forgotPasswordHandler = () => {
+
+    }
+
     const registerHandler = (e) => {
         navigate("/register");
     }
@@ -96,7 +100,7 @@ const LandingPage = (props) => {
                 <Authentication />
                 <Grid container>
                     <Grid item xs>
-                        <Box onClick={registerHandler}
+                        <Box onClick={forgotPasswordHandler}
                             sx={{
                                 cursor: 'pointer',
                                 textDecoration: 'underline',

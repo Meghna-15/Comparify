@@ -5,7 +5,6 @@ import LandingPage from "./components/landing/LandingPage";
 import Login from "./components/login/Login";
 import Alerts from "./components/alert/Alerts";
 import Menus from "./components/side-navigation/Menus";
-import LandingPage from "./components/landing/LandingPage";
 import UserProfile from "./components/user-profile/UserProfile";
 import AuthGuard from "./guard/AuthGuard";
 import Register from "./components/register";

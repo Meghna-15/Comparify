@@ -59,7 +59,6 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> register(@RequestBody SignupRequest signupRequest){
         // validate - optional
-        System.out.println("Working");
         if(!signupRequest.validate()){
             throw new MissingRequiredFieldException(400, 1000, new ArrayList<>());
         }
