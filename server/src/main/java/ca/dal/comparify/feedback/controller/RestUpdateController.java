@@ -1,19 +1,15 @@
 package ca.dal.comparify.feedback.controller;
 
-import ca.dal.comparify.email.service.EmailSenderService;
+import ca.dal.comparify.emailService.EmailSenderService;
 import ca.dal.comparify.feedback.model.Feedback;
-import ca.dal.comparify.feedback.repository.FeedbackRepository;
 import ca.dal.comparify.feedback.services.FeedbackService;
-import ca.dal.comparify.framework.mail.MailService;
-import ca.dal.comparify.item.model.ItemRequestModel;
-import ca.dal.comparify.utils.ResponseEntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.RestController;
-import java.util.Map;
+
+import java.time.LocalDate;
 
 
 @RestController
@@ -26,12 +22,10 @@ public class RestUpdateController {
     @Autowired
     FeedbackService feedbackService;
 
-    @Autowired
-    FeedbackRepository feedbackRepository;
-
     @PostMapping("/feedback")
     @ResponseBody
     public String userFeedback(@ModelAttribute Feedback fb) {
+        fb.setDate(LocalDate.now());
         boolean data = feedbackService.addFeedback(fb);
         sendEmail(fb);
         System.out.println(data);
@@ -40,8 +34,6 @@ public class RestUpdateController {
         } else {
             return "Unable to add the feedback";
         }
-
-
     }
 
     @Autowired

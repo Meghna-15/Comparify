@@ -23,9 +23,18 @@ public class FeedbackService {
     @Autowired
     private FeedbackRepository feedbackRepository;
 
+    @Autowired
+    private MongoRepository mongoRepository;
+
+    private final String FEEDBACK_COLLECTION = "feedback";
+
     public boolean addFeedback( Feedback f) {
-        feedbackRepository.save(f);
-        return true;
+        int result = mongoRepository.insertOne(FEEDBACK_COLLECTION, f , Feedback.class);
+
+        if(result == 0)
+            return true;
+
+        return false;
     }
 
 

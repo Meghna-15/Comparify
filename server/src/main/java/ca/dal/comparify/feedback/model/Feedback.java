@@ -2,7 +2,9 @@ package ca.dal.comparify.feedback.model;
 
 import ca.dal.comparify.utils.UUIDUtils;
 import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
+import java.time.LocalDate;
 
 public class Feedback{
 
@@ -12,9 +14,10 @@ public class Feedback{
      */
     @BsonId
     private String id;
-    private String email;
-    private String Usersfeedback;
-    private String suggestions;
+    @BsonProperty
+    private String email, Usersfeedback, suggestions;
+    @BsonProperty
+    private LocalDate date ;
 
     public Feedback() {
 
@@ -25,14 +28,15 @@ public class Feedback{
         this.email = email;
         this.Usersfeedback = Usersfeedback;
         this.suggestions = suggestions;
+        this.date = LocalDate.now();
     }
 
-    public Feedback(String id, String email, String Usersfeedback, String suggestions) {
-        this.id = id;
-        this.email = email;
-        this.Usersfeedback = Usersfeedback;
-        this.suggestions = suggestions;
-    }
+//    public Feedback(String id, String email, String Usersfeedback, String suggestions) {
+//        this.id = id;
+//        this.email = email;
+//        this.Usersfeedback = Usersfeedback;
+//        this.suggestions = suggestions;
+//    }
 
     public String getId() {
         return id;
@@ -49,6 +53,7 @@ public class Feedback{
                 ", email='" + email + '\'' +
                 ", feedback='" + Usersfeedback + '\'' +
                 ", suggestions='" + suggestions + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
 
@@ -75,5 +80,13 @@ public class Feedback{
     public void setSuggestions(String suggestions) {
         this.suggestions = suggestions;
     }
+
+    public LocalDate getDate() {
+        return date;
     }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+}
 

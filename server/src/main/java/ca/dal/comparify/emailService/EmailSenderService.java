@@ -1,4 +1,4 @@
-package ca.dal.comparify.email.service;
+package ca.dal.comparify.emailService;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
