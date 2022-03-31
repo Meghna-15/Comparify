@@ -1,11 +1,12 @@
 package ca.dal.comparify.searchProduct.repository;
 
 import ca.dal.comparify.mongo.MongoRepository;
-import ca.dal.comparify.searchProduct.model.Brand;
-import ca.dal.comparify.searchProduct.model.Item;
-import ca.dal.comparify.searchProduct.model.ItemDetail;
+import ca.dal.comparify.brand.model.BrandModel;
+import ca.dal.comparify.item.model.ItemModel;
+import ca.dal.comparify.compareitems.model.CompareItemsModel;
 import ca.dal.comparify.searchProduct.model.Product;
-import ca.dal.comparify.searchProduct.model.Store;
+import ca.dal.comparify.store.model.StoreModel;
+
 import io.micrometer.core.ipc.http.HttpSender.Method;
 
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import java.util.List;
 import static ca.dal.comparify.mongo.MongoUtils.eq;
 import static ca.dal.comparify.mongo.MongoUtils.set;
 import static ca.dal.comparify.mongo.MongoUtils.and;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties.Storage;
 import org.springframework.stereotype.Service;
@@ -33,26 +36,27 @@ public class ProductRepository {
     private final String ITEMNAME = "name";
 
     Class<Product> productCLass = Product.class;
-    Class<Store> storeCLass = Store.class;
-    Class<Item> itemCLass = Item.class;
-    Class<Brand> brandCLass = Brand.class;
-    Class<ItemDetail> itemDetailCLass = ItemDetail.class;
+    Class<StoreModel> storeCLass = StoreModel.class;
+    Class<ItemModel> itemCLass = ItemModel.class;
+    Class<BrandModel> brandCLass = BrandModel.class;
+    Class<CompareItemsModel> itemDetailCLass = CompareItemsModel.class;
 
     public List<Product> getAllProducts(String itemName) {
         List<Product> products = new ArrayList<>();
-        Item item = mongoRepository.findOne(ITEMCOLLECTION_NAME, eq(ITEMNAME, itemName), itemCLass);
+        ItemModel item = mongoRepository.findOne(ITEMCOLLECTION_NAME, eq(ITEMNAME, itemName), itemCLass);
 
-        List<ItemDetail> itemsDetails = mongoRepository.find(ITEMDETAILCOLLECTION_NAME, eq(ITEM_ID, item.getId()),
+        List<CompareItemsModel> itemsDetails = mongoRepository.find(ITEMDETAILCOLLECTION_NAME, eq(ITEM_ID, item.getId()),
                 itemDetailCLass);
 
-        for (ItemDetail itemDetail : itemsDetails) {
+        for (CompareItemsModel itemDetail : itemsDetails) {
            
-            Store store = mongoRepository.findOne(STORECOLLECTION_NAME, eq(STOREID, (String)itemDetail.getStoreId()),
+            StoreModel store = mongoRepository.findOne(STORECOLLECTION_NAME, eq(STOREID,
+            new ObjectId(itemDetail.getStoreId())),
                     storeCLass);
             String storeName = store.getStoreName();
-            Brand brand = mongoRepository.findOne(BRRANDCOLLECTION_NAME, eq(BRANDID, itemDetail.getBrandId()),
+            BrandModel brand = mongoRepository.findOne(BRRANDCOLLECTION_NAME, eq(BRANDID, itemDetail.getBrandId()),
                     brandCLass);
-            String brandName = brand.getBrandName();
+            String brandName = brand.getName();
             String productName = item.getName();
             double price = itemDetail.getPrice();
             double unit = itemDetail.getUnit();
