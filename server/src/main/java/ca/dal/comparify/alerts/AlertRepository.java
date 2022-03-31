@@ -47,14 +47,14 @@ public class AlertRepository {
 
             match(new Document("audit.created_by", userIdentifier)),
 
-            lookup("item", "item.entity_id", "_id",
+            lookup("item", FIELD_ITEM, "_id",
                 Arrays.asList(new Document("$project",
                     new Document("audit", 0L)
                         .append("_id", 0L))), "item"),
 
             unwind("$item"),
 
-            lookup("brand", "brand.entity_id", "_id",
+            lookup("brand", FIELD_BRAND, "_id",
                 Arrays.asList(new Document("$project",
                     new Document("audit", 0L)
                         .append("_id", 0L))), "brand"),

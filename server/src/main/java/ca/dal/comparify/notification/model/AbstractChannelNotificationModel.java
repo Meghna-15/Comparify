@@ -13,7 +13,7 @@ public abstract class AbstractChannelNotificationModel {
 
     private NotificationTypeEnum type;
 
-    public AbstractChannelNotificationModel(String title, String message,
+    protected AbstractChannelNotificationModel(String title, String message,
                                             IconType iconType, NotificationTypeEnum type) {
         this.title = title;
         this.message = message;

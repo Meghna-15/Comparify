@@ -65,35 +65,35 @@ public class AlertService {
      *
      * @author Harsh Shah
      */
-    public void trigger(String brandId, String productId){
-
-        List<AlertModel> alerts = checkForAlerts(brandId, productId);
-
-        List<AlertModel> alertsOnInformationAvailable = alerts.stream().
-            filter(alert -> AlertTypeEnum.PRODUCT_INFORMATION_AVAILABLE.equals(alert.getType()))
-            .collect(Collectors.toList());
-
-        if(!alertsOnInformationAvailable.isEmpty()){
-
-            AlertModel alert = alertsOnInformationAvailable.get(0);
-
-//            WebPushNotificationModel model = new WebPushNotificationModel(
-//                alert.getAudit().getCreatedBy(),
+//    public void trigger(String brandId, String productId){
+//
+//        List<AlertModel> alerts = checkForAlerts(brandId, productId);
+//
+//        List<AlertModel> alertsOnInformationAvailable = alerts.stream().
+//            filter(alert -> AlertTypeEnum.PRODUCT_INFORMATION_AVAILABLE.equals(alert.getType()))
+//            .collect(Collectors.toList());
+//
+//        if(!alertsOnInformationAvailable.isEmpty()){
+//
+//            AlertModel alert = alertsOnInformationAvailable.get(0);
+//
+////            WebPushNotificationModel model = new WebPushNotificationModel(
+////                alert.getAudit().getCreatedBy(),
+////                alert.getAlertIdentifier(),
+////                "Product Information Available", IconType.ALERT, NotificationTypeEnum.ALERT);
+//
+//            WebSocketNotificationModel model = new WebSocketNotificationModel(
+//                Collections.singletonList(alert.getAudit().getCreatedBy()),
 //                alert.getAlertIdentifier(),
 //                "Product Information Available", IconType.ALERT, NotificationTypeEnum.ALERT);
-
-            WebSocketNotificationModel model = new WebSocketNotificationModel(
-                Collections.singletonList(alert.getAudit().getCreatedBy()),
-                alert.getAlertIdentifier(),
-                "Product Information Available", IconType.ALERT, NotificationTypeEnum.ALERT);
-
-            notificationService.send(null,
-                NotificationChannelType.SOCKET, model);
-
-//            notificationService.send(alertsOnInformationAvailable.get(0).getAudit().getCreatedBy(),
-//                NotificationChannelType.SOCKET, null);
-        }
-    }
+//
+//            notificationService.send(null,
+//                NotificationChannelType.SOCKET, model);
+//
+////            notificationService.send(alertsOnInformationAvailable.get(0).getAudit().getCreatedBy(),
+////                NotificationChannelType.SOCKET, null);
+//        }
+//    }
 
 
     /**

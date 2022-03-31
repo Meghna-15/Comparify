@@ -7,7 +7,10 @@ import store from "./store"
 let stompClient = null;
 
 export const openSocket = () => {
-  const sock = new SockJS('http://localhost:9001/api/socket');
+
+  const socketUrl = process.env.REACT_APP_SERVER_BASE_URL + process.env.REACT_APP_SERVER_CONTEXT_PATH + "socket"
+
+  const sock = new SockJS(socketUrl);
   stompClient = Stomp.over(sock);
 
   const headers = { "Authorization": "Bearer " + localStorage.getItem("auth-token") }

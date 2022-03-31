@@ -1,7 +1,6 @@
 package ca.dal.comparify.framework.notification.websocket;
 
 import ca.dal.comparify.framework.app.ApplicationScope;
-import ca.dal.comparify.notification.model.NotificationModel;
 import ca.dal.comparify.notification.model.WebSocketNotificationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Harsh Shah
@@ -30,10 +28,12 @@ public class WebSocketService {
         return true;
     }
 
-    public boolean send(List<String> userIds, WebSocketNotificationModel model){
+    public boolean send(List<String> userIds, WebSocketNotificationModel model) {
         List<String> activeUsers = userIds.stream()
-                                        .filter(userId -> applicationScope.getActiveUsers().contains(userId))
-                                        .collect(Collectors.toList());
+            .filter(userId -> applicationScope.getActiveUsers().contains(userId))
+            .collect(Collectors.toList());
+
+        model.setReceiverIds(activeUsers);
 
         simpMessagingTemplate.convertAndSend("/topic/new-alert", model);
 

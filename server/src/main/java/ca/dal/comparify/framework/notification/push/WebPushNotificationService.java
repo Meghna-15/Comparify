@@ -59,7 +59,7 @@ public class WebPushNotificationService {
     public boolean send(String userId, WebPushNotificationModel model) {
 
         Message message = Message.builder()
-            .setToken(applicationScope.getUserToReceiverToken(model.getReceiverIdentifier()))
+            .setToken(applicationScope.getUserToReceiverToken(userId))
             .setWebpushConfig(WebpushConfig.builder().putHeader("ttl", TTL)
                 .setNotification(new WebpushNotification(model.getTitle(),
                     model.getMessage(),
@@ -67,9 +67,8 @@ public class WebPushNotificationService {
                 .build())
             .build();
 
-        String response = null;
         try {
-            response = FirebaseMessaging.getInstance().sendAsync(message).get();
+            FirebaseMessaging.getInstance().sendAsync(message).get();
         } catch (InterruptedException e) {
             return false;
         } catch (ExecutionException e) {
