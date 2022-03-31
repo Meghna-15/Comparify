@@ -9,7 +9,6 @@ import AuthGuard from "./guard/AuthGuard";
 import SearchProduct from "./components/searchProducts/SearchProduct";
 
 const AppRoutes = (props) => {
-
   return (
     <Router basename={process.env.REACT_APP_BASE_HREF}>
       <Routes>

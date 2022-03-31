@@ -1,28 +1,82 @@
-import React from "react";
+import { Button, TextField, Box, Grid, MenuItem } from "@material-ui/core";
+import { useFormik } from "formik";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import useStyles from "../../hooks/use-styles";
+import { useNavigate } from "react-router-dom";
+import { searchProduct } from "../../store/thunk/productThunkCreators";
 
-class SearchBar extends React.Component {
-  
-  state = { term: "" };
-  onFormSubmit = (e) => {
-    e.preventDefault();
-    this.props.onSubmit(this.state.term);
-  };
-  render() {
-    return (
-      <div className="ui segment">
-        <form onSubmit={this.onFormSubmit} className="ui form">
-          <div className="field">
-            <label>Product search</label>
-            <input
-              type="text"
-              value={this.state.term}
-              onChange={(e) => this.setState({ term: e.target.value })}
-            />
-          </div>
+
+const style = {
+  root: {
+    display: "inline-block",
+    margin: "30px 0px",
+  },
+  button: {
+    marginTop: "16px",
+    marginBottom: "8px",
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "end",
+  },
+};
+const SearchBar = (props) => {
+  const navigate = useNavigate();
+  const classes = useStyles(style);
+  const dispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: {},
+    onSubmit: (values, actions) => {
+      const { name } = values;
+      dispatch(searchProduct(name));
+    },
+  });
+ 
+
+
+  return (
+    <Grid container className={classes.root}>
+      <Box>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid>
+            <Grid item>
+              <TextField
+                fullWidth
+                margin="normal"
+                variant="outlined"
+                id="name"
+                name="name"
+                label="Product Name"
+                autoComplete="off"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
+                inputProps={{
+                  autoComplete: "off",
+                }}
+              ></TextField>
+            </Grid>
+
+            <Grid item className={classes.buttonContainer}>
+              <Button
+                color="primary"
+                variant="contained"
+                type="submit"
+                className={classes.button}
+              >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
         </form>
-      </div>
-    );
-  }
+      </Box>
+        {/* <ProductList values = {this.products}/>  */}
+    </Grid> 
   
-}
+  
+  );
+};
 export default SearchBar;

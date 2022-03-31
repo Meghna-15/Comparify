@@ -1,11 +1,13 @@
 import React from "react";
 import ProductRecord from "./ProductRecord";
-// import "../css/ImageList.css";
+import { useDispatch, useSelector } from "react-redux";
+import product from "../../store/thunk/productThunkCreators";
 
 const ProductList = (props) => {
-//   const products = props.products.map((product) => {
-//     return <ProductRecord product={product} />;
-//   });
+
+  const  products  = useSelector((state) => state.product.search);
+  console.log (products);
+  
   return (
     <div>
       <table class="ui inverted green table">
@@ -15,9 +17,9 @@ const ProductList = (props) => {
             <th>Retail stores</th>
             <th>brandi</th>
             <th>volume</th>
+            <th>price</th>
           </tr>
         </thead>
-
         <tbody>
           <ProductRecord />
         </tbody>

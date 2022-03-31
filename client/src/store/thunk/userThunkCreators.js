@@ -50,3 +50,6 @@ return httpClient.post("/user/details", details).then((response) => {
     alert(error);
   });
 };
+
+
+

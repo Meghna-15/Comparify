@@ -1,6 +1,5 @@
 package ca.dal.comparify.searchProduct.model;
 
-import javax.persistence.Entity;
 
 
 

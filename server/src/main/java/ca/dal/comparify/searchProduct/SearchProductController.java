@@ -18,7 +18,7 @@ public class SearchProductController {
     private ProductRepository productRepository;
     
     @GetMapping("/search")
-    public List<Product> getQuestion(@RequestParam String name) {
+    public List<Product> getProducts(@RequestParam String name) {
         return  productRepository.getAllProducts(name);
     }
 

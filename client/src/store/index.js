@@ -5,6 +5,7 @@ import thunkMiddleware from "redux-thunk";
 import authentication from "./reducers/authentication";
 import user from "./reducers/user";
 import alert from "./reducers/alert";
+import product from "./reducers/product";
 
 const CLEAR_ON_LOGOUT = "CLEAR_ON_LOGOUT";
 
@@ -17,7 +18,8 @@ export const clearOnLogout = () => {
 const appReducer = combineReducers({
   authentication, 
   user,
-  alert
+  alert,
+  product
 });
 
 const rootReducer = (state, action) => {
