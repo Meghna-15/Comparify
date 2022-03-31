@@ -36,7 +36,7 @@ function Menus(props) {
   const user = useSelector((state) => state.user)
 
   //Titles stored for all the menus
-  var titles = ['Home','Menu2','Menu3','Alerts', 'User Profile', 'Log out'];
+  var titles = ['Home','Add Item','Feedback','Alerts', 'User Profile', 'Log out'];
   var titlesAdmin = ['Home','Add Product', 'User Feedback', 'Log out'];
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -65,6 +65,10 @@ function Menus(props) {
     {
       if(index === 0)
        return <HomeIcon />
+      else if(index === 1)
+       return <AddIcon/>
+      else if(index === 2)
+       return <FeedbackIcon/>
       else if(index === 3)
         return <AddAlertOutlinedIcon/>
       else if(index === 4)
