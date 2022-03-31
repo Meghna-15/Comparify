@@ -1,31 +1,37 @@
 package ca.dal.comparify.searchProduct.model;
 
-import javax.persistence.Entity;
 
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.springframework.beans.factory.annotation.Value;
+
 
 public class Brand {
-    String brandId; 
    
-    String brandName;
+    String brandId;
+
+   
+    String name;
+    
     
     public Brand() {
     }
-    public Brand(String brandId, @BsonProperty("name") String brandName) {
-        this.brandId = brandId;
-        this.brandName = brandName;
+    public Brand(@BsonId String id, String name) {
+        this.brandId = id;
+        this.name = name;
     }
     public String getBrandId() {
         return brandId;
     }
+
     public String getBrandName() {
-        return brandName;
+        return name;
     }
-    public void setBrandId(String brandId) {
+    public void setBrandId( String brandId) {
         this.brandId = brandId;
     }
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 

@@ -4,25 +4,28 @@ package ca.dal.comparify.searchProduct.model;
 
 import javax.persistence.Entity;
 
+import org.bson.codecs.pojo.annotations.BsonId;
 
+@Entity
 public class Store {
-    String storeID;
+    @BsonId
+    String storeId;
     String storeName;
 
     public Store() {
     }
-    public Store(String storeID, String storeName) {
-        this.storeID = storeID;
+    public Store(String storeId, String storeName) {
+        this.storeId = storeId;
         this.storeName = storeName;
     }
     public String getStoreID() {
-        return storeID;
+        return storeId;
     }
     public String getStoreName() {
         return storeName;
     }
-    public void setStoreID(String storeID) {
-        this.storeID = storeID;
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
     public void setStoreName(String storeName) {
         this.storeName = storeName;
