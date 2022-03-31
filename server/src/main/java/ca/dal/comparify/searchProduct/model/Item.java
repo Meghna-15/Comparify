@@ -1,9 +1,11 @@
 package ca.dal.comparify.searchProduct.model;
 
+import org.bson.codecs.pojo.annotations.BsonId;
+
 public class Item {
 
     String name;
-    String id;
+    @BsonId String id;
     public Item(){
 
     };
