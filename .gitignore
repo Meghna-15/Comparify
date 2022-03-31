@@ -10,3 +10,5 @@ server/mvnw.cmd
 server/target/
 .vscode/
 client/.vscode/
+client/.DS_Store
+.DS_Store

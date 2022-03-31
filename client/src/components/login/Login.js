@@ -69,8 +69,8 @@ const LandingPage = (props) => {
     //     userIdentifier: '', secret: ''
     // }
 
-    const forgotPasswordHandler = () => {
-
+    const forgotPasswordHandler = (e) => {
+        navigate("/resetPassword");
     }
 
     const registerHandler = (e) => {

@@ -8,6 +8,10 @@ import Menus from "./components/side-navigation/Menus";
 import UserProfile from "./components/user-profile/UserProfile";
 import AuthGuard from "./guard/AuthGuard";
 import Register from "./components/register";
+import SetSecurityQuestion from "./components/forgetPassword/SetSecurityQuestion";
+import ResetPassword from "./components/forgetPassword/ResetPassword";
+import NewPassword from "./components/forgetPassword/NewPassword";
+
 
 const AppRoutes = (props) => {
 
@@ -18,17 +22,20 @@ const AppRoutes = (props) => {
           <Route index element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/setSecurityQuestion" element={<SetSecurityQuestion />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/newPassword" element={<NewPassword />} />
         </Route>
-        <Route element={<AuthGuard/>}>
+        <Route element={<AuthGuard />}>
           <Route path="/home" element={<Menus />} >
-            <Route path="alert" element={<Alerts />}/>
-            <Route path="profile" element={<UserProfile />}/>
+            <Route path="alert" element={<Alerts />} />
+            <Route path="profile" element={<UserProfile />} />
           </Route>
         </Route>
       </Routes>
     </Router>
   );
-  
+
 };
 
 export default AppRoutes;
