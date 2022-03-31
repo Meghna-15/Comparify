@@ -58,7 +58,24 @@ public class UserService {
 
     }
 
+    /**
+     * @param userId
+     * @return
+     *
+     * @author Harsh Shah
+     */
     public UserRoleModel getUserRole(String userId) {
         return userIAMService.getUserRole(userId);
+    }
+
+    /**
+     * @param userIdentifier
+     * @param userSecret
+     * @return
+     *
+     * @author Harsh Shah
+     */
+    public boolean updateUserSecret(String userIdentifier, String userSecret) {
+        return userIAMService.updateUserSecret(userIdentifier, userSecret);
     }
 }
