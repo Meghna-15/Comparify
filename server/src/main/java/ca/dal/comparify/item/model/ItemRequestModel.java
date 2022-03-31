@@ -3,7 +3,7 @@ package ca.dal.comparify.item.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * @author Harsh Shah
+ * @author Chanpreet Singh
  */
 public class ItemRequestModel {
 
@@ -14,6 +14,8 @@ public class ItemRequestModel {
     @JsonProperty("default_image")
     private String defaultImage;
 
+    public ItemRequestModel() {
+    }
 
     public ItemRequestModel(String name, String description, String defaultImage) {
         this.name = name;

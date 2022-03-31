@@ -6,7 +6,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 /**
- * @author Harsh Shah
+ * @author Chanpreet Singh
  */
 public class ItemModel extends ItemRequestModel {
 
@@ -17,6 +17,9 @@ public class ItemModel extends ItemRequestModel {
     private String defaultImage;
 
     private AuditModel audit;
+
+    public ItemModel() {
+    }
 
     public ItemModel(@BsonId String id,
                      @BsonProperty("name") String name,
@@ -47,10 +50,12 @@ public class ItemModel extends ItemRequestModel {
         this.id = id;
     }
 
+    @Override
     public String getDefaultImage() {
         return defaultImage;
     }
 
+    @Override
     public void setDefaultImage(String defaultImage) {
         this.defaultImage = defaultImage;
     }

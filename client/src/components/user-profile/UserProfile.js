@@ -1,10 +1,17 @@
 import { Box,Button,TextField} from "@material-ui/core";
-import React from "react";
+import React,{ useEffect } from "react";
 import useStyles from "../../hooks/use-styles";
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
+import logo from '../../assets/logo/logo-512-trans.png';
+import goldBadge from '../../assets/images/goldbadge.png';
+import silverBadge from '../../assets/images/silverbadge.png';
+import notificationAllowed from '../../assets/images/notificationAllowed.png';
+import orderMore from '../../assets/images/orderMore.png';
+
+import { getDetails, saveDetails } from "../../store/thunk/userThunkCreators";
 
 
 const style = {
@@ -12,9 +19,10 @@ const style = {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        margin: "64px 128px",
-        marginTop: "80px",
-        
+        marginTop: "30px",
+        backgroundImage : `url(${logo})`,
+        width: '100%',  
+        height: '100%',
     },
     imageContainer: {
         display: 'flex',
@@ -27,7 +35,7 @@ const style = {
     editableField: {
         width : '50%',
         float : 'right',
-        fontSize: 24,
+        fontSize: 18,
     },
     grid:{
         display: 'flex',
@@ -40,13 +48,13 @@ const style = {
     field:{
         alignItems: 'center',
         flexDirection: 'column',
-        marginTop: "50px",
-        marginBottom: "50px",
+        marginTop: "25px",
+        marginBottom: "25px",
         width: "70%",
     },
     label:{
         marginLeft: '30%',
-        fontSize: 22,
+        fontSize: 16,
         color: 'gray'
     },
 
@@ -57,36 +65,111 @@ const style = {
     buttonContainer: {
         display: "flex",
         justifyContent: "end"
+    },
+    badgeStyle: {
+        
+        position: 'absolute', 
+        top: 80,
+        right: 120,
+        width: "110px"
+    },
+
+    cartoon: {
+        
+        position: 'absolute', 
+        top: 350,
+        right: 20,
+        width: "320px"
     }
 }
 
 const UserProfile = (props) => {
 
     const classes = useStyles(style);
-    // const [task, setTask] = useState("");
     const [isEditMode, setEditMode] = React.useState(false);
+    const [isDataLoaded, setDataLoaded] = React.useState(false);
+    var email = ""
+    var firstName = ""
+    var lastName = ""
+
+    useEffect(() => {
+        
+        getDetails(localStorage.getItem('user-id')).then((data) => {
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("firstName", data.firstName);
+            localStorage.setItem("lastName", data.lastName);
+            localStorage.setItem("username", data.username);
+            localStorage.setItem("points", data.points)
+            localStorage.setItem("member", data.type)
+
+            if(isDataLoaded === false)
+                setDataLoaded(true);
+         })
+         .catch(err => console.log("Axios err: ", err))
+    }, [isDataLoaded])
 
     function userEmail()
     {
-        return "amansbhandari@gmail.com";
+        return localStorage.getItem("email");
     }
 
     function userFirstName()
     {
-        return "Aman Singh";
+        return localStorage.getItem("firstName");
     }
 
     function userLastName()
     {
-        return "Bhandari";
+        return localStorage.getItem("lastName");
+    }
+
+    function username()
+    {
+        return localStorage.getItem("username");
+    }
+
+    function userPoints()
+    {
+        return localStorage.getItem("points");
+    }
+
+    function userMember()
+    {
+        return localStorage.getItem("member");
+    }
+
+    function badgeImage()
+    {
+        if(localStorage.getItem("member")  === 'gold')
+        {
+            return goldBadge
+        }
+        else
+        {
+            return silverBadge
+        }
+    }
+
+    function cartoonImage()
+    {
+        if(localStorage.getItem("member")  === 'gold')
+        {
+            return notificationAllowed
+        }
+        else
+        {
+            return orderMore
+        }
     }
 
     return(<>
-                <Box className={classes.root}>
+                <Box className={classes.root} >
+                    <img src = {badgeImage()} style = {style.badgeStyle} alt=""/>
+                    <img src = {cartoonImage()} style = {style.cartoon} alt=""/>
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        User Profile
+                        {username()}
                     </Typography>
                     <div style={style.field}>
                         <label style= {style.label}>Email Id</label>
@@ -94,7 +177,7 @@ const UserProfile = (props) => {
                     </div>
                     
                     <div style={style.field}>
-                        <label style= {style.label}>First name</label>
+                        <label style= {style.label}>First Name</label>
                         {showFirstName()}
                     </div>
                      
@@ -103,7 +186,17 @@ const UserProfile = (props) => {
                         {showLastName()}
                     </div>
 
-                    <Grid item className={classes.buttonContainer}>
+                    <div style={style.field}>
+                        <label style= {style.label}>Points</label>
+                        {showPoints()}
+                    </div>
+
+                    <div style={style.field}>
+                        <label style= {style.label}>Member</label>
+                        {showMember()}
+                    </div>
+
+                    <Grid item className={classes.buttonContainer} >
                         <Button color="primary" variant="contained" type="submit" className={classes.button} onClick={() => {
             editClicked()}}>
                             {getButtonLabel()}
@@ -122,14 +215,52 @@ function getButtonLabel()
 }
 function editClicked()
 {
-    setEditMode(true)
+    if(isEditMode === false)        //Click to edit
+    {
+        setEditMode(true)
+        if(isDataLoaded === true)
+            setDataLoaded(false);
+    }
+    else                            //Save the user details
+    {
+        saveDetails({
+            "username": localStorage.getItem('user-id'), email, firstName,lastName
+        }).then((data) => {
+            localStorage.setItem("email", data.email);
+            localStorage.setItem("firstName", data.firstName);
+            localStorage.setItem("lastName", data.lastName);
+            
+            if(isDataLoaded === true)
+                setDataLoaded(false);
+
+         })
+        setEditMode(false);
+
+    }
+    
+}
+
+function emailChanged(e)
+{
+    email = e.target.value
+}
+
+function firstNameChanged(e)
+{
+    firstName = e.target.value
+}
+
+function lastNameChanged(e)
+{
+    lastName = e.target.value
 }
 
 function showEmailId()
 {
     if(isEditMode)
     {
-        return <TextField id="outlined-basic" label="Email Id" variant="outlined" style= {style.editableField} disabled={!isEditMode}/>
+        return <TextField id="email-text" label="Email Id" variant="outlined" style= {style.editableField} disabled={!isEditMode} onChange={(e) => {
+            emailChanged(e)}}/>
     }
     else{
         return <label style= {style.editableField} disabled={isEditMode}>{userEmail()}</label>
@@ -140,7 +271,8 @@ function showFirstName()
 {
     if(isEditMode)
     {
-        return <TextField id="outlined-basic" label="First name" variant="outlined" style= {style.editableField} disabled={!isEditMode}/>
+        return <TextField id="firstName-text" label="First name" variant="outlined" style= {style.editableField} disabled={!isEditMode} onChange={(e) => {
+            firstNameChanged(e)}}/>
     }
     else{
         return <label style= {style.editableField} disabled={isEditMode}>{userFirstName()}</label>
@@ -151,12 +283,24 @@ function showLastName()
 {
     if(isEditMode)
     {
-        return <TextField id="outlined-basic" label="Last name" variant="outlined" style= {style.editableField} disabled={!isEditMode} />
+        return <TextField id="lastName-text" label="Last name" variant="outlined" style= {style.editableField} disabled={!isEditMode} onChange={(e) => {
+            lastNameChanged(e)}}/>
     }
     else{
         return <label style= {style.editableField} disabled={isEditMode}>{userLastName()}</label>
     }
 }
+
+function showPoints()
+{
+        return <label style= {style.editableField}>{userPoints()}</label>
+}
+
+function showMember()
+{   
+    return <label style= {style.editableField}>{userMember()}</label>
+}
+
 }
 
 export default UserProfile;

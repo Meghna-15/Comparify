@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,20 +17,35 @@ import Typography from '@mui/material/Typography';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
-import UserProfile from '../user-profile/UserProfile';
+import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { getUserRole, logout } from '../../store/thunk/userThunkCreators';
+import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
+import CategoryIcon from '@mui/icons-material/Category';
+import FeedbackIcon from '@mui/icons-material/Feedback';
 
 const drawerWidth = 240;
 
 function Menus(props) {
   const { window } = props;
- 
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user)
+
   
   //Titles stored for all the menus
-  var titles = ['Home','Menu2','Menu3','Menu4', 'User Profile', 'Log out'];
+  var titles = ['Home','Menu2','Menu3','Alerts', 'User Profile', 'Log out'];
+  var titlesAdmin = ['Home','Add Product', 'User Feedback', 'Log out'];
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [titlePage, setTitlePage] = React.useState(titles[0]);
-  const [detailPage, setDetailPage] = React.useState(<h1>Our home page !</h1>)
+
+  useEffect(() => {
+    dispatch(getUserRole());
+    
+  }, [dispatch])
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -39,14 +54,60 @@ function Menus(props) {
 
   function getIcon(index)
   {
-    if(index === 0)
-        return <HomeIcon />
-    else if(index === 4)
-        return <AccountCircleIcon/>
-    else if(index === 5)
-        return <LogoutIcon/>
+    if(user.role.role_id === 'USER')
+    {
+      if(index === 0)
+       return <HomeIcon />
+      else if(index === 3)
+        return <AddAlertOutlinedIcon/>
+      else if(index === 4)
+         return <AccountCircleIcon/>
+       else if(index === 5)
+          return <LogoutIcon/>
+       else
+          return <AddIcon/>
+    }
     else
-        return <AddIcon/>
+    {
+      if(index === 0)
+       return <HomeIcon />
+      if(index === 1)
+        return <CategoryIcon />
+      else if(index === 2)
+        return <FeedbackIcon/>
+      else if(index === 3)
+         return <LogoutIcon/>
+    }
+    
+  }
+
+  function menuList()
+  {
+    let list = titlesAdmin.map((text, index) => (
+      <ListItem button key={text}  style= {{margin: '20px'}} onClick={() => {
+        menuClicked(index);
+      }}>
+        <ListItemIcon>
+          {getIcon(index)}
+        </ListItemIcon>
+        <ListItemText primary={text} />
+      </ListItem>
+    ))
+    
+    if(user.role.role_id === 'USER')
+    {
+      list = titles.map((text, index) => (
+        <ListItem button key={text}  style= {{margin: '20px'}} onClick={() => {
+          menuClicked(index);
+        }}>
+          <ListItemIcon>
+            {getIcon(index)}
+          </ListItemIcon>
+          <ListItemText primary={text} />
+        </ListItem>
+      ))
+    }
+    return list
   }
 
   const drawer = (
@@ -54,16 +115,7 @@ function Menus(props) {
       <Toolbar  style = {{background : '#2e4670'}}/>
       <Divider />
       <List>
-        {titles.map((text, index) => (
-          <ListItem button key={text}  style= {{margin: '20px'}} onClick={() => {
-            menuClicked(index);
-          }}>
-            <ListItemIcon>
-              {getIcon(index)}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {menuList()}
       </List>
       <Divider />
     </div>
@@ -139,7 +191,7 @@ function Menus(props) {
         <Typography paragraph>
           Consequat mauris n
         </Typography> */}
-        {detailPage}
+        <Outlet></Outlet>
         {/* <UserProfile></UserProfile> */}
       </Box>
     </Box>
@@ -147,33 +199,53 @@ function Menus(props) {
 
 function menuClicked(index)
 {
-  setTitlePage(titles[index]);
-
-  if(index === 0)
+  
+  if(user.role.role_id === 'USER')
   {
-    setDetailPage(<h1>Our home page detail page can be added by replacing this!</h1>)
-  }
-  else if(index === 1)
-  {
-    
-    setDetailPage(<h1>Menu 1 detail page can be added by replacing this!</h1>)
-  }
-  else if(index === 2)
-  {
-    setDetailPage(<h1>Menu 2 detail page can be added by replacing this!</h1>)
-  }
-  else if(index === 3)
-  {
-    setDetailPage(<h1>Menu 3 detail page can be added by replacing this!</h1>)
-  }
-  else if(index === 4)
-  {
-    setDetailPage(<UserProfile></UserProfile>);
+    setTitlePage(titles[index]);
+    if(index === 0)
+    {
+      //setDetailPage(<h1>Our home page detail page can be added by replacing this!</h1>)
+    }
+    else if(index === 1)
+    {
+      
+      //setDetailPage(<h1>Menu 1 detail page can be added by replacing this!</h1>)
+    }
+    else if(index === 2)
+    {
+      //setDetailPage(<h1>Menu 2 detail page can be added by replacing this!</h1>)
+    }
+    else if(index === 3){
+      navigate("alert")
+    }
+    else if(index === 4)
+    {
+      navigate("profile")
+    }
+    else 
+    {
+      dispatch(logout());
+    }
   }
   else 
   {
-    setDetailPage(<h1>User will be logged out !</h1>);
+    setTitlePage(titlesAdmin[index]);
+    if(index === 0)
+    {
+      //setDetailPage(<h1>Our home page detail page can be added by replacing this!</h1>)
+    }
+    else if(index === 1)
+    {
+      
+      //setDetailPage(<h1>Menu 1 detail page can be added by replacing this!</h1>)
+    }
+    else if(index === 3)
+    {
+      dispatch(logout());
+    }
   }
+  
 }
 }
 

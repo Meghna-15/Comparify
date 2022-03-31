@@ -1,7 +1,12 @@
 package ca.dal.comparify.user.service;
+/**
+ * @author aman singh bhandari
+ */
 
 import ca.dal.comparify.constant.ApplicationConstant;
 import ca.dal.comparify.user.model.iam.UserDetailsModel;
+import ca.dal.comparify.user.model.iam.UserDetailsRequestModel;
+import ca.dal.comparify.user.model.iam.UserIAMRequestModel;
 import ca.dal.comparify.user.repository.iam.UserDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +32,19 @@ public class UserDetailsService {
         }
 
         return userDetailsModel;
+    }
+
+
+    /**
+     * @param username
+     * @return
+     * @author Aman Singh Bhandari
+     */
+    public Boolean saveUserDetails(UserDetailsRequestModel userDetailsRequestModel) {
+
+        Boolean result = userDetailsRepository.saveUserDetails(userDetailsRequestModel);
+
+        return result;
     }
 
 }

@@ -2,7 +2,6 @@ package ca.dal.comparify.alerts.model;
 
 import ca.dal.comparify.brand.model.BrandModel;
 import ca.dal.comparify.item.model.ItemModel;
-import ca.dal.comparify.model.EntityReference;
 import ca.dal.comparify.model.RangeModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.codecs.pojo.annotations.BsonProperty;
