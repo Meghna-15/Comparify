@@ -3,7 +3,7 @@ package ca.dal.comparify.notification.model;
 /**
  * @author Harsh Shah
  */
-public abstract class AbstractChannelNotificationModel {
+public class AbstractChannelNotificationModel {
 
     private String title;
 

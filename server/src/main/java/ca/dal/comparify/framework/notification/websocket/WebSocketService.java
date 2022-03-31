@@ -30,7 +30,7 @@ public class WebSocketService {
 
     public boolean send(List<String> userIds, WebSocketNotificationModel model) {
         List<String> activeUsers = userIds.stream()
-            .filter(userId -> applicationScope.getActiveUsers().contains(userId))
+            .filter(userId -> applicationScope.containsActiveUsers(userId))
             .collect(Collectors.toList());
 
         model.setReceiverIds(activeUsers);
