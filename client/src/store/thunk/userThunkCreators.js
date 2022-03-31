@@ -2,6 +2,7 @@ import httpClient from "./interceptor";
 import { failedAuth, failedLogout, gotAuth, gotLogout } from "../reducers/authentication";
 import { failedGetUserRole, gotUserRole } from "../reducers/user";
 
+
 export const authenication = (credentials) => async (dispatch) => {
 
   try {
@@ -20,7 +21,7 @@ export const getUserRole = () => async (dispatch) => {
     const { data } = await httpClient.get("/user/role");
     dispatch(gotUserRole(data));
   } catch (error) {
-    dispatch(failedGetUserRole(error));
+    dispatch(failedGetUserRole(error)); 
   }
 };
 
@@ -46,6 +47,58 @@ export const getDetails = (username) => {
 export const saveDetails = (details) => {
 return httpClient.post("/user/details", details).then((response) => {
       return details
+  }, (error) => {
+    alert(error);
+  });
+};
+
+
+
+export const addproducts = (a) => {
+  console.log(a)
+  return httpClient.post("/compareitems/", a).then((response) => {
+    return a
+}, (error) => {
+  alert(error);
+});
+}; 
+
+
+    export const itemCategories = () => {
+  return httpClient.get("/itemcategories/" ).then((response) => {
+      let data = response.data
+      return data;
+  }, (error) => {
+    alert(error);
+  });
+};
+
+
+export const brandListDropDown = () => {
+  return httpClient.get("/brand/" ).then((response) => {
+      let data = response.data
+      return data;
+  }, (error) => {
+    alert(error);
+  });
+};
+
+
+export const productListDropDown = () => {
+  return httpClient.get("/item/" ).then((response) => {
+      let data = response.data
+      return data;
+  }, (error) => {
+    alert(error);
+  });
+};
+
+
+
+export const storeListDropDown = () => {
+  return httpClient.get("/store/" ).then((response) => {
+      let data = response.data
+      return data;
   }, (error) => {
     alert(error);
   });
