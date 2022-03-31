@@ -22,9 +22,10 @@ public class ResponseEntityUtils {
 
 
         switch (status){
+
             case 1:
-                customStatus = 512;
-                message = "Request Failed! Something went wrong...";
+                httpStatus = HttpStatus.OK;
+                message = "Success";
                 break;
 
             case 0:
@@ -34,6 +35,10 @@ public class ResponseEntityUtils {
             case -2:
                 httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
                 message = "Entity already exists";
+                break;
+            case -3:
+                customStatus = 512;
+                message = "Request Failed! Something went wrong...";
                 break;
             case -1:
             default:

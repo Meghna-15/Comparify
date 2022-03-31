@@ -1,6 +1,7 @@
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import { toast } from "react-toastify";
+import store from "./store"
 
 
 let stompClient = null;
@@ -13,7 +14,9 @@ export const openSocket = () => {
 
   stompClient.connect(headers, (frame) => {
     stompClient.subscribe('/topic/new-alert', function (alert) {
-      toast.success(alert.body);
+      if(new Set(alert.receiverIds).has(store.getState().user.role.id)){
+        toast.success(alert.body);
+      }
     });
   }, (error) => {
     console.log(error)

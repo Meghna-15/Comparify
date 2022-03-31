@@ -1,8 +1,8 @@
 package ca.dal.comparify.user;
 
 import ca.dal.comparify.constant.ApplicationConstant;
-import ca.dal.comparify.framework.exception.AllEmptyFieldException;
 import ca.dal.comparify.framework.exception.MissingRequiredFieldException;
+import ca.dal.comparify.framework.notification.push.WebPushNotificationService;
 import ca.dal.comparify.user.model.iam.UserDetailsModel;
 import ca.dal.comparify.user.model.iam.UserDetailsRequestModel;
 import ca.dal.comparify.user.model.iam.UserIAMRequestModel;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Harsh Shah
@@ -33,13 +34,17 @@ public class UserController {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private WebPushNotificationService webPushNotificationService;
+
     /**
      * @param userIAMRequestModel
      * @return
      * @author Harsh Shah
      */
     @PostMapping("/authentication")
-    public UserIAMResponseModel authentication(@RequestBody UserIAMRequestModel userIAMRequestModel) {
+    public UserIAMResponseModel authentication(@RequestBody UserIAMRequestModel userIAMRequestModel)
+        throws ExecutionException, InterruptedException {
 
         if (userIAMRequestModel.isEmpty()) {
             throw new MissingRequiredFieldException(400, 1000, userIAMRequestModel.getRequiredFields());
@@ -61,14 +66,13 @@ public class UserController {
         }
 
         int status = userService.createUserIAMInfo(userIAMRequestModel.getUserIdentifier(),
-                userIAMRequestModel.getUserSecret());
+            userIAMRequestModel.getUserSecret());
 
         return ResponseEntityUtils.returnStatus(status);
     }
 
     /**
      * @return
-     *
      * @author Harsh Shah
      */
     @GetMapping("/role")
@@ -79,7 +83,6 @@ public class UserController {
 
     /**
      * @return
-     *
      * @author Harsh Shah
      */
     @GetMapping("/logout")
@@ -122,7 +125,6 @@ public class UserController {
     /**
      * @param userIAMRequestModel
      * @return
-     *
      * @author Harsh Shah
      */
     @PutMapping("/iam")
@@ -135,7 +137,7 @@ public class UserController {
         boolean status = userService.updateUserSecret(userIAMRequestModel.getUserIdentifier(),
             userIAMRequestModel.getUserSecret());
 
-        return ResponseEntityUtils.returnStatus(status ? 0 : 1);
+        return ResponseEntityUtils.returnStatus(status ? 0 : -3);
     }
 
 
