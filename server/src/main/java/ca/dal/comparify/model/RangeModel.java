@@ -9,8 +9,7 @@ public class RangeModel<T> {
 
     private T max;
 
-    public RangeModel() {
-    }
+    public RangeModel() {}
 
     public RangeModel(T min, T max) {
         this.min = min;

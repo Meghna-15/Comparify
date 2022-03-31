@@ -128,7 +128,7 @@ public class UserIAMService {
      *
      * @author Harsh Shah
      */
-    public int createUserIAMInfo(String userIdentifier, String secret) {
+    public int createUserIAMInfo(String userId, String userIdentifier, String secret) {
 
         if (isUserExists(userIdentifier)) {
             throw new EntityAlreadyExistsException("User already exists having " + userIdentifier + " User Identifier",
@@ -145,7 +145,7 @@ public class UserIAMService {
                 DateUtils.addDaysToLocalNow(30),
                 new ArrayList<>());
 
-        return userIAMRepository.save(new UserIAMModel(userIdentifier, authentication, authorization));
+        return userIAMRepository.save(new UserIAMModel(userId, userIdentifier, authentication, authorization));
 
     }
 

@@ -57,11 +57,6 @@ function Menus(props) {
   const [titlePage, setTitlePage] = React.useState(titles[0]);
 
   useEffect(() => {
-    dispatch(getUserRole());
-    
-  }, [dispatch])
-
-  useEffect(() => {
     if(!isSocketConnected()){
       openSocket();
     }
