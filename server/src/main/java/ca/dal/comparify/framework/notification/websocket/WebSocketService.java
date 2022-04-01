@@ -1,7 +1,7 @@
 package ca.dal.comparify.framework.notification.websocket;
 
 import ca.dal.comparify.framework.app.ApplicationScope;
-import ca.dal.comparify.notification.model.WebSocketNotificationModel;
+import ca.dal.comparify.framework.notification.model.WebSocketNotificationModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

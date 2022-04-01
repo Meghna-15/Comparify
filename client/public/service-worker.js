@@ -31,7 +31,7 @@ self.addEventListener('push', async event => {
     icon: data.notification.icon
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions)
+  //self.registration.showNotification(notificationTitle, notificationOptions)
 
   // if(data.type) {
 

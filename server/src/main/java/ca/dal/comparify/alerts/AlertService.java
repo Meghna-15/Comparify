@@ -3,8 +3,10 @@ package ca.dal.comparify.alerts;
 import ca.dal.comparify.alerts.model.AlertModel;
 import ca.dal.comparify.alerts.model.AlertRequestModel;
 import ca.dal.comparify.alerts.model.AlertResponseModel;
+import ca.dal.comparify.framework.notification.model.AbstractChannelNotificationModel;
+import ca.dal.comparify.framework.notification.model.WebPushNotificationModel;
+import ca.dal.comparify.framework.notification.model.WebSocketNotificationModel;
 import ca.dal.comparify.model.HashModel;
-import ca.dal.comparify.alerts.model.AlertTypeEnum;
 import ca.dal.comparify.notification.NotificationService;
 import ca.dal.comparify.notification.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static ca.dal.comparify.alerts.model.AlertTypeEnum.PRODUCT_INFORMATION_AVAILABLE;
 import static ca.dal.comparify.utils.ObjectUtils.convert;
-import java.util.stream.Stream;
 
 /**
  * @author Harsh Shah
@@ -109,12 +109,11 @@ public class AlertService {
         }
 
         for (AlertModel alert : alerts) {
-            AbstractChannelNotificationModel model = new WebPushNotificationModel(
+            WebPushNotificationModel model = new WebPushNotificationModel(
                 alert.getAudit().getCreatedBy(), alert.getAlertIdentifier(),
                 message, IconType.ALERT, NotificationTypeEnum.ALERT);
 
-            notificationService.send(alert.getAudit().getCreatedBy(),
-                NotificationChannelType.PUSH, model);
+            notificationService.send(alert.getAudit().getCreatedBy(), model);
         }
     }
 
@@ -132,11 +131,11 @@ public class AlertService {
 
         for (AlertModel alert : alerts) {
             String userId = alert.getAudit().getCreatedBy();
-            AbstractChannelNotificationModel model = new WebSocketNotificationModel(
+            WebSocketNotificationModel model = new WebSocketNotificationModel(
                 Collections.singletonList(userId),
                 alert.getAlertIdentifier(), message, IconType.ALERT, NotificationTypeEnum.ALERT);
 
-            notificationService.send(userId, NotificationChannelType.SOCKET, model);
+            notificationService.send(userId, model);
         }
     }
 
