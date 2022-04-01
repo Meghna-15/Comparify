@@ -4,6 +4,7 @@ import ca.dal.comparify.alerts.model.AlertModel;
 import ca.dal.comparify.alerts.model.AlertRequestModel;
 import ca.dal.comparify.alerts.model.AlertResponseModel;
 import ca.dal.comparify.model.HashModel;
+import ca.dal.comparify.alerts.model.AlertTypeEnum;
 import ca.dal.comparify.notification.NotificationService;
 import ca.dal.comparify.notification.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 import static ca.dal.comparify.alerts.model.AlertTypeEnum.PRODUCT_INFORMATION_AVAILABLE;
 import static ca.dal.comparify.utils.ObjectUtils.convert;
+import java.util.stream.Stream;
 
 /**
  * @author Harsh Shah

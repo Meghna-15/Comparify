@@ -19,10 +19,19 @@ self.addEventListener('push', async event => {
 
   let data = null
   try {
-    data = JSON.parse(event.data)
+    data = await event.data.json()
+    console.log(data)
   } catch(e){
     return;
   }
+
+  const notificationTitle = data.notification.title;
+  const notificationOptions = {
+    body: data.notification.body,
+    icon: data.notification.icon
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions)
 
   // if(data.type) {
 
