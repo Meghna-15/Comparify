@@ -84,7 +84,6 @@ public class AlertRepository {
      * @param itemId
      * @param brandId
      * @return
-     *
      * @author Harsh Shah
      */
     public HashModel checkForAlerts(String brandId, String itemId) {
@@ -109,7 +108,6 @@ public class AlertRepository {
     /**
      * @param alertId
      * @return
-     *
      * @author Harsh Shah
      */
     public AlertModel fetchAlertById(String alertId) {
