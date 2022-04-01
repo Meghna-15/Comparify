@@ -9,7 +9,7 @@ import useStyles from "../../hooks/use-styles";
 const style = {
     root: {
         display: "inline-block",
-        margin: "30px 0px",
+        margin: "30px 0px 30px 0px",
     },
     button: {
         marginTop: "16px",
