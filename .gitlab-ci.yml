@@ -20,7 +20,10 @@ test:
       junit:
         - server/target/surefire-reports/TEST-*.xml
         - server/target/failsafe-reports/TEST-*.xml
-    
+  only:
+    changes:
+      - server/**/*
+
 # -------------------------- Build Server for Dev -------------------------- #
 build_server_for_dev:
   stage: build
