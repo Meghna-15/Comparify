@@ -91,6 +91,8 @@ public class DateUtils {
     /**
      * @param date yyyy-MM-dd
      * @return
+     *
+     * @author Harsh Shah
      */
     public static LocalDate parse(String date){
         return LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
