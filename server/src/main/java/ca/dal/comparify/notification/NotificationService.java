@@ -81,4 +81,9 @@ public class NotificationService {
     }
 
 
+    public boolean sendMail(String emailId, MailNotificationModel notification){
+        return mailService.send(emailId, notification.getTitle(), notification.getMessage(), notification.getModel());
+    }
+
+
 }
