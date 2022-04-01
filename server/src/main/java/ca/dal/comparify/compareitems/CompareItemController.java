@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -27,5 +28,10 @@ public class CompareItemController {
     public ResponseEntity<Map<String, String>> create(@RequestBody CompareItemsModel model) {
         int status = compareItemService.create(model);
         return ResponseEntityUtils.returnStatus(status);
+    }
+
+    @GetMapping("/")
+    public ArrayList<Map<String, Object>> getComparisions(@RequestParam(name = "itemId") String ItemId){
+        return compareItemService.fetchComparisions(ItemId, null);
     }
 }
