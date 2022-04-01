@@ -1,5 +1,7 @@
 package ca.dal.comparify.compareitems;
 
+import ca.dal.comparify.alerts.AlertService;
+import ca.dal.comparify.compareitems.CompareItemRepository;
 import ca.dal.comparify.compareitems.model.CompareItemsModel;
 import ca.dal.comparify.brand.BrandService;
 import ca.dal.comparify.store.StoreService;
@@ -24,6 +26,9 @@ public class CompareItemService {
     @Autowired
     private StoreService storeService;
 
+    @Autowired
+    private AlertService alertService;
+
     /**
      * @param model
      * @return
@@ -31,7 +36,15 @@ public class CompareItemService {
      * @author Chanpreet Singh
      */
     public int create(CompareItemsModel model){
-        return compareItemRepository.save(CompareItemsModel.create(model));
+
+        int status = compareItemRepository.save(CompareItemsModel.create(model));
+
+        if(status == 0){
+            alertService.trigger(model.getBrandId(), model.getProductId());
+        }
+
+        return status;
+
     }
 
     /**
