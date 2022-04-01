@@ -81,6 +81,13 @@ public class NotificationService {
     }
 
 
+    /**
+     * @param emailId
+     * @param notification
+     * @return
+     *
+     * @author Harsh Shah
+     */
     public boolean sendMail(String emailId, MailNotificationModel notification){
         return mailService.send(emailId, notification.getTitle(), notification.getMessage(), notification.getModel());
     }

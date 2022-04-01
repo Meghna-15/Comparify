@@ -44,6 +44,7 @@ public class AlertService {
      * @param alert
      * @param createdBy
      * @return
+     * 
      * @author Harsh Shah
      */
     public int create(AlertRequestModel alert, String createdBy) {
@@ -66,6 +67,7 @@ public class AlertService {
     /**
      * @param userIdentifier
      * @return
+     * 
      * @author Harsh Shah
      */
     public List<AlertResponseModel> fetch(String userIdentifier) {
@@ -76,6 +78,7 @@ public class AlertService {
      * @param userId
      * @param id
      * @return
+     * 
      * @author Harsh Shah
      */
     public boolean delete(String userId, String id) {
@@ -104,6 +107,7 @@ public class AlertService {
     /**
      * @param brandId
      * @param productId
+     * 
      * @author Harsh Shah
      */
     public void trigger(String brandId, String productId) {
@@ -138,6 +142,7 @@ public class AlertService {
     /**
      * @param alerts
      * @param message
+     * 
      * @author Harsh Shah
      */
     private void triggerWebPush(List<AlertModel> alerts, String message) {
@@ -158,6 +163,7 @@ public class AlertService {
     /**
      * @param alerts
      * @param message
+     * 
      * @author Harsh Shah
      */
     private void triggerSocket(List<AlertModel> alerts, String message) {
@@ -178,6 +184,7 @@ public class AlertService {
     /**
      * @param alertId
      * @return
+     *
      * @author Harsh Shah
      */
     private AlertModel fetchAlertById(String alertId) {
@@ -198,9 +205,10 @@ public class AlertService {
      * @param userId
      * @param alertIdentifier
      * @return
+     *
      * @author Harsh Shah
      */
-    private HashModel createMailModel(String userId, String alertIdentifier) {
+    private HashModel createMailModel(String userId, String alertIdentifier){
         UserDetailsModel user = userDetailsService.findUserById(userId);
 
         HashModel model = new HashModel();
