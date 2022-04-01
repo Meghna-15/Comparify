@@ -69,38 +69,23 @@ async function getDb() {
   });
 }
 
-messaging.setBackgroundMessageHandler(function (payload) {
-  const notificationTitle = 'Background Title (client)';
-  const notificationOptions = {
-    body: 'Background Body (client)',
-    icon: '/mail.png'
-  };
-
-  return self.registration.showNotification(notificationTitle, notificationOptions);
-});
-
-
 const CACHE_NAME = 'comparify-cache-v1';
-const urlsToCache = [
-  '/index.html',
-  '/index.js',
-  '/manifest.json'
-];
+const urlsToCache = [];
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE_NAME)
-    .then(cache => cache.addAll(urlsToCache)));
+  // event.waitUntil(caches.open(CACHE_NAME)
+  //   .then(cache => cache.addAll(urlsToCache)));
 });
 
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-      )
-  );
+  // event.respondWith(
+  //   caches.match(event.request)
+  //     .then(response => {
+  //       if (response) {
+  //         return response;
+  //       }
+  //       return fetch(event.request);
+  //     }
+  //     )
+  // );
 });
