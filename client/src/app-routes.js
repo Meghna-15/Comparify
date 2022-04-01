@@ -32,7 +32,7 @@ const AppRoutes = (props) => {
           <Route path="/home" element={<Menus />}>
             <Route path="alert" element={<Alerts />} />
             <Route path="profile" element={<UserProfile />} />
-            <Route path="/search" element={<SearchProduct />} />
+            <Route path="search" element={<SearchProduct />} />
           </Route>
         </Route>
       </Routes>

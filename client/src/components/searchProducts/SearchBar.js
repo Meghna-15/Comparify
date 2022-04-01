@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { searchProduct } from "../../store/thunk/productThunkCreators";
 
 
+
 const style = {
   root: {
     display: "inline-block",
@@ -73,7 +74,6 @@ const SearchBar = (props) => {
           </Grid>
         </form>
       </Box>
-        {/* <ProductList values = {this.products}/>  */}
     </Grid> 
   
   

@@ -1,7 +1,7 @@
 package ca.dal.comparify.searchProduct.model;
 
-
-
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 
 public class Product {
    
@@ -11,17 +11,24 @@ public class Product {
     private String StoreName;
     private double unitOrVolume;
     private double Price;
+    private String image;
+    private String description;
+
+    @BsonId
+    private String recordId;
 
     public Product(){
 
     }
-    public Product(String productname, String brandName, String storeName, double unitOrVolume, double price) {
-    
+    public Product(String productname, String brandName, String storeName, double unitOrVolume, double price,String image,String description,@BsonId String  recordId) {
         Productname = productname;
         BrandName = brandName;
         StoreName = storeName;
         this.unitOrVolume = unitOrVolume;
         Price = price;
+        this.image=image;
+        this.description=description;
+        this.recordId=recordId;
     }
   
     public String getBrandName() {
@@ -54,5 +61,23 @@ public class Product {
     }
     public void setPrice(double price) {
         this.Price = price;
+    }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getRecordId() {
+        return recordId;
+    }
+    public void setRecordId(String recordId) {
+        this.recordId = recordId;
     }
 }
