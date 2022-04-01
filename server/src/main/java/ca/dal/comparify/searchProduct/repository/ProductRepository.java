@@ -60,7 +60,7 @@ public class ProductRepository {
             String productName = item.getName();
             double price = itemDetail.getPrice();
             double unit = itemDetail.getUnit();
-            String image = p
+            String image = itemDetail.getImageText();
             String description = item.getDescription();
             
             String  recordId = itemDetail.getId().toString();
