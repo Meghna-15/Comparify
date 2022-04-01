@@ -59,7 +59,7 @@ build_server_for_staging:
     paths:
        - server/target/*.jar
   only:
-    ref:
+    refs:
       - main
     changes:
       - server/**/*
@@ -78,7 +78,7 @@ build_server_for_prod:
     paths:
        - server/target/*.jar
   only:
-    ref:
+    refs:
       - tags
     changes:
       - server/**/*
@@ -142,7 +142,7 @@ code_quality_for_staging_by_designite:
     - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca"
     - eval "$UPLOAD_QUALITY_REPORT"
   only:
-    ref:
+    refs:
       - main
     changes:
       - server/**/*
@@ -166,7 +166,7 @@ code_quality_for_prod_by_designite:
     - java -jar DesigniteJava.jar -ci -repo $CI_PROJECT_PATH -pat $PAT -host "git.cs.dal.ca"
     - eval "$UPLOAD_QUALITY_REPORT"
   only:
-    ref:
+    refs:
       - tags
     changes:
       - server/**/*
@@ -205,7 +205,7 @@ deploy_staging_client:
     - cd client
     - dpl --provider=heroku --app=$STAGING_CLIENT_HEROKU_APP_NAME --api-key=$HARSH_HEROKU_API_KEY --cleanup
   only:
-    ref:
+    refs:
       - main
     changes:
       - client/**/*
@@ -231,7 +231,7 @@ deploy_staging_server:
   when: delayed
   start_in: 5 minutes
   only:
-    ref:
+    refs:
       - main
     changes:
       - server/**/*
@@ -250,7 +250,7 @@ deploy_prod_client:
     - cd client
     - dpl --provider=heroku --app=$PRODUCTION_CLIENT_HEROKU_APP_NAME --api-key=$HARSH_HEROKU_API_KEY --cleanup
   only:
-    ref:
+    refs:
       - tags
     changes:
       - client/**/*
@@ -276,7 +276,7 @@ deploy_prod_server:
   when: delayed
   start_in: 5 minutes
   only:
-    ref:
+    refs:
       - tags
     changes:
       - server/**/*
