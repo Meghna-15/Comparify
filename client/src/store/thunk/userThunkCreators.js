@@ -1,15 +1,16 @@
 import httpClient from "./interceptor";
 import { failedAuth, failedLogout, gotAuth, gotLogout } from "../reducers/authentication";
 import { failedGetUserRole, gotUserRole } from "../reducers/user";
+import { closeSocket, openSocket } from "../../socket";
 
 
 export const authenication = (credentials) => async (dispatch) => {
-
   try {
     const { data } = await httpClient.post("/user/authentication", credentials);
     dispatch(gotAuth(data));
     localStorage.setItem("user-id", credentials.user_identifier)
     localStorage.setItem("auth-token", data.token);
+    openSocket();
   } catch (error) {
     dispatch(failedAuth(error));
     localStorage.removeItem("auth-token")
@@ -30,6 +31,7 @@ export const logout = () => async (dispatch) => {
     await httpClient.get("/user/logout");
     dispatch(gotLogout());
     localStorage.removeItem("auth-token")
+    closeSocket()
   } catch (error) {
     dispatch(failedLogout(error));
   }
@@ -52,10 +54,14 @@ return httpClient.post("/user/details", details).then((response) => {
   });
 };
 
+export const signup = (credentials) => async (dispatch) => {
+  try {
+    await httpClient.post("/user/register", credentials);
+  } catch (error) {}
+};
 
 
 export const addproducts = (a) => {
-  console.log(a)
   return httpClient.post("/compareitems/", a).then((response) => {
     return a
 }, (error) => {
@@ -64,7 +70,7 @@ export const addproducts = (a) => {
 }; 
 
 
-    export const itemCategories = () => {
+  export const itemCategories = () => {
   return httpClient.get("/itemcategories/" ).then((response) => {
       let data = response.data
       return data;
@@ -102,4 +108,21 @@ export const storeListDropDown = () => {
   }, (error) => {
     alert(error);
   });
+};
+
+
+export const addfeedback = (fb) => {
+  return httpClient.post("/feedback", fb).then((response) => {
+    return response
+}, (error) => {
+  alert(error);
+});
+}; 
+
+export const addAdminproducts = (item) => {
+  return httpClient.post("/item/", item).then((response) => {
+    return item
+}, (error) => {
+  alert(error);
+});
 };
