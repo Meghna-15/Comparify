@@ -1,7 +1,6 @@
 package ca.dal.comparify.compareitems;
 
 import ca.dal.comparify.alerts.AlertService;
-import ca.dal.comparify.compareitems.CompareItemRepository;
 import ca.dal.comparify.compareitems.model.CompareItemsModel;
 import ca.dal.comparify.brand.BrandService;
 import ca.dal.comparify.item.ItemService;
@@ -29,6 +28,8 @@ public class CompareItemService {
     private StoreService storeService;
     @Autowired
     private AlertService alertService;
+    private final String STATUS_VERIFIED = "verified";
+    private final String STATUS_NOT_VERIFIED = "not verified";
     @Autowired
     private ItemService itemService;
     @Autowired
@@ -41,7 +42,7 @@ public class CompareItemService {
      * @author Chanpreet Singh
      */
     public int create(CompareItemsModel model){
-        int status = compareItemRepository.save(CompareItemsModel.create(model));
+        int status = compareItemRepository.save(model);
         if(status == 0){
             alertService.trigger(model.getBrandId(), model.getProductId());
         }
@@ -108,6 +109,30 @@ public class CompareItemService {
             storeIds.add(each.getStoreId());
         Map<String, Object> storeResults = storeService.getSpecificStoreDetails(storeIds);
         return storeResults;
+    }
+
+    /**
+     * @return true when successful
+     * Checks if the item is valid or not by checking the price entry on the same day
+     * @author Aman Singh Bhandari
+     */
+    public Boolean verifyItem(CompareItemsModel itemModel)
+    {
+        List<CompareItemsModel> itemModels = compareItemRepository.getSameItems(itemModel);
+
+        if(itemModels.size() == 1)      //Only when there is/are items with same price on same day
+        {
+            CompareItemsModel firstModel = itemModels.get(0);
+            firstModel.setStatus(STATUS_VERIFIED);
+            compareItemRepository.updateItem(firstModel);
+            return true;
+        }
+        else if(itemModels.size() == 0)     //First item with this price on this day.. not verified
+        {
+            return false;
+        }
+
+        return true;        //Multiple verified documents found.. all verified
     }
 
     /**
