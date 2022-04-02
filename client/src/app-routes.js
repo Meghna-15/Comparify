@@ -12,6 +12,11 @@ import Register from "./components/register";
 import SetSecurityQuestion from "./components/forgetPassword/SetSecurityQuestion";
 import ResetPassword from "./components/forgetPassword/ResetPassword";
 import NewPassword from "./components/forgetPassword/NewPassword";
+import Addproduct from "./components/products/addproduct";
+import Feedback from "./components/feedback/Feedback";
+import Analytics from "./components/analytics/Analytics";
+import UserManagement from "./components/user_management/UserManagement";
+import AddStore from "./components/store/AddStore";
 
 const AppRoutes = (props) => {
   return (
@@ -30,8 +35,14 @@ const AppRoutes = (props) => {
         </Route>
         <Route element={<AuthGuard />}>
           <Route path="/home" element={<Menus />}>
+            <Route index element={<Analytics />} />
+            <Route path="analytics" element={<Analytics />} />
             <Route path="alert" element={<Alerts />} />
             <Route path="profile" element={<UserProfile />} />
+            <Route path="addproduct" element={<Addproduct />} />
+            <Route path="feedback" element={<Feedback />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="addstore" element={<AddStore />} />
             <Route path="search" element={<SearchProduct />} />
           </Route>
         </Route>

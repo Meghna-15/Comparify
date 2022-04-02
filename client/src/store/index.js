@@ -6,6 +6,10 @@ import authentication from "./reducers/authentication";
 import user from "./reducers/user";
 import alert from "./reducers/alert";
 import product from "./reducers/product";
+import item from "./reducers/item";
+import brand from "./reducers/brand";
+import notification from "./reducers/notification";
+import analytics from "./reducers/analytics";
 
 const CLEAR_ON_LOGOUT = "CLEAR_ON_LOGOUT";
 
@@ -19,7 +23,11 @@ const appReducer = combineReducers({
   authentication, 
   user,
   alert,
-  product
+  product,
+  item,
+  brand,
+  notification,
+  analytics
 });
 
 const rootReducer = (state, action) => {

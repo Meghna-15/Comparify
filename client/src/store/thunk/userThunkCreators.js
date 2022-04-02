@@ -1,6 +1,6 @@
 import httpClient from "./interceptor";
 import { failedAuth, failedLogout, gotAuth, gotLogout } from "../reducers/authentication";
-import { failedGetUserRole, gotUserRole } from "../reducers/user";
+import { failedGetUserRole, failedGetUsers, gotAllUsers, gotUserRole } from "../reducers/user";
 import { closeSocket, openSocket } from "../../socket";
 
 
@@ -62,7 +62,6 @@ export const signup = (credentials) => async (dispatch) => {
 
 
 export const addproducts = (a) => {
-  console.log(a)
   return httpClient.post("/compareitems/", a).then((response) => {
     return a
 }, (error) => {
@@ -71,7 +70,7 @@ export const addproducts = (a) => {
 }; 
 
 
-    export const itemCategories = () => {
+  export const itemCategories = () => {
   return httpClient.get("/itemcategories/" ).then((response) => {
       let data = response.data
       return data;
@@ -109,4 +108,31 @@ export const storeListDropDown = () => {
   }, (error) => {
     alert(error);
   });
+};
+
+
+export const addfeedback = (fb) => {
+  return httpClient.post("/feedback", fb).then((response) => {
+    return response
+}, (error) => {
+  alert(error);
+});
+}; 
+
+export const addAdminproducts = (item) => {
+  return httpClient.post("/item/", item).then((response) => {
+    return item
+}, (error) => {
+  alert(error);
+});
+};
+
+
+export const getAllUser = () => async (dispatch) => {
+  try {
+    const { data } = await httpClient.get("/user/all");
+    dispatch(gotAllUsers(data));
+  } catch (error) {
+    dispatch(failedGetUsers(error)); 
+  }
 };
