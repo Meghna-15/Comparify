@@ -48,6 +48,8 @@ public class WebPushNotificationService {
             FirebaseApp.initializeApp(options);
         } catch (IOException e) {
 
+        } catch (Exception e){
+
         }
     }
 

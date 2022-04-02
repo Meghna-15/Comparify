@@ -53,7 +53,7 @@ public class SchedulerService {
                 MailTemplateConstant.ACCOUNT_SECRET_EXPIRES,
                 IconType.ALERT, NotificationTypeEnum.ALERT, id, model);
 
-            notificationService.sendMail(email, notification);
+            notificationService.sendMail(id, email, notification);
 
         }
     }
