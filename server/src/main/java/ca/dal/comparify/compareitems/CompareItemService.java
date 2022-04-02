@@ -35,7 +35,7 @@ public class CompareItemService {
     private ItemService itemService;
     @Autowired
     private ItemCategoryService itemCategoryService;
-
+    
     /**
      * @param model
      * @return
