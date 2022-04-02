@@ -21,7 +21,7 @@ import java.time.format.FormatStyle;
 import java.util.Collections;
 import java.util.List;
 
-import static ca.dal.comparify.alerts.model.AlertTypeEnum.PRODUCT_INFORMATION_AVAILABLE;
+import static ca.dal.comparify.alerts.model.AlertTypeEnum.*;
 import static ca.dal.comparify.utils.DateUtils.zoneNow;
 import static ca.dal.comparify.utils.ObjectUtils.convert;
 
@@ -118,10 +118,10 @@ public class AlertService {
             convert((List<Object>) alerts.get(PRODUCT_INFORMATION_AVAILABLE.getValueLowerCase()), AlertModel.class);
 
         List<AlertModel> alertsOnPriceDrop =
-            convert((List<Object>) alerts.get(PRODUCT_INFORMATION_AVAILABLE.getValueLowerCase()), AlertModel.class);
+            convert((List<Object>) alerts.get(PRICE_DROP.getValueLowerCase()), AlertModel.class);
 
         List<AlertModel> alertsOnPriceRange =
-            convert((List<Object>) alerts.get(PRODUCT_INFORMATION_AVAILABLE.getValueLowerCase()), AlertModel.class);
+            convert((List<Object>) alerts.get(PRICE_RANGE.getValueLowerCase()), AlertModel.class);
 
 
         triggerSocket(alertsOnInformationAvailable, "Product Information Available");

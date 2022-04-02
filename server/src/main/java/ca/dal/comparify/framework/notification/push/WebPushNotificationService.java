@@ -45,7 +45,7 @@ public class WebPushNotificationService {
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
 
-            //FirebaseApp.initializeApp(options);
+            FirebaseApp.initializeApp(options);
         } catch (IOException e) {
 
         }
@@ -61,6 +61,10 @@ public class WebPushNotificationService {
     public boolean send(String userId, WebPushNotificationModel model) {
 
         String token = applicationScope.getUserToReceiverToken(userId);
+
+        if(token == null){
+            return false;
+        }
 
         Message message = Message.builder()
             .setToken(token)
