@@ -8,6 +8,7 @@ import { saveStore } from "../../store/thunk/storeThunkCreators";
 import useStyles from "../../hooks/use-styles";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import { storeAddSuccess } from "../../store/reducers/store";
 
 const style = {
   root: {
@@ -57,7 +58,9 @@ const AddStore = (props) => {
     },
   });
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(storeAddSuccess("failed"));
+  }, [dispatch]);
 
   function showSuccess() {
     if (status === "success") {
