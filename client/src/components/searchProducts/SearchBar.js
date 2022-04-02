@@ -1,4 +1,4 @@
-import { Button, TextField, Box, Grid, MenuItem } from "@material-ui/core";
+import { Button, TextField, Box, Grid} from "@material-ui/core";
 import { useFormik } from "formik";
 import React from "react";
 import { useDispatch} from "react-redux";
@@ -23,7 +23,6 @@ const style = {
   },
 };
 const SearchBar = (props) => {
-  const navigate = useNavigate();
   const classes = useStyles(style);
   const dispatch = useDispatch();
 

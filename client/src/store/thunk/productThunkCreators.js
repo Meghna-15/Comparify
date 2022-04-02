@@ -1,4 +1,4 @@
-import { alertCreated, alertCreationFailed, alertsFetched, alertsFetchedFailed } from "../reducers/alert";
+import { alertsFetchedFailed } from "../reducers/alert";
 import httpClient from "./interceptor";
 import { gotProductList } from "../reducers/product";
 
