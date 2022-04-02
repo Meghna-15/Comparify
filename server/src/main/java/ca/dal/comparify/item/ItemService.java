@@ -26,7 +26,10 @@ public class ItemService {
      * @author Chanpreet Singh
      */
     public int create(ItemRequestModel model, String createdBy){
-        return itemRepository.save(ItemModel.create(model, createdBy));
+        if(!findItem(model.getName()))
+            return itemRepository.save(ItemModel.create(model, createdBy));
+        else
+            return -2;
     }
 
     /**
@@ -46,4 +49,28 @@ public class ItemService {
         return result;
     }
 
+    /**
+     * @author Chanpreet Singh
+     */
+    public boolean findItem(String itemName){
+        boolean status = false;
+        ItemModel mongoResult = itemRepository.searchItemName(itemName);
+        if(mongoResult != null)
+            status = true;
+        return status;
+    }
+
+    /**
+     * @author Chanpreet Singh
+     */
+    public Map<String, Object> getItemDetails(String itemId){
+        ItemModel mongoResult = itemRepository.findOneItem(itemId);
+        Map result = new HashMap(){{
+            put("name", mongoResult.getName());
+            put("description", mongoResult.getDescription());
+            put("image", mongoResult.getDefaultImage());
+            put("categoryId", mongoResult.getItemCategoryId());
+        }};
+        return result;
+    }
 }
