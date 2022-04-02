@@ -19,6 +19,11 @@ import static ca.dal.comparify.mongo.MongoUtils.eq;
 public class CompareItemRepository {
 
     public static final String ITEM_COLLECTION = "compareItems";
+    private final String BRAND_ID= "brandId";
+    private final String STORE_ID= "storeId";
+    private final String PRODUCT_ID= "productId";
+    private String DATE_OF_PURCHASE= "dateOfPurchase";
+    private final String PRICE = "price";
 
     @Autowired
     private MongoRepository mongoRepository;
@@ -56,5 +61,21 @@ public class CompareItemRepository {
             e.printStackTrace();
         }
         return parsedDate;
+    }
+
+    /**
+     * @author aman singh bhandari
+     */
+    public List<CompareItemsModel> getSameItems(CompareItemsModel comparifyItemsModel)
+    {
+        Bson query = and(eq(BRAND_ID,comparifyItemsModel.getBrandId()),
+                eq(STORE_ID,comparifyItemsModel.getStoreId()),
+                eq(PRODUCT_ID, comparifyItemsModel.getProductId()),
+                eq(DATE_OF_PURCHASE, comparifyItemsModel.getDateOfPurchase()),
+                eq(PRICE, comparifyItemsModel.getDateOfPurchase()));
+
+        List<CompareItemsModel> list = mongoRepository.find(ITEM_COLLECTION, query, CompareItemsModel.class);
+
+        return list;
     }
 }

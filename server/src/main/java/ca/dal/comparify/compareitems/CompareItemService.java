@@ -99,7 +99,8 @@ public class CompareItemService {
      */
     public Boolean verifyItem(CompareItemsModel itemModel)
     {
-        //List<CompareItemsModel> itemModels = compareItemRepository.getSameItems(itemModel);
+        List<CompareItemsModel> itemModels = compareItemRepository.getSameItems(itemModel);
+        
 
         return true;
     }
