@@ -1,5 +1,6 @@
 package ca.dal.comparify.compareitems;
 
+import ca.dal.comparify.alerts.AlertService;
 import ca.dal.comparify.compareitems.model.CompareItemsModel;
 import ca.dal.comparify.brand.BrandService;
 import ca.dal.comparify.store.StoreService;
@@ -23,6 +24,8 @@ public class CompareItemService {
     private BrandService brandService;
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private AlertService alertService;
 
     /**
      * @param model
@@ -31,12 +34,18 @@ public class CompareItemService {
      * @author Chanpreet Singh
      */
     public int create(CompareItemsModel model){
-        return compareItemRepository.save(CompareItemsModel.create(model));
+
+        int status = compareItemRepository.save(CompareItemsModel.create(model));
+
+        if(status == 0){
+            alertService.trigger(model.getBrandId(), model.getProductId());
+        }
+
+        return status;
+
     }
 
     /**
-     * @return
-     *
      * @author Chanpreet Singh
      */
     public ArrayList<Map<String, Object>> fetchComparisions(String ItemId, String date){
@@ -63,6 +72,9 @@ public class CompareItemService {
         return result;
     }
 
+    /**
+     * @author Chanpreet Singh
+     */
     public Map<String, Object> getBrandDetails(List<CompareItemsModel> mongoResult){
         ArrayList<String> brandIds = new ArrayList<String>();
         for(CompareItemsModel each : mongoResult)
@@ -71,6 +83,9 @@ public class CompareItemService {
         return brandResults;
     }
 
+    /**
+     * @author Chanpreet Singh
+     */
     public Map<String, Object> getStoreDetails(List<CompareItemsModel> mongoResult){
         ArrayList<String> storeIds = new ArrayList<String>();
         for(CompareItemsModel each : mongoResult)
