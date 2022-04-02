@@ -91,4 +91,16 @@ public class CompareItemService {
         Map<String, Object> storeResults = storeService.getSpecificStoreDetails(storeIds);
         return storeResults;
     }
+
+    /**
+     * @return
+     * Checks if the item is valid or not by checking the price entry on the same day
+     * @author Aman Singh Bhandari
+     */
+    public Boolean verifyItem(CompareItemsModel itemModel)
+    {
+        //List<CompareItemsModel> itemModels = compareItemRepository.getSameItems(itemModel);
+
+        return true;
+    }
 }

@@ -32,6 +32,10 @@ public class CompareItemController {
     public ResponseEntity<Map<String, String>> create(@RequestBody CompareItemsModel model) {
         appreciationService.addAppreciation(model);
 
+        Boolean result = compareItemService.verifyItem(model);
+        if(result == false)
+            return null;    //do not execute next steps if something went wrong
+
         int status = compareItemService.create(model);
         return ResponseEntityUtils.returnStatus(status);
     }
