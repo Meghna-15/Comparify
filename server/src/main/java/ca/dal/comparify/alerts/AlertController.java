@@ -64,6 +64,7 @@ public class AlertController {
 
     @GetMapping("/trigger")
     public void trigger(){
+        // Test API
         alertService.trigger("84e218d4-2c57-47a1-85b1-91f1b201a437", "588fa189-7ed1-41c0-8cc7-eac61304e7b9");
     }
 
