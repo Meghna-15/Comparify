@@ -32,7 +32,7 @@ const AppRoutes = (props) => {
         </Route>
         <Route element={<AuthGuard />}>
           <Route path="/home" element={<Menus />} >
-            {/* <Route index element={<Analysis />} /> */}
+            <Route index element={<Analysis />} />
             <Route path="analysis" element={<Analysis />} />
             <Route path="alert" element={<Alerts />} />
             <Route path="profile" element={<UserProfile />} />
