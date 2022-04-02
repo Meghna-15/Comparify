@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPriceTrendForBrands } from '../../store/thunk/analysisThunkCreators';
+import { fetchPriceTrendForBrands } from '../../store/thunk/analyticsThunkCreators';
 
 
 function generateOptions(title, categories, data) {
@@ -52,10 +52,10 @@ function generateOptions(title, categories, data) {
     }
 }
 
-const Analysis = (props) => {
+const Analytics = (props) => {
 
     const dispatch = useDispatch();
-    const priceTrendForBrands = useSelector((state) => state.analysis.price_trend_for_brands);
+    const priceTrendForBrands = useSelector((state) => state.analytics.price_trend_for_brands);
 
     const [priceData, setPriceData ] = useState(null)
 
@@ -64,8 +64,6 @@ const Analysis = (props) => {
     }, [dispatch])
 
     useEffect(() => {
-
-        const points = {}
 
         if(!priceTrendForBrands || !priceTrendForBrands.trend){
             return;
@@ -118,4 +116,4 @@ const Analysis = (props) => {
     </div>)
 }
 
-export default Analysis;
+export default Analytics;

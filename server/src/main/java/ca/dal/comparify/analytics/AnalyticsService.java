@@ -1,4 +1,4 @@
-package ca.dal.comparify.analysis;
+package ca.dal.comparify.analytics;
 
 import ca.dal.comparify.brand.model.BrandModel;
 import ca.dal.comparify.model.HashModel;
@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
  * @author Harsh Shah
  */
 @Service
-public class AnalysisService {
+public class AnalyticsService {
 
     @Autowired
-    private AnalysisRepository analysisRepository;
+    private AnalyticsRepository analyticsRepository;
 
     /**
      * @param itemId
@@ -25,16 +25,22 @@ public class AnalysisService {
      * @author Harsh Shah
      */
     public List<HashModel> getPriceTrend(String itemId){
-        return analysisRepository.getPriceTrend(itemId);
+        return analyticsRepository.getPriceTrend(itemId);
     }
 
+    /**
+     * @param itemId
+     * @return
+     *
+     * @author Harsh Shah
+     */
     public HashModel getPriceTrendForDifferentBrands(String itemId){
-        HashModel result = analysisRepository.getPriceTrendForDifferentBrands(itemId);
+        HashModel result = analyticsRepository.getPriceTrendForDifferentBrands(itemId);
 
         List<Map<String, Object>> brands = (List<Map<String, Object>>) result.get("brands");
         List<String> brand = brands.stream().map(itr -> (String) itr.get("_id")).collect(Collectors.toList());
 
-        List<BrandModel> brandInfo = analysisRepository.getBrands(brand);
+        List<BrandModel> brandInfo = analyticsRepository.getBrands(brand);
 
         result.put("brands", brandInfo);
 

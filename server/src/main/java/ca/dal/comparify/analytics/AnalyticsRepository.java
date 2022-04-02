@@ -1,4 +1,4 @@
-package ca.dal.comparify.analysis;
+package ca.dal.comparify.analytics;
 
 import ca.dal.comparify.brand.model.BrandModel;
 import ca.dal.comparify.compareitems.CompareItemRepository;
@@ -18,7 +18,7 @@ import static java.util.Arrays.asList;
  * @author Harsh Shah
  */
 @Service
-public class AnalysisRepository {
+public class AnalyticsRepository {
 
     @Autowired
     private MongoRepository mongoRepository;

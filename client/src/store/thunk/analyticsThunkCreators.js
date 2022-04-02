@@ -1,4 +1,4 @@
-import { failedGetPriceTrend, failedGetPriceTrendForBrands, gotPriceTrend, gotPriceTrendForBrands } from "../reducers/analysis";
+import { failedGetPriceTrend, failedGetPriceTrendForBrands, gotPriceTrend, gotPriceTrendForBrands } from "../reducers/analytics";
 import httpClient from "./interceptor";
 
 

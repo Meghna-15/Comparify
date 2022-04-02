@@ -1,4 +1,4 @@
-package ca.dal.comparify.analysis;
+package ca.dal.comparify.analytics;
 
 import ca.dal.comparify.model.HashModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,12 @@ import java.util.List;
 /**
  * @author Harsh Shah
  */
-@RequestMapping("/analysis")
+@RequestMapping("/analytics")
 @RestController
-public class AnalysisController {
+public class AnalyticsController {
 
     @Autowired
-    private AnalysisService analysisService;
+    private AnalyticsService analyticsService;
 
     /**
      * @param itemId
@@ -27,12 +27,12 @@ public class AnalysisController {
      */
     @GetMapping("")
     public List<HashModel> getPriceTrend(@RequestParam("item_id") String itemId){
-        return analysisService.getPriceTrend(itemId);
+        return analyticsService.getPriceTrend(itemId);
     }
 
     @GetMapping("/brands")
     public HashModel getPriceTrendForDifferentBrands(@RequestParam("item_id") String itemId){
-        return analysisService.getPriceTrendForDifferentBrands(itemId);
+        return analyticsService.getPriceTrendForDifferentBrands(itemId);
     }
 
 }
