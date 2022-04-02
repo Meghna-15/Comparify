@@ -29,6 +29,7 @@ import Fab from '@mui/material/Fab';
 import NotificationTray from "./../notification/NotificationTray";
 import CategoryIcon from '@mui/icons-material/Category';
 import FeedbackIcon from '@mui/icons-material/Feedback';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 const style = {
   root: {},
@@ -51,7 +52,7 @@ function Menus(props) {
 
   //Titles stored for all the menus
   var titles = ['Home','Add Item','Alerts','Feedback', 'User Profile', 'Log out'];
-  var titlesAdmin = ['Home','Add Product', 'User Feedback', 'Log out'];
+  var titlesAdmin = ['Home','Add Product', 'User Feedback', "User Management", 'Log out'];
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [titlePage, setTitlePage] = React.useState(titles[0]);
@@ -102,8 +103,10 @@ function Menus(props) {
       if(index === 1)
         return <CategoryIcon />
       else if(index === 2)
-        return <FeedbackIcon/>
-      else if(index === 3)
+        return <FeedbackIcon />
+        else if(index === 3)
+        return <ManageAccountsIcon />
+      else if(index === 4)
          return <LogoutIcon/>
     }
     
@@ -276,6 +279,10 @@ function menuClicked(index)
       //setDetailPage(<h1>Menu 1 detail page can be added by replacing this!</h1>)
     }
     else if(index === 3)
+    {
+      navigate("users")
+    }
+    else if(index === 4)
     {
       dispatch(logout());
     }

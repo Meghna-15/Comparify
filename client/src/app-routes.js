@@ -13,6 +13,8 @@ import ResetPassword from "./components/forgetPassword/ResetPassword";
 import NewPassword from "./components/forgetPassword/NewPassword";
 import Addproduct from "./components/products/addproduct";
 import Feedback from "./components/feedback/Feedback";
+import Analysis from "./components/analysis/Analysis";
+import UserManagement from "./components/user_management/UserManagement";
 
 
 const AppRoutes = (props) => {
@@ -30,10 +32,13 @@ const AppRoutes = (props) => {
         </Route>
         <Route element={<AuthGuard />}>
           <Route path="/home" element={<Menus />} >
+            {/* <Route index element={<Analysis />} /> */}
+            <Route path="analysis" element={<Analysis />} />
             <Route path="alert" element={<Alerts />} />
             <Route path="profile" element={<UserProfile />} />
             <Route path="addproduct" element={<Addproduct />} />
             <Route path="feedback" element={<Feedback />} />
+            <Route path="users" element={<UserManagement />} />
           </Route>
         </Route>
       </Routes>
