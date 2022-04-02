@@ -13,6 +13,8 @@ import ResetPassword from "./components/forgetPassword/ResetPassword";
 import NewPassword from "./components/forgetPassword/NewPassword";
 import Addproduct from "./components/products/addproduct";
 import Feedback from "./components/feedback/Feedback";
+import Analytics from "./components/analytics/Analytics";
+import UserManagement from "./components/user_management/UserManagement";
 import AddStore from "./components/store/AddStore";
 import AddBrand from "./components/brand/AddBrand";
 import AddAdminproduct from "./components/products/addAdminproduct";
@@ -34,6 +36,8 @@ const AppRoutes = (props) => {
         </Route>
         <Route element={<AuthGuard />}>
           <Route path="/home" element={<Menus />}>
+            <Route index element={<Analytics />} />
+            <Route path="analytics" element={<Analytics />} />
             <Route path="alert" element={<Alerts />} />
             <Route path="profile" element={<UserProfile />} />
             <Route path="addproduct" element={<Addproduct />} />
@@ -41,6 +45,7 @@ const AppRoutes = (props) => {
             <Route path="addstore" element={<AddStore />} />
             <Route path="addbrand" element={<AddBrand />} />
             <Route path="addproductadmin" element={<AddAdminproduct />} />
+            <Route path="users" element={<UserManagement />} />
           </Route>
         </Route>
       </Routes>

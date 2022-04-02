@@ -29,6 +29,7 @@ import Fab from "@mui/material/Fab";
 import NotificationTray from "./../notification/NotificationTray";
 import CategoryIcon from "@mui/icons-material/Category";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import BrandingWatermarkIcon from "@mui/icons-material/BrandingWatermark";
@@ -65,6 +66,7 @@ function Menus(props) {
     "Add Brand",
     "Add Store",
     "Add Product",
+    "User Management",
     "User Feedback",
     "Log out",
   ];
@@ -103,9 +105,10 @@ function Menus(props) {
       if (index === 0) return <HomeIcon />;
       else if (index === 1) return <AddBoxIcon />; //Add brand
       else if (index === 2) return <AddBusinessIcon />; //Add Store
-      if (index === 3) return <CategoryIcon />;
-      else if (index === 4) return <FeedbackIcon />;
-      else if (index === 5) return <LogoutIcon />;
+      else if (index === 3) return <CategoryIcon />;
+      else if (index === 4) return <ManageAccountsIcon />;
+      else if (index === 5) return <FeedbackIcon />;
+      else if (index === 6) return <LogoutIcon />;
     }
   }
 
@@ -113,7 +116,7 @@ function Menus(props) {
     let list = titlesAdmin.map((text, index) => (
       <ListItem
         button
-        key={text}
+        key={text + "-admin"}
         style={{ margin: "20px" }}
         onClick={() => {
           menuClicked(index);
@@ -128,7 +131,7 @@ function Menus(props) {
       list = titles.map((text, index) => (
         <ListItem
           button
-          key={text}
+          key={text + "-user"}
           style={{ margin: "20px" }}
           onClick={() => {
             menuClicked(index);
@@ -280,7 +283,6 @@ function Menus(props) {
     } else {
       setTitlePage(titlesAdmin[index]);
       if (index === 0) {
-        //setDetailPage(<h1>Our home page detail page can be added by replacing this!</h1>)
       } else if (index === 1) {
         navigate("addbrand");
       } else if (index === 2) {
@@ -288,8 +290,9 @@ function Menus(props) {
       } else if (index === 3) {
         navigate("addproductadmin");
       } else if (index === 4) {
-        //setDetailPage(<h1>Menu 1 detail page can be added by replacing this!</h1>)
+        navigate("users");
       } else if (index === 5) {
+      } else if (index === 6) {
         dispatch(logout());
       }
     }
