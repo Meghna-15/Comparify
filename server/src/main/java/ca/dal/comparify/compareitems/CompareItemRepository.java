@@ -1,6 +1,7 @@
 package ca.dal.comparify.compareitems;
 
 import ca.dal.comparify.compareitems.model.CompareItemsModel;
+import ca.dal.comparify.model.AppreciationModel;
 import ca.dal.comparify.mongo.MongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +10,8 @@ import org.bson.conversions.Bson;
 import java.util.Date;
 import java.util.List;
 
-import static ca.dal.comparify.mongo.MongoUtils.and;
-import static ca.dal.comparify.mongo.MongoUtils.eq;
+import static ca.dal.comparify.mongo.MongoUtils.*;
+import static ca.dal.comparify.mongo.MongoUtils.set;
 
 /**
  * @author Chanpreet Singh
@@ -72,10 +73,23 @@ public class CompareItemRepository {
                 eq(STORE_ID,comparifyItemsModel.getStoreId()),
                 eq(PRODUCT_ID, comparifyItemsModel.getProductId()),
                 eq(DATE_OF_PURCHASE, comparifyItemsModel.getDateOfPurchase()),
-                eq(PRICE, comparifyItemsModel.getDateOfPurchase()));
+                eq(PRICE, comparifyItemsModel.getPrice()));
 
         List<CompareItemsModel> list = mongoRepository.find(ITEM_COLLECTION, query, CompareItemsModel.class);
 
         return list;
+    }
+
+    /**
+     * @param compareItemsModel
+     * @return
+     * @author Aman Singh Bhandari
+     */
+    public Boolean updateItem(CompareItemsModel compareItemsModel) {
+        Bson query = eq(CompareItemsModel._ID, compareItemsModel.getId());
+        Bson[] values = {set(CompareItemsModel.STATUS,compareItemsModel.getStatus())};
+        Boolean result = mongoRepository.updateOne(ITEM_COLLECTION,query, values);
+
+        return result;
     }
 }

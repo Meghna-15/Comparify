@@ -23,6 +23,9 @@ public class CompareItemController {
     @Autowired
     private AppreciationService appreciationService;
 
+    private final String STATUS_VERIFIED = "verified";
+    private final String STATUS_NOT_VERIFIED = "not verified";
+
     /**
      * @param model
      * @return
@@ -34,7 +37,13 @@ public class CompareItemController {
 
         Boolean result = compareItemService.verifyItem(model);
         if(result == false)
-            return null;    //do not execute next steps if something went wrong
+        {
+            model.setStatus(STATUS_NOT_VERIFIED);
+        }
+        else
+        {
+            model.setStatus(STATUS_VERIFIED);
+        }
 
         int status = compareItemService.create(model);
         return ResponseEntityUtils.returnStatus(status);
