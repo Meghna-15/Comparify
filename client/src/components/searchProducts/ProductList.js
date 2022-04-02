@@ -1,12 +1,10 @@
 import { Grid } from "@mui/material";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import product from "../../store/thunk/productThunkCreators";
+import React from "react";
+import {  useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
 
 const ProductList = (props) => {
   const products = useSelector((state) => state.product.search);
-  console.log(products);
 
 
   return (

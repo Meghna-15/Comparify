@@ -1,7 +1,7 @@
 import { Button, TextField, Box, Grid, MenuItem } from "@material-ui/core";
 import { useFormik } from "formik";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useDispatch} from "react-redux";
 import useStyles from "../../hooks/use-styles";
 import { useNavigate } from "react-router-dom";
 import { searchProduct } from "../../store/thunk/productThunkCreators";
