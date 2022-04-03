@@ -17,6 +17,9 @@ import Feedback from "./components/feedback/Feedback";
 import Analytics from "./components/analytics/Analytics";
 import UserManagement from "./components/user_management/UserManagement";
 import AddStore from "./components/store/AddStore";
+import AddBrand from "./components/brand/AddBrand";
+import AddAdminproduct from "./components/products/addAdminproduct";
+import AnalyticsAdmin from "./components/analytics/AnalyticsAdmin";
 
 const AppRoutes = (props) => {
   return (
@@ -41,9 +44,11 @@ const AppRoutes = (props) => {
             <Route path="profile" element={<UserProfile />} />
             <Route path="addproduct" element={<Addproduct />} />
             <Route path="feedback" element={<Feedback />} />
-            <Route path="users" element={<UserManagement />} />
             <Route path="addstore" element={<AddStore />} />
-            <Route path="search" element={<SearchProduct />} />
+            <Route path="addbrand" element={<AddBrand />} />
+            <Route path="addproductadmin" element={<AddAdminproduct />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="analyticsadmin" element={<AnalyticsAdmin />} />
           </Route>
         </Route>
       </Routes>
