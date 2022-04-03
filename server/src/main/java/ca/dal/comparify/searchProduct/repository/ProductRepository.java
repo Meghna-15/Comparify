@@ -47,7 +47,11 @@ public class ProductRepository {
             ItemModel item = mongoRepository.findOne(ITEMCOLLECTION_NAME, eq(ITEMNAME, itemName), itemCLass);
 
             List<CompareItemsModel> itemsDetails = mongoRepository.find(ITEMDETAILCOLLECTION_NAME,
+<<<<<<< HEAD
                     eq(ITEM_ID, item.getId()),
+=======
+                    and(eq(ITEM_ID, item.getId()), eq("status", "verified")),
+>>>>>>> 0fb7a8b8be9159f5777bcd4be44d1216fa941c6f
                     itemDetailCLass);
 
             for (CompareItemsModel itemDetail : itemsDetails) {
@@ -66,7 +70,12 @@ public class ProductRepository {
                 String description = item.getDescription();
 
                 String recordId = itemDetail.getId().toString();
+<<<<<<< HEAD
                 Product p = new Product(productName, brandName, storeName, price, unit, image, description, recordId);
+=======
+                Product p = new Product(productName, brandName, storeName, price, unit, image, description,
+                    item.getId(),  recordId);
+>>>>>>> 0fb7a8b8be9159f5777bcd4be44d1216fa941c6f
                 products.add(p);
             }
 
