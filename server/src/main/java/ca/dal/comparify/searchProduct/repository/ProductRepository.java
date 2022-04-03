@@ -43,31 +43,38 @@ public class ProductRepository {
 
     public List<Product> getAllProducts(String itemName) {
         List<Product> products = new ArrayList<>();
-        ItemModel item = mongoRepository.findOne(ITEMCOLLECTION_NAME, eq(ITEMNAME, itemName), itemCLass);
+        try {
+            ItemModel item = mongoRepository.findOne(ITEMCOLLECTION_NAME, eq(ITEMNAME, itemName), itemCLass);
 
-        List<CompareItemsModel> itemsDetails = mongoRepository.find(ITEMDETAILCOLLECTION_NAME, eq(ITEM_ID, item.getId()),
-                itemDetailCLass);
+            List<CompareItemsModel> itemsDetails = mongoRepository.find(ITEMDETAILCOLLECTION_NAME,
+                    eq(ITEM_ID, item.getId()),
+                    itemDetailCLass);
 
-        for (CompareItemsModel itemDetail : itemsDetails) {
-           
-            StoreModel store = mongoRepository.findOne(STORECOLLECTION_NAME, eq(STOREID,
-            new ObjectId(itemDetail.getStoreId())),
-                    storeCLass);
-            String storeName = store.getStoreName();
-            BrandModel brand = mongoRepository.findOne(BRRANDCOLLECTION_NAME, eq(BRANDID, itemDetail.getBrandId()),
-                    brandCLass);
-            String brandName = brand.getName();
-            String productName = item.getName();
-            double price = itemDetail.getPrice();
-            double unit = itemDetail.getUnit();
-            String image = itemDetail.getImageText();
-            String description = item.getDescription();
-            
-            String  recordId = itemDetail.getId().toString();
-            Product p = new Product(productName, brandName, storeName, price, unit,image,description,recordId);
-            products.add(p);
+            for (CompareItemsModel itemDetail : itemsDetails) {
+
+                StoreModel store = mongoRepository.findOne(STORECOLLECTION_NAME, eq(STOREID,
+                        new ObjectId(itemDetail.getStoreId())),
+                        storeCLass);
+                String storeName = store.getStoreName();
+                BrandModel brand = mongoRepository.findOne(BRRANDCOLLECTION_NAME, eq(BRANDID, itemDetail.getBrandId()),
+                        brandCLass);
+                String brandName = brand.getName();
+                String productName = item.getName();
+                double price = itemDetail.getPrice();
+                double unit = itemDetail.getUnit();
+                String image = itemDetail.getImageText();
+                String description = item.getDescription();
+
+                String recordId = itemDetail.getId().toString();
+                Product p = new Product(productName, brandName, storeName, price, unit, image, description, recordId);
+                products.add(p);
+            }
+
+        } catch (Exception e) {  
+            return products;
         }
-
+      
+       
         return products;
     }
 
