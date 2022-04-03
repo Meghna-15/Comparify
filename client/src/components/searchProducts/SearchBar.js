@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import React from "react";
 import { useDispatch} from "react-redux";
 import useStyles from "../../hooks/use-styles";
-import { useNavigate } from "react-router-dom";
 import { searchProduct } from "../../store/thunk/productThunkCreators";
 
 
