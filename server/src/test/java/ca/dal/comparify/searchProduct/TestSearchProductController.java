@@ -24,19 +24,19 @@ public class TestSearchProductController {
     private MockMvc mockMvc;
    
 
-    @Test
-    public void getProducts() throws Exception {
+    // @Test
+    // public void getProducts() throws Exception {
      
        
-        this.mockMvc.perform(get("/product/search?name=Milk")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("Milk")));
-       this.mockMvc.perform(get("/product/search?name=sfsdf")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("[]")));
+    //     this.mockMvc.perform(get("/product/search?name=Milk")).andDo(print()).andExpect(status().isOk())
+    //             .andExpect(content().string(containsString("Milk")));
+    //    this.mockMvc.perform(get("/product/search?name=sfsdf")).andDo(print()).andExpect(status().isOk())
+    //             .andExpect(content().string(containsString("[]")));
      
                
                
           
 
-    }
+    // }
 
 }
