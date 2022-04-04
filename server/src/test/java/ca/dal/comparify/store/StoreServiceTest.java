@@ -96,7 +96,4 @@ public class StoreServiceTest {
 
         assertEquals(storeService.saveStore(storeModel), "success");
     }
-
-
-
 }
