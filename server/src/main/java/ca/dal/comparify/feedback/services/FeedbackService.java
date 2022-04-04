@@ -1,7 +1,6 @@
 package ca.dal.comparify.feedback.services;
 
 
-import ca.dal.comparify.feedback.repository.FeedbackRepository;
 import ca.dal.comparify.item.model.ItemModel;
 import ca.dal.comparify.item.model.ItemRequestModel;
 import com.mongodb.client.model.Filters;
