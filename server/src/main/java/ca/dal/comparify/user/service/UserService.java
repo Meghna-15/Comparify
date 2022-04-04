@@ -16,6 +16,9 @@ import java.util.List;
 public class UserService {
 
 
+    private double points=0;
+    private String type="silver";
+
     @Autowired
     private UserIAMService userIAMService;
 
@@ -56,7 +59,15 @@ public class UserService {
         return userIAMService.createUserIAMInfo(userId, userIdentifier, secret);
     }
 
+
+    /**
+     * @author Meghna Rupchandani
+     */
+
     public int register(SignupRequest signupRequest) {
+
+        signupRequest.setPoints(points);
+        signupRequest.setType(type);
         return userRegistrationService.register(signupRequest);
 
     }
@@ -90,5 +101,9 @@ public class UserService {
      */
     public List<HashModel> getAllUsers(String userId) {
         return userIAMService.getAllUsers(userId);
+    }
+
+    public boolean logout(String userId) {
+        return userIAMService.logout(userId);
     }
 }
