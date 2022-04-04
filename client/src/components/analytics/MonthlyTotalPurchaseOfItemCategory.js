@@ -73,8 +73,7 @@ const MonthlyTotalPurchaseOfItemCategory = (props) => {
 
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
-    const monthsNames = [ "January", "February", "March", "April", "May", "June", 
-    "July", "August", "September", "October", "November", "December" ];
+
 
     const formik = useFormik({
         initialValues: {
@@ -94,7 +93,8 @@ const MonthlyTotalPurchaseOfItemCategory = (props) => {
             return;
         }
 
-        const categories = Object.entries(totalPurchaseOfItemCategory).map(itr => itr[0])
+        const monthsNames = [ "January", "February", "March", "April", "May", "June", 
+        "July", "August", "September", "October", "November", "December" ];
 
         const data = Object.entries(totalPurchaseOfItemCategory)
                         .map(itr => { return {name: itr[0], data: [itr[1]]}})

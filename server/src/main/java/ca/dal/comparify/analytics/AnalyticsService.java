@@ -27,20 +27,18 @@ public class AnalyticsService {
     /**
      * @param itemId
      * @return
-     *
      * @author Harsh Shah
      */
-    public List<HashModel> getPriceTrend(String itemId){
+    public List<HashModel> getPriceTrend(String itemId) {
         return analyticsRepository.getPriceTrend(itemId);
     }
 
     /**
      * @param itemId
      * @return
-     *
      * @author Harsh Shah
      */
-    public HashModel getPriceTrendForDifferentBrands(String itemId){
+    public HashModel getPriceTrendForDifferentBrands(String itemId) {
         HashModel result = analyticsRepository.getPriceTrendForDifferentBrands(itemId);
 
         List<Map<String, Object>> brands = (List<Map<String, Object>>) result.get("brands");
@@ -55,18 +53,24 @@ public class AnalyticsService {
     /**
      * @param date
      * @return
+     * @author Harsh Shah
      */
-    public List<HashModel> getProductCountForCategory(String date){
+    public List<HashModel> getProductCountForCategory(String date) {
         return analyticsRepository.getProductCountForCategory(DateUtils.parse(date));
     }
 
 
-    public Map<String, Double> getMonthlyTotalPurchaseOfItemCategory(int month){
+    /**
+     * @param month
+     * @return
+     * @author Harsh Shah
+     */
+    public Map<String, Double> getMonthlyTotalPurchaseOfItemCategory(int month) {
 
         List<HashModel> resultSet = analyticsRepository.getMonthlyTotalPurchaseOfItemCategory(month);
 
         Map<String, Double> stats = new HashMap<>();
-        for(Map<String, Object> resut: resultSet){
+        for (Map<String, Object> resut : resultSet) {
             stats.put((String) resut.get("_id"), (Double) resut.get("totalPurchase"));
         }
 
@@ -75,13 +79,12 @@ public class AnalyticsService {
 
         Map<String, Double> output = new HashMap<>();
 
-        for(Map.Entry<String, String> entry: categories.entrySet()){
+        for (Map.Entry<String, String> entry : categories.entrySet()) {
             output.put(entry.getValue(), stats.getOrDefault(entry.getKey(), 0.0));
         }
 
         return output;
     }
-
 
 
 }

@@ -55,7 +55,6 @@ class NotificationControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-
     @MockBean
     private NotificationService notificationService;
 

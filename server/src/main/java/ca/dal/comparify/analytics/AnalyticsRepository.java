@@ -145,12 +145,12 @@ public class AnalyticsRepository {
      * @return
      * @author Harsh Shah
      */
-    public List<HashModel> getMonthlyTotalPurchaseOfItemCategory(int month){
+    public List<HashModel> getMonthlyTotalPurchaseOfItemCategory(int month) {
         List<Bson> pipeline = asList(
 
             match(new Document(STATUS, "verified")
-                    .append("$expr",
-                        new Document("$eq", asList(new Document("$month", "$dateOfPurchase"), month)))),
+                .append("$expr",
+                    new Document("$eq", asList(new Document("$month", "$dateOfPurchase"), month)))),
 
             group(
                 new Document("_id",
@@ -159,13 +159,13 @@ public class AnalyticsRepository {
                     .append("totalPurchase",
                         new Document("$sum", "$price"))),
 
-            lookup("item", "_id.itemId",  "_id",  "item"),
+            lookup("item", "_id.itemId", "_id", "item"),
 
             unwind("$item"),
 
             group(new Document("_id", "$item.itemCategoryId")
-                    .append("totalPurchase",
-                        new Document("$sum", "$totalPurchase"))));
+                .append("totalPurchase",
+                    new Document("$sum", "$totalPurchase"))));
 
         return mongoRepository.aggregate(CompareItemRepository.ITEM_COLLECTION,
             pipeline, HashModel.class);
