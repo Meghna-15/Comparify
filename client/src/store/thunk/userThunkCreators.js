@@ -136,6 +136,7 @@ export const getAllUser = () => async (dispatch) => {
     dispatch(failedGetUsers(error)); 
   }
 };
+
 export const fetchComparedProducts = (itemId) => {
   return httpClient.get("/compareitems/",{params: {itemId: itemId}} ).then((response) => {
       let data = response.data
