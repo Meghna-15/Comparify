@@ -57,7 +57,7 @@ const classes = useStyles();
     
   
    function handleSubmit(event) {
-    event.preventDefault();
+    // event.preventDefault();
      addproducts({
     
       "userId": localStorage.getItem('user-id'), "product":itemCategory, "productId":product, "brandId":brand, "storeId":store, "unit":volume,"price":price, discount,
@@ -120,7 +120,7 @@ return(
       <TextField id="volume" label="Volume (in kg)" variant="outlined"  type="number" value={volume} fullWidth={170} onChange={(e) => setVolume(e.target.value)}
         />
         </div>
-      {/* <div>
+      <div>
       <Box sx={{ m: 3}}></Box> 
        <TextField
         id="date"
@@ -129,7 +129,7 @@ return(
         fullWidth={170} onChange={(e) => setDate(e.target.value)}
 
       />
-    </div> */}
+    </div>
     
       <div>
       <Box sx={{ m: 3}}></Box> 
