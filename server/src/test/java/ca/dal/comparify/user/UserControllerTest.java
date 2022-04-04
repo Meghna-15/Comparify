@@ -12,10 +12,7 @@ import ca.dal.comparify.user.service.UserService;
 import ca.dal.comparify.utils.MapUtils;
 import ca.dal.comparify.utils.ResponseEntityUtils;
 import ca.dal.comparify.utils.SecurityUtils;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -49,9 +46,7 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -80,6 +75,9 @@ class UserControllerTest {
 
     @MockBean
     private UserDetailsService userDetailsService;
+
+    private MockedStatic<SecurityUtils> securityUtils;
+
 
     public static Stream<Arguments> testGetAllUsersDatasource() {
         return Stream.of(
@@ -169,18 +167,22 @@ class UserControllerTest {
 
     @BeforeAll
     void setUpForTestSuite() {
-         Mockito.mockStatic(SecurityUtils.class).
-             when(() -> SecurityUtils.getPrincipal(any()))
-             .thenReturn("dummy_id");
+
+        securityUtils = Mockito.mockStatic(SecurityUtils.class);
+        securityUtils.when(() -> SecurityUtils.getPrincipal(any()))
+            .thenReturn("dummy_id");
+    }
+
+    @AfterAll
+    void tearDownTestSuite() {
+        securityUtils.close();
     }
 
     @BeforeEach
-    void setUpForTestCase() {
-    }
+    void setUpForTestCase() {}
 
     @AfterEach
-    void tearDownTestCase() {
-    }
+    void tearDownTestCase() {}
 
     @ParameterizedTest(name = "{index}: testGetAllUsers() = {0}")
     @MethodSource("testGetAllUsersDatasource")

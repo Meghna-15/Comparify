@@ -5,12 +5,14 @@ import ca.dal.comparify.alerts.model.AlertResponseModel;
 import ca.dal.comparify.framework.exception.handler.GlobalExceptionHandler;
 import ca.dal.comparify.utils.ResponseEntityUtils;
 import ca.dal.comparify.utils.SecurityUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -63,6 +65,8 @@ class AlertControllerTest {
     @MockBean
     private AlertService alertService;
 
+    private MockedStatic<SecurityUtils> securityUtils;
+
     public static Stream<Arguments> testCreateDatasource() {
 
         return Stream.of(
@@ -104,9 +108,15 @@ class AlertControllerTest {
 
     @BeforeAll
     void setUpForTestSuite() {
-        Mockito.mockStatic(SecurityUtils.class).
-            when(() -> SecurityUtils.getPrincipal(any()))
+
+        securityUtils = Mockito.mockStatic(SecurityUtils.class);
+        securityUtils.when(() -> SecurityUtils.getPrincipal(any()))
             .thenReturn("dummy_id");
+    }
+
+    @AfterAll
+    void tearDownTestSuite() {
+        securityUtils.close();
     }
 
     @ParameterizedTest(name = "{index}: testCreate() = {1}")
