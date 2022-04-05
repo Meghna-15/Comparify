@@ -60,7 +60,7 @@ public class UserDetailsModel {
     }
 
     public static List<String> getRequiredFields() {
-        return Arrays.asList(USERNAME);
+        return Arrays.asList(USERNAME_KEY);
     }
 
     public String getId() {
@@ -123,9 +123,4 @@ public class UserDetailsModel {
     public void setType(String type) {
         this.type = type;
     }
-
-    public static List<String> getRequiredFields(){
-        return Arrays.asList(USERNAME_KEY);
-    }
-
  }
