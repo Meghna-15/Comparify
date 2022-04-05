@@ -1,10 +1,8 @@
 package ca.dal.comparify.user.model.iam;
 
-import ca.dal.comparify.utils.UUIDUtils;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.types.ObjectId;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,13 +13,13 @@ import java.util.List;
  */
 public class UserDetailsModel {
 
-    public static final String USERNAME = "username";
+    public static final String USERNAME_KEY = "username";
 
     @BsonProperty("_id")
     @BsonId
     private String id;
 
-    @BsonProperty(USERNAME)
+    @BsonProperty(USERNAME_KEY)
     private String username;
 
     private String email;
@@ -37,7 +35,7 @@ public class UserDetailsModel {
     }
 
     public UserDetailsModel(@BsonId String id,
-                        @BsonProperty(USERNAME) String username,
+                        @BsonProperty(USERNAME_KEY) String username,
                         @BsonProperty("email") String email,
                         @BsonProperty("firstName") String firstName,
                             @BsonProperty("lastName") String lastName,
@@ -118,7 +116,7 @@ public class UserDetailsModel {
     }
 
     public static List<String> getRequiredFields(){
-        return Arrays.asList(USERNAME);
+        return Arrays.asList(USERNAME_KEY);
     }
 
  }

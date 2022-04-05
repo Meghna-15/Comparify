@@ -40,9 +40,9 @@ public class CompareItemRepository {
     public List<CompareItemsModel> fetchCompare(String ItemId, String date){
         Bson query;
         if(date==null)
-            query = and(eq("productId", ItemId), eq("status", "verified"));
+            query = and(eq(productId, ItemId), eq("status", "verified"));
         else
-            query = and(eq("productId", ItemId), eq("dateOfPurchase", DateUtils.parse(date)), eq("status", "verified"));
+            query = and(eq(productId, ItemId), eq("dateOfPurchase", DateUtils.parse(date)), eq("status", "verified"));
         List<CompareItemsModel> result = mongoRepository.find(ITEM_COLLECTION, query, CompareItemsModel.class);
         return result;
     }
@@ -69,8 +69,8 @@ public class CompareItemRepository {
      * @author Aman Singh Bhandari
      */
     public Boolean updateItem(CompareItemsModel compareItemsModel) {
-        Bson query = eq(CompareItemsModel._ID, compareItemsModel.getId());
-        Bson[] values = {set(CompareItemsModel.STATUS,compareItemsModel.getStatus())};
+        Bson query = eq(CompareItemsModel.ID, compareItemsModel.getId());
+        Bson[] values = {set(CompareItemsModel.STATUS_KEY,compareItemsModel.getStatus())};
         Boolean result = mongoRepository.updateOne(ITEM_COLLECTION,query, values);
 
         return result;

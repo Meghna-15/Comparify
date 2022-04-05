@@ -37,7 +37,7 @@ public class AppreciationRepository {
      */
     public Boolean saveUserAppreciation(AppreciationModel appreciationModel) {
         Bson query = eq(username, appreciationModel.getUsername());
-        Bson[] values = {set(AppreciationModel.POINTS,appreciationModel.getPoints()), set(AppreciationModel.TYPE, appreciationModel.getType())};
+        Bson[] values = {set(AppreciationModel.POINTS_KEY,appreciationModel.getPoints()), set(AppreciationModel.TYPE_KEY, appreciationModel.getType())};
         Boolean result = mongoRepository.updateOne(userDetailsCollection,query, values);
 
         return result;
