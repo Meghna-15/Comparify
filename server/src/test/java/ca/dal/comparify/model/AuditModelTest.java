@@ -70,11 +70,12 @@ class AuditModelTest {
     @Test
     void testCreate2() {
         LocalDateTime atStartOfDayResult = LocalDate.of(1970, 1, 1).atStartOfDay();
+        Date fromResult = Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant());
         AuditModel actualCreateResult = AuditModel.create("Jan 1, 2020 8:00am GMT+0100",
-            Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant()));
+            fromResult);
         assertEquals("Jan 1, 2020 8:00am GMT+0100", actualCreateResult.getCreatedBy());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        assertEquals("1969-12-31", simpleDateFormat.format(actualCreateResult.getCreatedOn()));
+        assertSame(fromResult, actualCreateResult.getCreatedOn());
     }
 
     /**
@@ -91,10 +92,12 @@ class AuditModelTest {
     @Test
     void testUpdate2() {
         LocalDateTime atStartOfDayResult = LocalDate.of(1970, 1, 1).atStartOfDay();
+        Date fromResult = Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant());
         AuditModel actualUpdateResult = AuditModel.update("2020-03-01",
-            Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant()));
+            fromResult);
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        assertEquals("1969-12-31", simpleDateFormat.format(actualUpdateResult.getUpdatedOn()));
+        assertSame(fromResult, actualUpdateResult.getUpdatedOn());
         assertEquals("2020-03-01", actualUpdateResult.getUpdatedBy());
     }
 }
