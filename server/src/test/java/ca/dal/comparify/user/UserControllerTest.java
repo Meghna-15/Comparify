@@ -194,9 +194,9 @@ class UserControllerTest {
             .andExpect(result -> {
                 String content = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
                 if (mockResponse == null) {
-                    assertEquals(content, expected);
+                    assertEquals(expected, content);
                 } else {
-                    assertEquals(content, write(expected));
+                    assertEquals(write(expected), content);
                 }
             });
 
@@ -217,9 +217,9 @@ class UserControllerTest {
             .andExpect(result -> {
                 String content = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
                 if (mockResponse == null) {
-                    assertEquals(content, expected);
+                    assertEquals(expected, content);
                 } else {
-                    assertEquals(content, write(expected));
+                    assertEquals(write(expected), content);
                 }
             });
     }
@@ -235,9 +235,9 @@ class UserControllerTest {
             .andExpect(result -> {
                 String content = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
                 if (mockResponse == null) {
-                    assertEquals(content, expected);
+                    assertEquals(expected, content);
                 } else {
-                    assertEquals(content, write(expected));
+                    assertEquals(write(expected), content);
                 }
             });
     }
@@ -252,7 +252,7 @@ class UserControllerTest {
             .andExpect(status().is(status))
             .andExpect(result -> {
                 String content = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
-                assertEquals(content, write(expected));
+                assertEquals(write(expected), content);
             });
     }
 
@@ -270,7 +270,7 @@ class UserControllerTest {
             .andExpect(status().is(status))
             .andExpect(result -> {
                 String content = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
-                assertEquals(content, write(expected));
+                assertEquals(write(expected), content);
             });
     }
 

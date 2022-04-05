@@ -96,9 +96,9 @@ class NotificationControllerTest {
             .andExpect(status().is(expectedStatus)).andExpect(result -> {
                 String content = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
                 if (mockResponse == null) {
-                    assertEquals(content, expected);
+                    assertEquals(expected, content);
                 } else {
-                    assertEquals(content, write(expected));
+                    assertEquals(write(expected), content);
                 }
 
             });
@@ -116,7 +116,7 @@ class NotificationControllerTest {
                 .content(write(request)))
             .andExpect(status().is(expectedStatus)).andExpect(result -> {
                 String content = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
-                assertEquals(content, write(expected));
+                assertEquals(write(expected), content);
             });
     }
 }
