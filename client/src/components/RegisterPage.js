@@ -14,8 +14,6 @@ import { MenuItem, Select } from "@material-ui/core";
         background: "linear-gradient",
         minWidth: "100%",
         minHeight: "100vh",
-        display: "flex",
-      
        },
     button: {
         marginTop: "16px",
