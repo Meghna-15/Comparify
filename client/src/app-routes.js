@@ -22,6 +22,7 @@ import AddAdminproduct from "./components/products/addAdminproduct";
 import AnalyticsAdmin from "./components/analytics/AnalyticsAdmin";
 import ComparePrice from "./components/ComparePrices/ComparePrice";
 import { useSelector } from "react-redux";
+import AdminFeedback from "./components/feedback/AdminFeedback";
 
 const AppRoutes = (props) => {
   const userRole = useSelector((state) => state.user.role.role_id);
@@ -60,6 +61,7 @@ const AppRoutes = (props) => {
             <Route path="users" element={<UserManagement />} />
             <Route path="addstore" element={<AddStore />} />
             <Route path="analyticsadmin" element={<AnalyticsAdmin />} />
+            <Route path="viewfeedbacks" element={<AdminFeedback />} />
           </Route>
         </Route>
       </Routes>

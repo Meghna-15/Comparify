@@ -304,6 +304,7 @@ function Menus(props) {
       } else if (index === 4) {
         navigate("users");
       } else if (index === 5) {
+        navigate("viewfeedbacks");
       } else if (index === 6) {
         dispatch(logout());
       }
