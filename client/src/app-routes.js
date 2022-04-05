@@ -23,9 +23,7 @@ import AnalyticsAdmin from "./components/analytics/AnalyticsAdmin";
 import ComparePrice from "./components/ComparePrices/ComparePrice";
 import { useSelector } from "react-redux";
 
-
 const AppRoutes = (props) => {
-
   const userRole = useSelector((state) => state.user.role.role_id);
 
   return (
@@ -44,8 +42,13 @@ const AppRoutes = (props) => {
         </Route>
         <Route element={<AuthGuard />}>
           <Route path="/home" element={<Menus />}>
-            <Route index element={userRole === "USER" ? <SearchProduct /> : <AnalyticsAdmin />} />
-            <Route path="compare" element={<ComparePrice { ...props } />} />
+            <Route
+              index
+              element={
+                userRole === "USER" ? <SearchProduct /> : <AnalyticsAdmin />
+              }
+            />
+            <Route path="compare" element={<ComparePrice {...props} />} />
             <Route path="analytics" element={<Analytics />} />
             <Route path="alert" element={<Alerts />} />
             <Route path="profile" element={<UserProfile />} />
@@ -56,6 +59,7 @@ const AppRoutes = (props) => {
             <Route path="addproductadmin" element={<AddAdminproduct />} />
             <Route path="users" element={<UserManagement />} />
             <Route path="addstore" element={<AddStore />} />
+            <Route path="analyticsadmin" element={<AnalyticsAdmin />} />
           </Route>
         </Route>
       </Routes>
