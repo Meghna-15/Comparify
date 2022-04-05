@@ -18,11 +18,11 @@ import static ca.dal.comparify.mongo.MongoUtils.set;
 public class CompareItemRepository {
 
     public static final String ITEM_COLLECTION = "compareItems";
-    private final String BRAND_ID= "brandId";
-    private final String STORE_ID= "storeId";
-    private final String PRODUCT_ID= "productId";
-    private String DATE_OF_PURCHASE= "dateOfPurchase";
-    private final String PRICE = "price";
+    private final String brandId = "brandId";
+    private final String storeId = "storeId";
+    private final String productId = "productId";
+    private String dateOfPurchase = "dateOfPurchase";
+    private final String price = "price";
 
     @Autowired
     private MongoRepository mongoRepository;
@@ -52,11 +52,11 @@ public class CompareItemRepository {
      */
     public List<CompareItemsModel> getSameItems(CompareItemsModel comparifyItemsModel)
     {
-        Bson query = and(eq(BRAND_ID,comparifyItemsModel.getBrandId()),
-                eq(STORE_ID,comparifyItemsModel.getStoreId()),
-                eq(PRODUCT_ID, comparifyItemsModel.getProductId()),
-                eq(DATE_OF_PURCHASE, comparifyItemsModel.getDateOfPurchase()),
-                eq(PRICE, comparifyItemsModel.getPrice()));
+        Bson query = and(eq(brandId,comparifyItemsModel.getBrandId()),
+                eq(storeId,comparifyItemsModel.getStoreId()),
+                eq(productId, comparifyItemsModel.getProductId()),
+                eq(dateOfPurchase, comparifyItemsModel.getDateOfPurchase()),
+                eq(price, comparifyItemsModel.getPrice()));
 
         List<CompareItemsModel> list = mongoRepository.find(ITEM_COLLECTION, query, CompareItemsModel.class);
 

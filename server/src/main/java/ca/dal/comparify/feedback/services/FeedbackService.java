@@ -1,8 +1,6 @@
 package ca.dal.comparify.feedback.services;
 
 
-import ca.dal.comparify.item.model.ItemModel;
-import ca.dal.comparify.item.model.ItemRequestModel;
 import com.mongodb.client.model.Filters;
 import org.springframework.beans.factory.annotation.Autowired;
 import ca.dal.comparify.feedback.model.Feedback;
@@ -24,10 +22,10 @@ public class FeedbackService {
     @Autowired
     private MongoRepository mongoRepository;
 
-    private final String FEEDBACK_COLLECTION = "feedback";
+    private final String feedbackCollection = "feedback";
 
     public boolean addFeedback( Feedback f) {
-        int result = mongoRepository.insertOne(FEEDBACK_COLLECTION, f , Feedback.class);
+        int result = mongoRepository.insertOne(feedbackCollection, f , Feedback.class);
 
         if(result == 0)
         { return true;}
@@ -39,7 +37,7 @@ public class FeedbackService {
      * @author Chanpreet Singh
      */
     public ArrayList getAll(){
-        List<Feedback> mongoResult = mongoRepository.find(FEEDBACK_COLLECTION, Filters.empty(), Feedback.class);
+        List<Feedback> mongoResult = mongoRepository.find(feedbackCollection, Filters.empty(), Feedback.class);
         ArrayList<Map> result = new ArrayList();
         for(Feedback eachFeedbak: mongoResult){
             Map dataDict = new HashMap(){{
@@ -54,7 +52,7 @@ public class FeedbackService {
     }
 
     public long getFeedbackCount(){
-        return mongoRepository.count(FEEDBACK_COLLECTION, Filters.empty());
+        return mongoRepository.count(feedbackCollection, Filters.empty());
     }
 }
 
