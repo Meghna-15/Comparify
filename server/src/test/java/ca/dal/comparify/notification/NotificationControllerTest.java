@@ -84,6 +84,13 @@ class NotificationControllerTest {
         securityUtils.close();
     }
 
+    /**
+     * @param expectedStatus
+     * @param mockResponse
+     * @param expected
+     * @throws Exception
+     * @author Harsh Shah
+     */
     @ParameterizedTest(name = "{index}: testFetch() = {0}")
     @MethodSource("testFetchDatasource")
     void testFetch(int expectedStatus, List<NotificationModel> mockResponse,
@@ -104,6 +111,14 @@ class NotificationControllerTest {
             });
     }
 
+    /**
+     * @param request
+     * @param expectedStatus
+     * @param mockResponse
+     * @param expected
+     * @throws Exception
+     * @author Harsh Shah
+     */
     @ParameterizedTest(name = "{index}: testRegisterReceiver() = {1}")
     @MethodSource("testRegisterReceiverDatasource")
     void testRegisterReceiver(NotificationReceiverModel request, int expectedStatus,

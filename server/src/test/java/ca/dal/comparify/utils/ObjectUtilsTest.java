@@ -8,10 +8,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static ca.dal.comparify.utils.ObjectUtils.read;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ObjectUtilsTest {
 
@@ -22,7 +22,8 @@ class ObjectUtilsTest {
             Arguments.of("{\"token\": \"AAAA\", \"refresh_token\": \"BBBB\"}",
                 UserIAMResponseModel.class, new UserIAMResponseModel("AAAA", "BBBB")),
             Arguments.of("{\"token\": \"AAAA\"}",
-                UserIAMResponseModel.class, new UserIAMResponseModel("AAAA"))
+                UserIAMResponseModel.class, new UserIAMResponseModel("AAAA")),
+            Arguments.of("{\"token\": \"AAAA\"", UserIAMResponseModel.class, null)
         );
     }
 
@@ -46,7 +47,11 @@ class ObjectUtilsTest {
             Arguments.of(
                 singletonMap("token", "AAAA"),
                 UserIAMResponseModel.class,
-                new UserIAMResponseModel("AAAA"))
+                new UserIAMResponseModel("AAAA")),
+            Arguments.of(
+                singletonMap("demo", "AAAA"),
+                UserIAMResponseModel.class,
+                null)
         );
     }
 
@@ -75,7 +80,12 @@ class ObjectUtilsTest {
     @ParameterizedTest(name = "{index}: testRead({0})")
     @MethodSource("testReadDatasource")
     <T> void testRead(String json, Class<T> classOf, T expected) {
-        assertEquals(expected, ObjectUtils.read(json, classOf));
+        if (null == expected) {
+            assertNull(read(json, classOf));
+        } else {
+            assertEquals(expected, read(json, classOf));
+        }
+
     }
 
     /**
@@ -87,7 +97,11 @@ class ObjectUtilsTest {
     @ParameterizedTest(name = "{index}: testWrite() = {1}")
     @MethodSource("testWriteDatasource")
     <T> void testWrite(Object request, String expected) {
-        assertEquals(expected, ObjectUtils.write(request));
+        if (null == expected) {
+            assertNull(ObjectUtils.write(request));
+        } else {
+            assertEquals(expected, ObjectUtils.write(request));
+        }
     }
 
 

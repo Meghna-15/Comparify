@@ -184,6 +184,12 @@ class UserControllerTest {
     @AfterEach
     void tearDownTestCase() {}
 
+    /**
+     * @param mockResponse
+     * @param expected
+     * @throws Exception
+     * @author Harsh Shah
+     */
     @ParameterizedTest(name = "{index}: testGetAllUsers() = {0}")
     @MethodSource("testGetAllUsersDatasource")
     public void testGetAllUsers(List<HashModel> mockResponse, Object expected) throws Exception {
@@ -202,6 +208,14 @@ class UserControllerTest {
 
     }
 
+    /**
+     * @param request
+     * @param status
+     * @param mockResponse
+     * @param expected
+     * @throws Exception
+     * @author Harsh Shah
+     */
     @ParameterizedTest(name = "{index}: testAuthentication({0}) = {1}")
     @MethodSource("testAuthenticationDatasource")
     public void testAuthentication(UserIAMRequestModel request, int status,
@@ -225,6 +239,13 @@ class UserControllerTest {
     }
 
 
+    /**
+     * @param mockResponse
+     * @param status
+     * @param expected
+     * @throws Exception
+     * @author Harsh Shah
+     */
     @ParameterizedTest(name = "{index}: testGetUserRole({0}) = {1}")
     @MethodSource("testGetUserRoleDatasource")
     public void testGetUserRole(UserRoleModel mockResponse, int status, Object expected) throws Exception {
@@ -242,6 +263,13 @@ class UserControllerTest {
             });
     }
 
+    /**
+     * @param mockResponse
+     * @param status
+     * @param expected
+     * @throws Exception
+     * @author Harsh Shah
+     */
     @ParameterizedTest(name = "{index}: testLogout() = {0}")
     @MethodSource("testLogoutDatasource")
     public void testLogout(Object mockResponse, int status, Object expected) throws Exception {
@@ -257,6 +285,14 @@ class UserControllerTest {
     }
 
 
+    /**
+     * @param request
+     * @param status
+     * @param mockResponse
+     * @param expected
+     * @throws Exception
+     * @author Harsh Shah
+     */
     @ParameterizedTest(name = "{index}: testUpdate() = {0}")
     @MethodSource("testUpdateDatasource")
     public void testUpdate(UserIAMRequestModel request, int status,
