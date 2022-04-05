@@ -92,6 +92,9 @@ class AlertModelTest {
         assertSame(fromResult, actualAlertModel.getExpiresOn());
     }
 
+    /**
+     * @author Harsh Shah
+     */
     @Test
     void testTransform() {
         AlertModel actualTransformResult = AlertModel.transform(new AlertRequestModel(), "Create By");
@@ -105,6 +108,9 @@ class AlertModelTest {
         assertEquals("Create By", actualTransformResult.getAudit().getCreatedBy());
     }
 
+    /**
+     * @author Harsh Shah
+     */
     @Test
     void testTransform2() {
         AlertModel actualTransformResult = AlertModel.transform(new AlertModel(), "Create By");

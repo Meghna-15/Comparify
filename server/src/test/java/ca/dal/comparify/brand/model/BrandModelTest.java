@@ -47,6 +47,9 @@ class BrandModelTest {
         assertEquals("The characteristics of someone or something", actualBrandModel.getDescription());
     }
 
+    /**
+     * @author Harsh Shah
+     */
     @Test
     void testTransform() {
         BrandModel actualTransformResult = BrandModel.transform(
