@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ca.dal.comparify.securityQuestion.model.Question;
+import ca.dal.comparify.securityQuestion.repository.QuestionRepository;
 import net.minidev.json.JSONObject;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -30,9 +31,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TestQuestionControler {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private QuestionController questionController;
 
     @MockBean
-    private QuestionController questionController;
+    private QuestionRepository questionRepository;
 
     String questionText = "What is your favourite color?";
     String answer = "Blue";
@@ -43,7 +46,7 @@ public class TestQuestionControler {
     @Test
     public void addQuestionFailMongoException() throws Exception {
 
-        when(questionController.addQuestion(any(Question.class))).thenReturn(-2);
+        when(questionRepository.addQuestion(any(Question.class))).thenReturn(-2);
 
         this.mockMvc.perform(post("/securityQuestion/add")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +59,7 @@ public class TestQuestionControler {
     @Test
     public void addQuestionFailCollectionCanNotfind() throws Exception {
 
-        when(questionController.addQuestion(any(Question.class))).thenReturn(-1);
+        when(questionRepository.addQuestion(any(Question.class))).thenReturn(-1);
 
         this.mockMvc.perform(post("/securityQuestion/add")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -69,7 +72,7 @@ public class TestQuestionControler {
     @Test
     public void addQuestionSuccessful() throws Exception {
 
-        when(questionController.addQuestion(question)).thenReturn(0);
+        when(questionRepository.addQuestion(question)).thenReturn(0);
         this.mockMvc.perform(post("/securityQuestion/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toJSONString())
@@ -80,7 +83,7 @@ public class TestQuestionControler {
 
     @Test
     public void getQuestionSucceful() throws Exception {
-        when(questionController.getQuestion(username)).thenReturn(Arrays.asList(question));
+        when(questionRepository.getAllQuestion(username)).thenReturn(Arrays.asList(question));
         this.mockMvc.perform(get("/securityQuestion/getAll?userIdentifier=test"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
@@ -92,7 +95,7 @@ public class TestQuestionControler {
 
     @Test
     public void getQuestionNoRecordFound() throws Exception {
-        when(questionController.getQuestion(any())).thenReturn(Arrays.asList());
+        when(questionRepository.getAllQuestion(any())).thenReturn(Arrays.asList());
         this.mockMvc.perform(get("/securityQuestion/getAll?userIdentifier=tes"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
@@ -100,7 +103,7 @@ public class TestQuestionControler {
 
     @Test
     public void getQuestionFailBadRequest() throws Exception {
-        when(questionController.getQuestion(username)).thenReturn(Arrays.asList(question));
+        when(questionRepository.getAllQuestion(username)).thenReturn(Arrays.asList(question));
         this.mockMvc.perform(get("/securityQuestion/getAll?xyz=test"))
                 .andExpect(status().isBadRequest());
 
@@ -108,7 +111,7 @@ public class TestQuestionControler {
 
     @Test
     public void getOneQuestionSuccess() throws Exception {
-        when(questionController.getOneQuestion(username)).thenReturn(question);
+        when(questionRepository.getOneQuestionById(username)).thenReturn(question);
         this.mockMvc.perform(get("/securityQuestion/getOne?userIdentifier=test"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userIdentifier", is(username)))
@@ -119,7 +122,7 @@ public class TestQuestionControler {
 
     @Test
     public void getOneQuestionNoRecordFound() throws Exception {
-        when(questionController.getOneQuestion(any())).thenReturn(question);
+        when(questionRepository.getOneQuestionById(any())).thenReturn(question);
         this.mockMvc.perform(get("/securityQuestion/getOne?userIdentifier=test"))
                 .andExpect(status().isOk())
                 .equals(null);
@@ -127,21 +130,21 @@ public class TestQuestionControler {
 
     @Test
     public void getOneQuestionFailBadRequest() throws Exception {
-        when(questionController.getOneQuestion(username)).thenReturn(question);
+        when(questionRepository.getOneQuestionById(username)).thenReturn(question);
         this.mockMvc.perform(get("/securityQuestion/getOne?xyz=test"))
                 .andExpect(status().isBadRequest());
 
     }
     @Test
     public void updateAnswerSuccessFull() throws Exception {
-       when(questionController.updateAnswer(anyString(), anyString(),anyString())).thenReturn(true);
+       when(questionRepository.updateAnswer(anyString(), anyString(),anyString())).thenReturn(true);
          this.mockMvc.perform(put("/securityQuestion/update?userIdentifier=test&question="+questionText+"&answer=Red"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
     @Test
     public void updateAnswerFail4xxError() throws Exception {
-        when(questionController.updateAnswer(anyString(), anyString(),anyString())).thenReturn(false);
+        when(questionRepository.updateAnswer(anyString(), anyString(),anyString())).thenReturn(false);
         this.mockMvc.perform(put("/securityQuestion/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.toJSONString())
@@ -150,14 +153,14 @@ public class TestQuestionControler {
     }
     @Test   
     public void deleteQuestionSuccess() throws Exception {
-        when(questionController.deleteQuestion(anyString(),anyString())).thenReturn(true);
+        when(questionRepository.deleteQuestion(anyString(),anyString())).thenReturn(true);
         this.mockMvc.perform(delete("/securityQuestion/delete?userIdentifier=test&question="+questionText))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
     }
     @Test
     public void deleteQuestionFail() throws Exception {
-        when(questionController.deleteQuestion(anyString(),anyString())).thenReturn(false);
+        when(questionRepository.deleteQuestion(anyString(),anyString())).thenReturn(false);
         this.mockMvc.perform(delete("/securityQuestion/delete?userIdentifier=test"))
                 .andExpect(status().is4xxClientError());
     }

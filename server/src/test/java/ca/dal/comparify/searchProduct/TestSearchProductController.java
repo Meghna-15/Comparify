@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ca.dal.comparify.searchProduct.model.Product;
+import ca.dal.comparify.searchProduct.repository.ProductRepository;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -30,8 +31,10 @@ public class TestSearchProductController {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private SearchProductController searchProductController;
+    @MockBean
+    private ProductRepository productRepository;
 
     @Test
     public void getProductsFound() throws Exception {
@@ -48,7 +51,7 @@ public class TestSearchProductController {
         Product product = new Product(productname, brandName, storeName, unit, price, image, description,
                 productId, recordId);
 
-        when(searchProductController.getProducts(any())).thenReturn(Arrays.asList(product));
+        when(productRepository.getAllProducts(any())).thenReturn(Arrays.asList(product));
         // check if the access token is valid
         this.mockMvc.perform(get("/product/search?name=Milk"))
                 .andExpect(status().isOk())
