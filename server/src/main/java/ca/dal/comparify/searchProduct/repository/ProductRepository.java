@@ -14,6 +14,7 @@ import static ca.dal.comparify.mongo.MongoUtils.eq;
 
 import static ca.dal.comparify.mongo.MongoUtils.and;
 
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,18 +44,18 @@ public class ProductRepository {
         List<Product> products = new ArrayList<>();
         try {
             ItemModel item = mongoRepository.findOne(ITEMCOLLECTION_NAME, eq(ITEMNAME, itemName), itemCLass);
-
+            Bson filter =  and(eq(ITEM_ID, item.getId()), eq("status", "verified"));
             List<CompareItemsModel> itemsDetails = mongoRepository.find(ITEMDETAILCOLLECTION_NAME,
-                    and(eq(ITEM_ID, item.getId()), eq("status", "verified")),
-                    itemDetailCLass);
+                   filter,itemDetailCLass);
 
             for (CompareItemsModel itemDetail : itemsDetails) {
-
-                StoreModel store = mongoRepository.findOne(STORECOLLECTION_NAME, eq(STOREID,
-                        new ObjectId(itemDetail.getStoreId())),
+                Bson matchStore = eq(STOREID,
+                        new ObjectId(itemDetail.getStoreId()));
+                StoreModel store = mongoRepository.findOne(STORECOLLECTION_NAME, matchStore,
                         storeCLass);
                 String storeName = store.getStoreName();
-                BrandModel brand = mongoRepository.findOne(BRRANDCOLLECTION_NAME, eq(BRANDID, itemDetail.getBrandId()),
+                Bson matchBrand = eq(BRANDID, itemDetail.getBrandId());
+                BrandModel brand = mongoRepository.findOne(BRRANDCOLLECTION_NAME, matchBrand,
                         brandCLass);
                 String brandName = brand.getName();
                 String productName = item.getName();
