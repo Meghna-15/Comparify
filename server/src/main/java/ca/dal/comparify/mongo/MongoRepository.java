@@ -175,8 +175,8 @@ public class MongoRepository {
      * @return
      * @author Harsh Shah
      */
-    public <T> List<T> find(String collectionName, Bson query, Bson projection, PaginationOptions options,
-                            Class<T> classOf) {
+    public <T> List<T> find(String collectionName, Bson query, Bson projection,
+                            PaginationOptions options, Class<T> classOf) {
         MongoCollection<T> collection = getCollection(collectionName, classOf);
 
         List<T> output = new ArrayList<>();
