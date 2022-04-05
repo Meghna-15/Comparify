@@ -105,7 +105,17 @@ class MongoRepositoryTest {
         return Stream.of(
             Arguments.of(collectionName, new Document("name", "Maddy"), Document.class, 0),
             Arguments.of(collectionName, new Document("name", "Maddy"), null, -1),
-            Arguments.of(null, new Document("name", "Maddy"), Document.class, -2));
+            Arguments.of(collectionName, new Document("name", "Maddy"), Document.class, -2));
+    }
+
+    public static Stream<Arguments> testInsertManyDatasource() {
+
+        List<Document> data = Arrays.asList(new Document("name", "Mike"));
+
+        return Stream.of(
+            Arguments.of(collectionName, data, Document.class, 0),
+            Arguments.of(collectionName, data, null, -1),
+            Arguments.of(collectionName, data, Document.class, -2));
     }
 
     public static Stream<Arguments> testCountDatasource() {
@@ -316,10 +326,16 @@ class MongoRepositoryTest {
      * @param <T>
      * @author Harsh Shah
      */
-    @ParameterizedTest(name = "{index}: testInsertOne() = {0}")
+    @ParameterizedTest(name = "{index}: testInsertOne() = {3}")
     @MethodSource("testInsertOneDatasource")
     <T> void testInsertOne(String collection, T object, Class<T> tClass, int expected) {
         assertEquals(expected, mongoRepository.insertOne(collection, object, tClass));
+    }
+
+    @ParameterizedTest(name = "{index}: testInsertMany() = {3}")
+    @MethodSource("testInsertManyDatasource")
+    <T> void testInsertMany(String collection, List<T> objects, Class<T> tClass, int expected) {
+        assertEquals(expected, mongoRepository.insertMany(collection, objects, tClass));
     }
 
     /**
