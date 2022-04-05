@@ -75,33 +75,6 @@ public class CompareItemsRepositoryTest {
         assertEquals(compareItemRepository.save(compareItemsModel), 0);
     }
 
-//    @Test
-//    void TestfetchCompare()
-//    {
-//       String date="02-02-2000";
-//       String itemid="aghcbv";
-//
-//
-//
-//        Date date1=new Date();
-//        CompareItemsModel compareItemsModel = new CompareItemsModel();
-//        compareItemsModel.setProductId("dummydata");
-//        compareItemsModel.setBrandId("dummydata");
-//        compareItemsModel.setStoreId("dummydata");
-//        compareItemsModel.setImageText("dummydata");
-//        compareItemsModel.setUserId("dummydata");
-//        compareItemsModel.setPrice(100.0);
-//        compareItemsModel.setDateOfPurchase(date1);
-//        List compareItems = new ArrayList<>();
-//        compareItems.add(compareItemsModel);
-//
-//        when(mongoRepository.find( any(), any(), any())).thenReturn(compareItems);
-//        assertEquals(compareItemRepository.fetchCompare(itemid,date).size(), compareItems.size());
-//
-//    }
-//
-
-
     @Test
     void TestUpdateItem()
     {
