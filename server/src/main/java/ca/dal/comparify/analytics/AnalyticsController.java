@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+
+import static ca.dal.comparify.utils.StringUtils.isEmpty;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 
 /**
  * @author Harsh Shah
@@ -22,17 +27,52 @@ public class AnalyticsController {
     /**
      * @param itemId
      * @return
-     *
      * @author Harsh Shah
      */
     @GetMapping("")
-    public List<HashModel> getPriceTrend(@RequestParam("item_id") String itemId){
+    public List<HashModel> getPriceTrend(@RequestParam("item_id") String itemId) {
+        if (isEmpty(itemId)) {
+            return emptyList();
+        }
         return analyticsService.getPriceTrend(itemId);
     }
 
+    /**
+     * @param itemId
+     * @return
+     * @author Harsh Shah
+     */
     @GetMapping("/brands")
-    public HashModel getPriceTrendForDifferentBrands(@RequestParam("item_id") String itemId){
+    public HashModel getPriceTrendForDifferentBrands(@RequestParam("item_id") String itemId) {
+        if (isEmpty(itemId)) {
+            return new HashModel();
+        }
         return analyticsService.getPriceTrendForDifferentBrands(itemId);
     }
 
+    /**
+     * @param date
+     * @return
+     * @author Harsh Shah
+     */
+    @GetMapping("/categories")
+    public List<HashModel> getProductCountForCategory(@RequestParam("date") String date) {
+        if (isEmpty(date)) {
+            return emptyList();
+        }
+        return analyticsService.getProductCountForCategory(date);
+    }
+
+    /**
+     * @param month
+     * @return
+     * @author Harsh Shah
+     */
+    @GetMapping("/monthly")
+    public Map<String, Double> getMonthlyTotalPurchaseOfItemCategory(@RequestParam("month") int month) {
+        if (month < 1 || month > 12) {
+            return emptyMap();
+        }
+        return analyticsService.getMonthlyTotalPurchaseOfItemCategory(month);
+    }
 }
