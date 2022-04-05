@@ -1,5 +1,6 @@
-package ca.dal.comparify.compareitems.model;
+package ca.dal.comparify.CompareItems.model;
 
+import ca.dal.comparify.compareitems.model.CompareItemsModel;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 
