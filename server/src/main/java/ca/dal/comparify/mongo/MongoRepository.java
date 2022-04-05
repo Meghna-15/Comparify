@@ -437,10 +437,17 @@ public class MongoRepository {
     /**
      * @param collectionName
      * @author Harsh Shah
+     * @return
      */
-    public void dropCollection(String collectionName) {
+    public boolean dropCollection(String collectionName) {
         MongoCollection<Document> collection = getCollection(collectionName);
+
+        if(null == collection){
+            return false;
+        }
+
         collection.drop();
+        return true;
     }
 
     /**
@@ -452,6 +459,11 @@ public class MongoRepository {
      */
     public String createIndex(String collectionName, Document index, boolean unique) {
         MongoCollection<Document> collection = getCollection(collectionName);
+
+        if(null == collection){
+            return null;
+        }
+
         return collection.createIndex(index, new IndexOptions().unique(unique));
     }
 }

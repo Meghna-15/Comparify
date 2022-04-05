@@ -88,9 +88,9 @@ class CompareItemsModelTest {
     @Test
     void testConstructor3() {
         LocalDateTime atStartOfDayResult = LocalDate.of(1970, 1, 1).atStartOfDay();
+        Date actualDate = Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant());
         CompareItemsModel actualCompareItemsModel = new CompareItemsModel("Image Text", "42", "42", 10.0d, 10.0d, "42",
-            Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant()), 10.0d, "42", "Status");
-
+            actualDate, 10.0d, "42", "Status");
         assertEquals("42", actualCompareItemsModel.getBrandId());
         assertEquals("42", actualCompareItemsModel.getUserId());
         assertEquals(10.0d, actualCompareItemsModel.getUnit().doubleValue());
@@ -101,7 +101,7 @@ class CompareItemsModelTest {
         assertEquals(10.0d, actualCompareItemsModel.getPrice().doubleValue());
         assertEquals("Image Text", actualCompareItemsModel.getImageText());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        assertEquals("1969-12-31", simpleDateFormat.format(actualCompareItemsModel.getDateOfPurchase()));
+        assertSame(actualDate, actualCompareItemsModel.getDateOfPurchase());
     }
 
     /**

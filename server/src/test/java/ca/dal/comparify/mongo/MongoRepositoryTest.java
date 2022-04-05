@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MongoRepositoryTest {
 
     private static String collectionName;
+    private static String indexCollectionName;
+
     @Autowired
     private MongoRepository mongoRepository;
 
@@ -162,10 +165,18 @@ class MongoRepositoryTest {
                 Document.class, false));
     }
 
+    public static Stream<Arguments> testDropCollectionDatasource() {
+
+        return Stream.of(
+            Arguments.of("collectionName", true),
+            Arguments.of(null, false));
+    }
+
     @BeforeAll
     void setUpForTestSuite() {
 
         collectionName = UUIDUtils.generate();
+        indexCollectionName = UUIDUtils.generate();
 
         mongoRepository.createIndex(collectionName, new Document("name", 1), true);
 
@@ -180,6 +191,7 @@ class MongoRepositoryTest {
     @AfterAll
     void tearDownTestSuite() {
         mongoRepository.dropCollection(collectionName);
+        mongoRepository.dropCollection(indexCollectionName);
     }
 
     /**
@@ -400,7 +412,34 @@ class MongoRepositoryTest {
         } else {
             assertNull(mongoRepository.aggregateOne(collection, pipeline, tClass));
         }
+    }
 
+    /**
+     * @param collection
+     * @param expected
+     * @param <T>
+     * @author Harsh Shah
+     */
+    @ParameterizedTest(name = "{index}: testDropCollection() = {1}")
+    @MethodSource("testDropCollectionDatasource")
+    <T> void testDropCollection(String collection, boolean expected) {
+        assertEquals(expected, mongoRepository.dropCollection(collection));
+    }
+
+    public static Stream<Arguments> testCreateIndexDatasource() {
+        return Stream.of(
+            Arguments.of(indexCollectionName, new Document("name", 1), true),
+            Arguments.of(null, new Document("name", "1"), false));
+    }
+
+    @ParameterizedTest(name = "{index}: testDropCollection() = {1}")
+    @MethodSource("testCreateIndexDatasource")
+    <T> void testCreateIndex(String collection, Document index, boolean expected) {
+        if(expected){
+            assertNotNull( mongoRepository.createIndex(collection, index, true));
+        } else {
+            assertNull( mongoRepository.createIndex(collection, index, true));
+        }
     }
 
 }
