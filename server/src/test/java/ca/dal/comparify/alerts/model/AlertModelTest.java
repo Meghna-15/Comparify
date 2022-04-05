@@ -1,23 +1,20 @@
 package ca.dal.comparify.alerts.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import ca.dal.comparify.model.AuditModel;
 import ca.dal.comparify.model.RangeModel;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import org.junit.jupiter.api.Disabled;
-
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AlertModelTest {
+    /**
+     * @author Harsh Shah
+     */
     @Test
     void testConstructor() {
         AlertModel actualAlertModel = new AlertModel();
@@ -39,6 +36,9 @@ class AlertModelTest {
         assertTrue(actualAlertModel.isStatus());
     }
 
+    /**
+     * @author Harsh Shah
+     */
     @Test
     void testConstructor2() {
         AlertRequestModel request = new AlertRequestModel();
@@ -55,6 +55,9 @@ class AlertModelTest {
         assertSame(createResult, actualAlertModel.getAudit());
     }
 
+    /**
+     * @author Harsh Shah
+     */
     @Test
     void testConstructor3() {
         AlertModel request = new AlertModel();
@@ -71,6 +74,9 @@ class AlertModelTest {
         assertSame(createResult, actualAlertModel.getAudit());
     }
 
+    /**
+     * @author Harsh Shah
+     */
     @Test
     void testConstructor4() {
         RangeModel<Integer> rangeModel = new RangeModel<>();
