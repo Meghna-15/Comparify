@@ -1,4 +1,4 @@
-package ca.dal.comparify.CompareItems.model;
+package ca.dal.comparify.compareItems.model;
 
 import ca.dal.comparify.compareitems.model.CompareItemsModel;
 import org.bson.types.ObjectId;
