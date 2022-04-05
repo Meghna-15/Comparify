@@ -2,6 +2,7 @@ package ca.dal.comparify.mongo;
 
 import ca.dal.comparify.utils.UUIDUtils;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
@@ -14,9 +15,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static ca.dal.comparify.mongo.MongoUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ContextConfiguration(classes = {MongoRepository.class, MongoConfig.class})
@@ -25,43 +28,40 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class MongoRepositoryTest {
 
+    private static String collectionName;
     @Autowired
     private MongoRepository mongoRepository;
-
-    private String collectionName;
 
     public static Stream<Arguments> testFindDatasource() {
         return Stream.of(
             Arguments.of(new Document(), Document.class, 3),
-            Arguments.of(new Document("name", "Herry"), Document.class, 1),
-            Arguments.of(new Document("name", "Herry"), null, 0));
+            Arguments.of(new Document("name", "John"), Document.class, 1),
+            Arguments.of(new Document("name", "John"), null, 0));
     }
 
     public static Stream<Arguments> testFindWithPaginationDatasource() {
         return Stream.of(
-            Arguments.of(new Document(),
-                new PaginationOptions(new Document()), Document.class, 3),
-            Arguments.of(new Document("name", "Herry"),
+            Arguments.of(new Document("name", "John"),
                 new PaginationOptions(new Document("name", 1)), Document.class, 1),
-            Arguments.of(new Document("name", "Herry"), null, null, 0));
+            Arguments.of(new Document("name", "John"), null, null, 0));
     }
 
     public static Stream<Arguments> testFindWithProjectionDatasource() {
         return Stream.of(
             Arguments.of(new Document(), new Document(), Document.class, 3),
-            Arguments.of(new Document("name", "Herry"), new Document("name", 1), Document.class, 1),
-            Arguments.of(new Document("name", "Herry"), null, null, 0),
-            Arguments.of(new Document("name", "Herry"), null, Document.class, 1));
+            Arguments.of(new Document("name", "John"), new Document("name", 1), Document.class, 1),
+            Arguments.of(new Document("name", "John"), null, null, 0),
+            Arguments.of(new Document("name", "John"), null, Document.class, 1));
     }
 
     public static Stream<Arguments> testFindWithProjectionAndPaginationDatasource() {
         return Stream.of(
             Arguments.of(new Document(), new Document(),
                 new PaginationOptions(new Document()), Document.class, 3),
-            Arguments.of(new Document("name", "Herry"), new Document("name", 1),
+            Arguments.of(new Document("name", "John"), new Document("name", 1),
                 new PaginationOptions(new Document("name", 1)), Document.class, 1),
-            Arguments.of(new Document("name", "Herry"), null, null, null, 0),
-            Arguments.of(new Document("name", "Herry"), null,
+            Arguments.of(new Document("name", "John"), null, null, null, 0),
+            Arguments.of(new Document("name", "John"), null,
                 new PaginationOptions(new Document()), Document.class, 1));
     }
 
@@ -90,10 +90,74 @@ class MongoRepositoryTest {
         );
     }
 
+    public static Stream<Arguments> testFindOneWithProjectionAndPaginationDatasource() {
+        return Stream.of(
+            Arguments.of(new Document(), new Document("_id", 0),
+                new PaginationOptions(new Document()), Document.class, new Document("name", "John")),
+            Arguments.of(new Document("name", "John"), new Document("_id", 0),
+                new PaginationOptions(new Document("name", 1)), Document.class, new Document("name", "Herry")),
+            Arguments.of(new Document("name", "John"), null, null, null, null),
+            Arguments.of(new Document("name", "John"), null,
+                new PaginationOptions(new Document()), Document.class, new Document("name", "Herry")));
+    }
+
+    public static Stream<Arguments> testInsertOneDatasource() {
+        return Stream.of(
+            Arguments.of(collectionName, new Document("name", "Maddy"), Document.class, 0),
+            Arguments.of(collectionName, new Document("name", "Maddy"), null, -1),
+            Arguments.of(null, new Document("name", "Maddy"), Document.class, -2));
+    }
+
+    public static Stream<Arguments> testCountDatasource() {
+        return Stream.of(
+            Arguments.of(collectionName, new Document("name", "John"), 1),
+            Arguments.of(null, new Document("name", "John"), -1));
+    }
+
+    public static Stream<Arguments> testUpdateOneDatasource() {
+        return Stream.of(
+            Arguments.of(collectionName, new Document("name", "Herry"),
+                new Bson[]{set("name", "Harry")}, true),
+            Arguments.of(collectionName, new Document("name", "Herry"),
+                new Bson[]{}, false),
+            Arguments.of(null, new Document("name", "Herry"),
+                new Bson[]{set("name", "Harry")}, false));
+    }
+
+    public static Stream<Arguments> testDeleteOneDatasource() {
+        return Stream.of(
+            Arguments.of(collectionName, new Document("name", "Herry"), true),
+            Arguments.of(null, new Document("name", "Herry"), false));
+    }
+
+    public static Stream<Arguments> testAggregateDatasource() {
+
+        List<Bson> pipeline = Arrays.asList(match(new Document("name", "John")));
+        return Stream.of(
+            Arguments.of(collectionName, pipeline,
+                Document.class, 1),
+            Arguments.of(null, pipeline,
+                Document.class, 0));
+    }
+
+    public static Stream<Arguments> testAggregateOneDatasource() {
+
+        List<Bson> pipeline = Arrays.asList(
+            facet(new Document("user", Arrays.asList(match(new Document("name", "John"))))));
+
+        return Stream.of(
+            Arguments.of(collectionName, pipeline,
+                Document.class, true),
+            Arguments.of(null, pipeline,
+                Document.class, false));
+    }
+
     @BeforeAll
     void setUpForTestSuite() {
 
         collectionName = UUIDUtils.generate();
+
+        mongoRepository.createIndex(collectionName, new Document("name", 1), true);
 
         List<Document> dummy = new ArrayList<>();
         dummy.add(new Document("name", "John"));
@@ -225,26 +289,102 @@ class MongoRepositoryTest {
         }
     }
 
-    public static Stream<Arguments> testFindOneWithProjectionAndPaginationDatasource() {
-        return Stream.of(
-            Arguments.of(new Document(), new Document("_id", 0),
-                new PaginationOptions(new Document()), Document.class, new Document("name", "John")),
-            Arguments.of(new Document("name", "Herry"), new Document("_id", 0),
-                new PaginationOptions(new Document("name", 1)), Document.class, new Document("name", "Herry")),
-            Arguments.of(new Document("name", "Herry"), null, null, null, null),
-            Arguments.of(new Document("name", "Herry"), null,
-                new PaginationOptions(new Document()), Document.class, new Document("name", "Herry")));
-    }
-
+    /**
+     * @param query
+     * @param projection
+     * @param options
+     * @param tClass
+     * @param expected
+     * @param <T>
+     * @author Harsh Shah
+     */
     @ParameterizedTest(name = "{index}: testFindOneWithProjectionAndPagination() = {0}")
     @MethodSource("testFindOneWithProjectionAndPaginationDatasource")
     <T> void testFindOneWithProjectionAndPagination(Document query, Document projection,
-                                       PaginationOptions options, Class<T> tClass, Object expected) {
+                                                    PaginationOptions options, Class<T> tClass, Object expected) {
         if (null == expected) {
             assertNull(mongoRepository.findOne(collectionName, query, projection, options, tClass));
         } else {
             assertNotNull(mongoRepository.findOne(collectionName, query, projection, options, tClass));
         }
+    }
+
+    /**
+     * @param object
+     * @param tClass
+     * @param expected
+     * @param <T>
+     * @author Harsh Shah
+     */
+    @ParameterizedTest(name = "{index}: testInsertOne() = {0}")
+    @MethodSource("testInsertOneDatasource")
+    <T> void testInsertOne(String collection, T object, Class<T> tClass, int expected) {
+        assertEquals(expected, mongoRepository.insertOne(collection, object, tClass));
+    }
+
+    /**
+     * @param collection
+     * @param query
+     * @param expected
+     * @param <T>
+     * @author Harsh Shah
+     */
+    @ParameterizedTest(name = "{index}: testCount() = {1}")
+    @MethodSource("testCountDatasource")
+    <T> void testCount(String collection, Document query, int expected) {
+        assertEquals(expected, mongoRepository.count(collection, query));
+    }
+
+    @ParameterizedTest(name = "{index}: testUpdateOne() = {1}")
+    @MethodSource("testUpdateOneDatasource")
+    <T> void testUpdateOne(String collection, Document query, Bson[] values, boolean expected) {
+        assertEquals(expected, mongoRepository.updateOne(collection, query, values));
+    }
+
+    /**
+     * @param collection
+     * @param query
+     * @param expected
+     * @param <T>
+     * @author Harsh Shah
+     */
+    @ParameterizedTest(name = "{index}: testDeleteOne() = {1}")
+    @MethodSource("testDeleteOneDatasource")
+    <T> void testDeleteOne(String collection, Document query, boolean expected) {
+        assertEquals(expected, mongoRepository.deleteOne(collection, query));
+    }
+
+    /**
+     * @param collection
+     * @param pipeline
+     * @param tClass
+     * @param expected
+     * @param <T>
+     * @author Harsh Shah
+     */
+    @ParameterizedTest(name = "{index}: testAggregate() = {3}")
+    @MethodSource("testAggregateDatasource")
+    <T> void testAggregate(String collection, List<Bson> pipeline, Class<T> tClass, int expected) {
+        assertEquals(expected, mongoRepository.aggregate(collection, pipeline, tClass).size());
+    }
+
+    /**
+     * @param collection
+     * @param pipeline
+     * @param tClass
+     * @param expected
+     * @param <T>
+     * @author Harsh Shah
+     */
+    @ParameterizedTest(name = "{index}: testAggregateOne() = {3}")
+    @MethodSource("testAggregateOneDatasource")
+    <T> void testAggregateOne(String collection, List<Bson> pipeline, Class<T> tClass, boolean expected) {
+        if (expected) {
+            assertNotNull(mongoRepository.aggregateOne(collection, pipeline, tClass));
+        } else {
+            assertNull(mongoRepository.aggregateOne(collection, pipeline, tClass));
+        }
+
     }
 
 }
