@@ -17,11 +17,8 @@ public class ResponseEntityUtils {
     public static final String ENTITY_ALREADY_EXISTS = "Entity already exists";
     public static final String REQUEST_FAILED_SOMETHING_WENT_WRONG = "Request Failed! Something went wrong...";
     public static final String INVALID_REQUEST = "Invalid Request";
-<<<<<<< HEAD
     private static final int CUSTOM_STATUS = 512;
-=======
-    public static final int CUSTOM_STATUS = 512;
->>>>>>> 9334de5d99a3434bc4a7cb8658d329221ce1c397
+
 
     private ResponseEntityUtils() {
     }

@@ -13,11 +13,8 @@ import java.util.List;
 
 public class AppreciationModel implements Serializable {
 
-<<<<<<< HEAD
     private static final String USERNAME_KEY = "username";
-=======
-    public static final String USERNAME_KEY = "username";
->>>>>>> 9334de5d99a3434bc4a7cb8658d329221ce1c397
+
 
     public static final String POINTS_KEY = "points";
 

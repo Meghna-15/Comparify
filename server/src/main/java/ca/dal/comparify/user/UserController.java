@@ -34,15 +34,10 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/user")
 public class UserController {
 
-<<<<<<< HEAD
     private static final int STATUS = 400;
     private static final int ERROR_CODE = 1000;
     private static final int ERROR_CODE1 = 2005;
-=======
-    public static final int STATUS = 400;
-    public static final int ERROR_CODE = 1000;
-    public static final int ERROR_CODE1 = 2005;
->>>>>>> 9334de5d99a3434bc4a7cb8658d329221ce1c397
+
     @Autowired
     private UserService userService;
 
