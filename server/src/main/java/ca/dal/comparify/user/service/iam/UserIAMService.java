@@ -34,10 +34,10 @@ import static ca.dal.comparify.user.model.iam.authorization.UserAuthorizationRol
 @Service
 public class UserIAMService {
 
-    public static final int ACCOUNT_EXPIRATION_DAYS = 365;
+    private static final int ACCOUNT_EXPIRATION_DAYS = 365;
     private static final long SECRET_EXPIRATION_DAYS = 30;
     private static final long ALERT_BEFORE_SECRET_EXPIRATION_DAYS = 15;
-    public static final int STATUS = 401;
+    private static final int STATUS = 401;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

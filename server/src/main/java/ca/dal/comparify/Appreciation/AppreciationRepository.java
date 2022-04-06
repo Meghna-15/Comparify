@@ -26,8 +26,8 @@ public class AppreciationRepository {
     private final String productId = "productId";
 
     private final String compareItemsCollection = "compareItems";
-    public static final String userDetailsCollection = "user";
-    public static final String userId = "userId";
+    private static final String userDetailsCollection = "user";
+    private static final String userId = "userId";
     private String dateOfPurchase = "dateOfPurchase";
 
     /**
