@@ -22,6 +22,7 @@ import static java.util.Arrays.asList;
 @Service
 public class AnalyticsRepository {
 
+<<<<<<< HEAD
     private static final String STATUS = "status";
     private static final String VERIFIED = "verified";
     private static final String DATE_OF_PURCHASE = "$dateOfPurchase";
@@ -31,6 +32,17 @@ public class AnalyticsRepository {
     private static final String BRAND = "brand";
     private static final String CATEGORY = "category";
     private static final String EXPR = "$expr";
+=======
+    public static final String STATUS = "status";
+    public static final String VERIFIED = "verified";
+    public static final String DATE_OF_PURCHASE = "$dateOfPurchase";
+    public static final String PRICE = "$price";
+    public static final String BRANDS = "brands";
+    public static final String BRAND_ID = "$brandId";
+    public static final String BRAND = "brand";
+    public static final String CATEGORY = "category";
+    public static final String EXPR = "$expr";
+>>>>>>> 9334de5d99a3434bc4a7cb8658d329221ce1c397
 
 
     @Autowired

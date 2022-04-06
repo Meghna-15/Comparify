@@ -22,7 +22,11 @@ import static java.util.Collections.emptyList;
 @Service
 public class TokenService implements AuthenticationProviders {
 
+<<<<<<< HEAD
     private static final int LENGTH = 2;
+=======
+    public static final int LENGTH = 2;
+>>>>>>> 9334de5d99a3434bc4a7cb8658d329221ce1c397
     @Value("${jwt.token.expiration}")
     private long tokenExpiration;
 

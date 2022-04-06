@@ -16,7 +16,11 @@ import java.util.stream.Collectors;
 public class MongoUtils {
 
     private static final String DOLLAR_INC = "$inc";
+<<<<<<< HEAD
     private static final String LOOKUP = "$lookup";
+=======
+    public static final String LOOKUP = "$lookup";
+>>>>>>> 9334de5d99a3434bc4a7cb8658d329221ce1c397
 
     private MongoUtils() {
     }
